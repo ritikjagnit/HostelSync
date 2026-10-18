@@ -1,0 +1,130 @@
+.navbar-header {
+  background-color: var(--white);
+  border-bottom: var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.25rem;
+}
+
+.navbar-brand-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.brand-logo-container {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.brand-institute {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  letter-spacing: 0.01em;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-600);
+}
+
+.nav-portal-link {
+  color: var(--primary-700);
+  background-color: var(--primary-50);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-100);
+}
+
+.nav-portal-link:hover {
+  background-color: var(--primary-100);
+}
+
+.navbar-auth-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--slate-100);
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--slate-200);
+}
+
+.user-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--slate-800);
+}
+
+.user-role-badge {
+  font-size: 0.6875rem;
+  padding: 0.15rem 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8125rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary-600);
+  display: inline-block;
+  animation: pulseGlow 2s infinite ease-in-out;
+}

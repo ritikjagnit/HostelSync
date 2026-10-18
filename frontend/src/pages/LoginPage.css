@@ -1,0 +1,128 @@
+.login-page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4.25rem - 180px);
+  padding: 3rem 1.5rem;
+  background: linear-gradient(180deg, var(--white) 0%, var(--primary-50) 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  border-top: 4px solid var(--primary-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.login-badge-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.login-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  letter-spacing: -0.02em;
+}
+
+.login-subtitle {
+  font-size: 0.875rem;
+  color: var(--slate-500);
+  margin-top: 0.35rem;
+}
+
+.login-error-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.error-icon {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--slate-700);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-md);
+  color: var(--slate-800);
+  background-color: var(--white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-600);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-input:disabled {
+  background-color: var(--slate-100);
+  cursor: not-allowed;
+}
+
+.login-submit-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.login-footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: var(--border-light);
+  text-align: center;
+}
+
+.login-hint {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.login-back-link a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary-600);
+  text-decoration: none;
+}
+
+.login-back-link a:hover {
+  text-decoration: underline;
+}

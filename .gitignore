@@ -1,0 +1,53 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs and Editors
+.idea/
+*.iml
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+.factorypath
+
+# Environment and Secrets
+.env
+.env.local
+.env.*.local
+*.p12
+*.pem
+*.jks
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node / Frontend Build
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.oxlint-cache/
+
+# Java / Maven Backend Build
+backend/target/
+backend/*.jar
+backend/*.war
+backend/.flattened-pom.xml
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Local Database Files & Runtime Data (H2)
+data/
+backend/data/
+*.mv.db
+*.trace.db

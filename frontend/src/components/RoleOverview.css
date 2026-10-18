@@ -1,0 +1,78 @@
+.roles-section {
+  margin: 3.5rem 0;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.role-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-top: 3px solid var(--primary-400);
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.role-header {
+  margin-bottom: 1.25rem;
+}
+
+.role-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  margin-top: 0.75rem;
+  letter-spacing: -0.015em;
+}
+
+.role-persona {
+  font-size: 0.875rem;
+  color: var(--slate-500);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.role-body {
+  border-top: var(--border-light);
+  padding-top: 1rem;
+}
+
+.responsibilities-heading {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.65rem;
+}
+
+.role-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.role-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--slate-700);
+  line-height: 1.45;
+}
+
+.bullet-dot {
+  color: var(--primary-500);
+  font-size: 0.625rem;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}

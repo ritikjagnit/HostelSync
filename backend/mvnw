@@ -1,0 +1,28 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Maven Wrapper Script for Unix / POSIX
+# ----------------------------------------------------------------------------
+
+set -e
+
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if [ -z "$JAVA_HOME" ]; then
+  JAVACMD="java"
+else
+  JAVACMD="$JAVA_HOME/bin/java"
+fi
+
+if ! command -v "$JAVACMD" >/dev/null 2>&1; then
+  echo "Error: JAVA_HOME is not set and no 'java' command could be found in your PATH." >&2
+  echo "Please install JDK 21 and ensure 'java' is accessible in your PATH." >&2
+  exit 1
+fi
+
+WRAPPER_JAR="$DIR/.mvn/wrapper/maven-wrapper.jar"
+if [ ! -f "$WRAPPER_JAR" ]; then
+  echo "Downloading Maven Wrapper..."
+  curl -fsSL https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.3.2/maven-wrapper-3.3.2.jar -o "$WRAPPER_JAR"
+fi
+
+exec "$JAVACMD" -Dmaven.multiModuleProjectDirectory="$DIR" -classpath "$WRAPPER_JAR" org.apache.maven.wrapper.MavenWrapperMain "$@"
