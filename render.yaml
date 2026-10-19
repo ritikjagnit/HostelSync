@@ -47,6 +47,5 @@ services:
 databases:
   - name: hostelsync-db
     databaseName: hostelsyncdb
-    user: postgres
     plan: free
     region: singapore
