@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import ImageWithFallback from '../components/ImageWithFallback';
 import { getHostelImage } from '../config/media';
 import AdminAdmissionsManager from '../components/AdminAdmissionsManager';
+import GrievanceMaintenanceManager from '../components/GrievanceMaintenanceManager';
 import './PortalCommon.css';
 import './AdminPortal.css';
 
@@ -1197,6 +1198,17 @@ export default function AdminPortal() {
             }}
           >
             &#128197; Attendance Oversight
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'complaints'}
+            className={`admin-tab ${activeTab === 'complaints' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('complaints');
+            }}
+          >
+            &#128295; Grievance Redressal
           </button>
         </div>
 
@@ -2577,6 +2589,15 @@ export default function AdminPortal() {
               )}
             </div>
           </div>
+        )}
+
+        {/* TAB 9: INSTITUTIONAL GRIEVANCE REDRESSAL & MAINTENANCE */}
+        {activeTab === 'complaints' && (
+          <GrievanceMaintenanceManager
+            apiPrefix="/api/admin/complaints"
+            role="ADMIN"
+            hostels={hostels}
+          />
         )}
 
 

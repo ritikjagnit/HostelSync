@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import ImageWithFallback from '../components/ImageWithFallback';
 import { getHostelImage } from '../config/media';
 import AdminAdmissionsManager from '../components/AdminAdmissionsManager';
+import GrievanceMaintenanceManager from '../components/GrievanceMaintenanceManager';
 import './PortalCommon.css';
 import './WardenPortal.css';
 
@@ -466,6 +467,13 @@ export default function WardenPortal() {
             id="tab-warden-attendance"
           >
             Night Roll Call
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
+            onClick={() => setActiveTab('complaints')}
+            id="tab-warden-complaints"
+          >
+            &#128295; Complaints &amp; Maintenance
           </button>
           <button
             className={`tab-btn ${activeTab === 'hostels' ? 'active' : ''}`}
@@ -1176,6 +1184,17 @@ export default function WardenPortal() {
         {activeTab === 'admissions' && (
           <AdminAdmissionsManager
             apiPrefix="/api/warden/admissions"
+            role="WARDEN"
+            hostels={hostels}
+          />
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB: COMPLAINTS & GRIEVANCE REDRESSAL */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'complaints' && (
+          <GrievanceMaintenanceManager
+            apiPrefix="/api/warden/complaints"
             role="WARDEN"
             hostels={hostels}
           />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import ImageWithFallback from '../components/ImageWithFallback';
+import StudentComplaintSection from '../components/StudentComplaintSection';
 import { MEDIA_REGISTRY, getHostelImage } from '../config/media';
 import './PortalCommon.css';
 import './StudentPortal.css';
@@ -324,6 +325,13 @@ export default function StudentPortal() {
             onClick={() => handleTabChange('attendance')}
           >
             <span>&#128197;</span> My Attendance
+          </button>
+          <button
+            id="tab-student-complaints"
+            className={`student-tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
+            onClick={() => handleTabChange('complaints')}
+          >
+            <span>&#128295;</span> Maintenance &amp; Grievances
           </button>
           <button
             id="tab-student-profile"
@@ -1049,6 +1057,16 @@ export default function StudentPortal() {
               )}
             </div>
           </div>
+        )}
+
+        {/* ============================================================= */}
+        {/* TAB 5: MAINTENANCE & GRIEVANCES (तक्रार निवारण)                  */}
+        {/* ============================================================= */}
+        {activeTab === 'complaints' && (
+          <StudentComplaintSection
+            currentRoomNumber={dashboardData?.currentAllocation?.room?.roomNumber || ''}
+            hostelName={dashboardData?.currentAllocation?.room?.hostel?.name || ''}
+          />
         )}
 
         {/* ============================================================= */}

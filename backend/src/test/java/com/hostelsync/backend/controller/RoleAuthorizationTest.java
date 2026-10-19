@@ -47,21 +47,28 @@ class RoleAuthorizationTest {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired(required = false)
+    private com.hostelsync.backend.repository.ComplaintRepository complaintRepository;
+
     private String adminToken;
     private String wardenToken;
     private String studentToken;
 
     @BeforeEach
     void setUp() {
+        if (complaintRepository != null) {
+            complaintRepository.deleteAll();
+        }
         attendanceRepository.deleteAll();
         assignmentRepository.deleteAll();
         roomAllocationRepository.deleteAll();
         studentRepository.deleteAll();
         userRepository.deleteAll();
+        userRepository.flush();
 
         User admin = userRepository.save(new User(
                 "Principal Administrator",
-                "admin@gpsakoli.ac.in",
+                "auth.admin@gpsakoli.ac.in",
                 passwordEncoder.encode("AdminPass123!"),
                 Role.ADMIN,
                 true
@@ -69,7 +76,7 @@ class RoleAuthorizationTest {
 
         User warden = userRepository.save(new User(
                 "Hostel Warden",
-                "warden@gpsakoli.ac.in",
+                "auth.warden@gpsakoli.ac.in",
                 passwordEncoder.encode("WardenPass123!"),
                 Role.WARDEN,
                 true
@@ -77,7 +84,7 @@ class RoleAuthorizationTest {
 
         User student = userRepository.save(new User(
                 "Student Resident",
-                "student@gpsakoli.ac.in",
+                "auth.student@gpsakoli.ac.in",
                 passwordEncoder.encode("StudentPass123!"),
                 Role.STUDENT,
                 true

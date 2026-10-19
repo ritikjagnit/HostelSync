@@ -30,6 +30,7 @@ public class AdminBootstrapRunner implements ApplicationRunner {
     private final RoomAllocationRepository roomAllocationRepository;
     private final WardenHostelAssignmentRepository wardenHostelAssignmentRepository;
     private final HostelApplicationRepository hostelApplicationRepository;
+    private final ComplaintRepository complaintRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${app.bootstrap.admin.enabled:false}")
@@ -44,6 +45,9 @@ public class AdminBootstrapRunner implements ApplicationRunner {
     @Value("${app.bootstrap.admin.full-name:System Administrator}")
     private String adminFullName;
 
+    @Value("${app.bootstrap.complaints.enabled:false}")
+    private boolean bootstrapComplaintsEnabled;
+
     public AdminBootstrapRunner(
             UserRepository userRepository,
             StudentRepository studentRepository,
@@ -52,6 +56,7 @@ public class AdminBootstrapRunner implements ApplicationRunner {
             RoomAllocationRepository roomAllocationRepository,
             WardenHostelAssignmentRepository wardenHostelAssignmentRepository,
             HostelApplicationRepository hostelApplicationRepository,
+            ComplaintRepository complaintRepository,
             PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
@@ -60,6 +65,7 @@ public class AdminBootstrapRunner implements ApplicationRunner {
         this.roomAllocationRepository = roomAllocationRepository;
         this.wardenHostelAssignmentRepository = wardenHostelAssignmentRepository;
         this.hostelApplicationRepository = hostelApplicationRepository;
+        this.complaintRepository = complaintRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -329,6 +335,44 @@ public class AdminBootstrapRunner implements ApplicationRunner {
             hostelApplicationRepository.save(app4);
 
             log.info("Demonstration student hostel applications successfully seeded.");
+        }
+
+        // Seed Demonstration Maintenance Complaints if enabled and none exist
+        if (bootstrapComplaintsEnabled && complaintRepository.count() == 0) {
+            var studentOpt = studentRepository.findByUserEmail("amit.sharma@gpsakoli.ac.in");
+            var sahyadriOpt = hostelRepository.findAll().stream().findFirst();
+            if (studentOpt.isPresent() && sahyadriOpt.isPresent()) {
+                Student amit = studentOpt.get();
+                Hostel sahyadriHostel = sahyadriOpt.get();
+                Room room101 = roomRepository.findByHostelIdAndRoomNumber(sahyadriHostel.getId(), "101").orElse(null);
+
+                Complaint c1 = new Complaint();
+                c1.setTicketNumber("CMP-2026-E49A1");
+                c1.setStudent(amit);
+                c1.setHostel(sahyadriHostel);
+                c1.setRoom(room101);
+                c1.setTitle("Ceiling Fan Regulator Not Functioning");
+                c1.setDescription("The speed regulator knob is stuck at maximum speed in Room 101. Need replacement.");
+                c1.setCategory(ComplaintCategory.ELECTRICAL);
+                c1.setUrgency(ComplaintUrgency.MEDIUM);
+                c1.setStatus(ComplaintStatus.PENDING);
+                complaintRepository.save(c1);
+
+                Complaint c2 = new Complaint();
+                c2.setTicketNumber("CMP-2026-P12B3");
+                c2.setStudent(amit);
+                c2.setHostel(sahyadriHostel);
+                c2.setRoom(room101);
+                c2.setTitle("Water Tap Dripping Continuously in 1st Floor Corridor Washroom");
+                c2.setDescription("The tap in washroom stall #2 has a faulty washer and is continuously dripping water.");
+                c2.setCategory(ComplaintCategory.PLUMBING);
+                c2.setUrgency(ComplaintUrgency.HIGH);
+                c2.setStatus(ComplaintStatus.IN_PROGRESS);
+                c2.setResolutionNotes("Maintenance plumber notified, spare tap washer requisitioned.");
+                complaintRepository.save(c2);
+
+                log.info("Demonstration hostel maintenance complaints successfully seeded.");
+            }
         }
     }
 }
