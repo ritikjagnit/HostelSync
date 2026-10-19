@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: hostelsync-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: singapore
+    branch: main
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: DB_HOST
+        fromDatabase:
+          name: hostelsync-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: hostelsync-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: hostelsync-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: hostelsync-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: hostelsync-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: BOOTSTRAP_ADMIN_ENABLED
+        value: "true"
+      - key: BOOTSTRAP_ADMIN_EMAIL
+        value: admin@gpsakoli.ac.in
+      - key: BOOTSTRAP_ADMIN_PASSWORD
+        value: Admin@123
+      - key: BOOTSTRAP_ADMIN_FULL_NAME
+        value: Principal Sakoli
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://gpsakolihostelsync.pages.dev,http://localhost:5173
+
+databases:
+  - name: hostelsync-db
+    databaseName: hostelsyncdb
+    user: postgres
+    plan: free
+    region: singapore
