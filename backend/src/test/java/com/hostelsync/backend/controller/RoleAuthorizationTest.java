@@ -2,7 +2,7 @@ package com.hostelsync.backend.controller;
 
 import com.hostelsync.backend.entity.Role;
 import com.hostelsync.backend.entity.User;
-import com.hostelsync.backend.repository.UserRepository;
+import com.hostelsync.backend.repository.*;
 import com.hostelsync.backend.security.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +30,18 @@ class RoleAuthorizationTest {
     private UserRepository userRepository;
 
     @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private RoomAllocationRepository roomAllocationRepository;
+
+    @Autowired
+    private WardenHostelAssignmentRepository assignmentRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -41,6 +53,10 @@ class RoleAuthorizationTest {
 
     @BeforeEach
     void setUp() {
+        attendanceRepository.deleteAll();
+        assignmentRepository.deleteAll();
+        roomAllocationRepository.deleteAll();
+        studentRepository.deleteAll();
         userRepository.deleteAll();
 
         User admin = userRepository.save(new User(

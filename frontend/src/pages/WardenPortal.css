@@ -1,0 +1,499 @@
+/* Warden Operations Portal Styling */
+
+.warden-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.warden-stat-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--slate-200, #e2e8f0);
+  border-top: 4px solid var(--primary-700, #1e3a8a);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.warden-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+.warden-stat-card.stat-hostels {
+  border-top-color: #2563eb;
+}
+
+.warden-stat-card.stat-rooms {
+  border-top-color: #4f46e5;
+}
+
+.warden-stat-card.stat-capacity {
+  border-top-color: #0d9488;
+}
+
+.warden-stat-card.stat-occupied {
+  border-top-color: #f59e0b;
+}
+
+.warden-stat-card.stat-available {
+  border-top-color: #10b981;
+}
+
+.warden-stat-card.stat-rate {
+  border-top-color: #ec4899;
+}
+
+.warden-stat-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--slate-500, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.warden-stat-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--slate-900, #0f172a);
+  line-height: 1.2;
+}
+
+.warden-stat-subtext {
+  font-size: 0.75rem;
+  color: var(--slate-500, #64748b);
+  margin-top: 0.35rem;
+}
+
+/* Hostels Grid */
+.warden-hostel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.warden-hostel-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.5rem;
+  border: 1px solid var(--slate-200, #e2e8f0);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.warden-hostel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.warden-hostel-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--slate-900, #0f172a);
+}
+
+.warden-hostel-address {
+  font-size: 0.875rem;
+  color: var(--slate-600, #475569);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.warden-metric-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  background: var(--slate-50, #f8fafc);
+  border-radius: var(--radius-md, 8px);
+  padding: 0.875rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.warden-metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.warden-metric-item .val {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--slate-900, #0f172a);
+}
+
+.warden-metric-item .lbl {
+  font-size: 0.75rem;
+  color: var(--slate-500, #64748b);
+  margin-top: 0.2rem;
+}
+
+.warden-progress-container {
+  margin-bottom: 1.25rem;
+}
+
+.warden-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--slate-700, #334155);
+  margin-bottom: 0.4rem;
+}
+
+.warden-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--slate-200, #e2e8f0);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.warden-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
+
+/* Room Inventory Grid & Cards */
+.warden-room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.warden-room-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg, 12px);
+  border: 1px solid var(--slate-200, #e2e8f0);
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.warden-room-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--slate-100, #f1f5f9);
+}
+
+.warden-room-num {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--slate-900, #0f172a);
+}
+
+.warden-room-floor {
+  font-size: 0.8125rem;
+  color: var(--slate-500, #64748b);
+}
+
+.warden-bed-indicators {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.warden-bed-pill {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.warden-bed-pill.occupied {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.warden-bed-pill.vacant {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #6ee7b7;
+}
+
+.warden-occupants-list {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.warden-occupant-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--slate-50, #f8fafc);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--slate-200, #e2e8f0);
+  font-size: 0.8125rem;
+}
+
+.warden-occupant-badge .name {
+  font-weight: 600;
+  color: var(--slate-800, #1e293b);
+}
+
+.warden-occupant-badge .roll {
+  font-size: 0.75rem;
+  color: var(--slate-500, #64748b);
+}
+
+/* Filter Bar */
+.warden-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg, 12px);
+  border: 1px solid var(--slate-200, #e2e8f0);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.warden-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 180px;
+  flex: 1;
+}
+
+.warden-filter-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-600, #475569);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.warden-filter-input,
+.warden-filter-select {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--slate-300, #cbd5e1);
+  font-size: 0.875rem;
+  background-color: #ffffff;
+  color: var(--slate-800, #1e293b);
+}
+
+.warden-filter-input:focus,
+.warden-filter-select:focus {
+  outline: none;
+  border-color: var(--primary-600, #2563eb);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* Empty State */
+.warden-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: #ffffff;
+  border-radius: var(--radius-lg, 12px);
+  border: 2px dashed var(--slate-200, #e2e8f0);
+  margin: 1.5rem 0;
+}
+
+.warden-empty-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--slate-800, #1e293b);
+  margin-bottom: 0.5rem;
+}
+
+.warden-empty-desc {
+  font-size: 0.875rem;
+  color: var(--slate-500, #64748b);
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* ========================================================================== */
+/* ATTENDANCE ROLL CALL & HISTORY STYLES                                      */
+/* ========================================================================== */
+
+.attendance-header-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #ffffff;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg, 12px);
+  border: 1px solid var(--slate-200, #e2e8f0);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.attendance-mode-tabs {
+  display: flex;
+  background: var(--slate-100, #f1f5f9);
+  padding: 0.25rem;
+  border-radius: 8px;
+  gap: 0.25rem;
+}
+
+.attendance-mode-btn {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--slate-600, #475569);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.attendance-mode-btn.active {
+  background: #ffffff;
+  color: var(--primary-700, #1e3a8a);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-toggle-group {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.attendance-toggle-btn {
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--slate-200, #cbd5e1);
+  background: #ffffff;
+  color: var(--slate-600, #475569);
+  transition: all 0.15s ease;
+}
+
+.attendance-toggle-btn:hover {
+  background: var(--slate-100, #f1f5f9);
+}
+
+.attendance-toggle-btn.btn-present.selected {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #15803d;
+  box-shadow: 0 2px 4px rgba(22, 163, 74, 0.25);
+}
+
+.attendance-toggle-btn.btn-absent.selected {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #b91c1c;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
+}
+
+.attendance-toggle-btn.btn-leave.selected {
+  background: #d97706;
+  color: #ffffff;
+  border-color: #b45309;
+  box-shadow: 0 2px 4px rgba(217, 119, 6, 0.25);
+}
+
+.attendance-remarks-input {
+  width: 100%;
+  max-width: 240px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8125rem;
+  border: 1px solid var(--slate-200, #cbd5e1);
+  border-radius: 6px;
+  background: #f8fafc;
+  color: var(--slate-800, #1e293b);
+  transition: border-color 0.15s ease;
+}
+
+.attendance-remarks-input:focus {
+  outline: none;
+  border-color: var(--primary-600, #2563eb);
+  background: #ffffff;
+}
+
+.attendance-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.attendance-badge.present {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.attendance-badge.absent {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.attendance-badge.on_leave,
+.attendance-badge.on-leave {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.attendance-quick-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.attendance-summary-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.attendance-summary-chip {
+  background: #ffffff;
+  border: 1px solid var(--slate-200, #e2e8f0);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.attendance-summary-chip .chip-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--slate-500, #64748b);
+  text-transform: uppercase;
+}
+
+.attendance-summary-chip .chip-val {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--slate-900, #0f172a);
+  margin-top: 0.25rem;
+}
+

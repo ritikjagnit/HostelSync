@@ -41,8 +41,7 @@ public class AdminStudentController {
     @PostMapping
     public ResponseEntity<StudentResponseDto> createStudent(@Valid @RequestBody StudentCreateRequestDto requestDto) {
         StudentResponseDto created = studentService.createStudent(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create("/api/admin/students/" + created.id()))
+        return ResponseEntity.created(URI.create("/api/admin/students/" + created.id()))
                 .body(created);
     }
 

@@ -1,0 +1,3 @@
+# Cloudflare Pages SPA Routing
+# Ensures direct visits and refreshes to client-side routes (/login, /admin, /warden, /student) serve index.html
+/*    /index.html   200

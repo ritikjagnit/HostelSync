@@ -71,6 +71,9 @@ The system implements the core relational entities with explicit table mappings 
 | **`Hostel`** | `hostels` | `id`, `name`, `hostel_type`, `address`, `is_active` | `hostel_type` (BOYS, GIRLS) |
 | **`Room`** | `rooms` | `id`, `room_number`, `floor`, `capacity`, `hostel_id` | Composite UNIQUE `(hostel_id, room_number)`, N:1 with `hostels` |
 | **`RoomAllocation`** | `room_allocations` | `id`, `student_id`, `room_id`, `allocation_date`, `vacating_date`, `status` | N:1 with `students`, N:1 with `rooms`, `status` (ACTIVE, COMPLETED) |
+| **`WardenHostelAssignment`** | `warden_hostel_assignments` | `id`, `warden_id`, `hostel_id`, `assigned_at` | Composite UNIQUE `(warden_id, hostel_id)`, N:1 with `users`, N:1 with `hostels` |
+| **`Attendance`** | `attendances` | `id`, `student_id`, `attendance_date`, `status`, `remarks`, `recorded_by`, `created_at`, `updated_at` | Composite UNIQUE `(student_id, attendance_date)`, N:1 with `students`, N:1 with `users` (`recorded_by`), `status` (PRESENT, ABSENT, ON_LEAVE) |
+
 
 ---
 
@@ -122,6 +125,7 @@ HostelSync recognizes three primary user personas aligned with polytechnic admin
 | **Warden Assignment** | Full Access | No Access | No Access |
 | **Room Master Setup** | Full Access | Edit/Update | View Available |
 | **Student Admission & Allotment** | Approve / Audit | Assign / Reallocate | Submit Request |
+| **Hostel Attendance & Roll Call** | Institution-wide Summary & Audit | Mark & Update Assigned Hostels | View Personal Attendance & % |
 | **Gate Pass / Leave Approval** | Global View | Review / Approve / Reject | Create Request |
 | **Maintenance Grievances** | Escalation Monitoring | Assign & Resolve | File & Track Status |
 | **Fee Receipt Verification** | Audit & Reports | Verify Payment | Upload Receipt |
@@ -158,7 +162,12 @@ HostelSync recognizes three primary user personas aligned with polytechnic admin
 - **Phase 3A (Complete)**: Admin Dashboard and Hostel/Room Management (Database-backed Hostels CRUD & active status toggle, Rooms CRUD with capacity and floor validation, room number uniqueness per hostel, allocation conflict protection, and responsive executive Admin portal).
 - **Phase 3B (Complete)**: Student Directory & Basic Admission Record Management (DTO-based REST endpoints under `/api/admin/students`, linked User accounts with `Role.STUDENT`, unique enrollment numbers & institutional emails, BCrypt password hashing, allocation-safe deletion protection returning 409 Conflict, and responsive Admin Portal Student Directory tab with live search, filters, detail modals, and create/edit forms).
   - *Architectural Note on Admissions Model*: The existing `Student` entity (linked 1:1 with `User` and 1:N with `RoomAllocation`) comprehensively captures student identity, admission enrollment details, department/semester standing, and residential history without creating a redundant `Admission` entity that would duplicate student identity data.
-- **Phase 3C / Phase 4**: Room allocation assignment workflow, digital gate pass system, grievance/complaint ticketing, and fee verification.
-- **Phase 5**: Admin reporting, exportable PDF/Excel rosters, and institutional notification broadcast.
+- **Phase 3C (Complete)**: Room Allocation Assignment Workflow (Dedicated `AllocationService` and `AdminAllocationController` under `/api/admin/allocations`, pessimistic write lock protection via `@Lock(LockModeType.PESSIMISTIC_WRITE)` preventing concurrent over-allocation, single active allocation business rule enforcement, active room capacity validation, checkout workflow with status update to `COMPLETED` and vacating date validation, historical preservation, sensitive user field redaction, 17 comprehensive integration tests, and 5th "Room Allocations" tab in Admin Portal with live search, filters, room availability visual cards, checkout confirmation, and detail inspection).
+- **Phase 3D (Complete)**: Student Resident Portal & Self-Service Implementation (Dedicated `StudentPortalService` and `StudentPortalController` under `/api/student/**` restricted to `ROLE_STUDENT`, server-side data ownership derived strictly from authenticated JWT identity, personalized resident dashboard, safe contact phone editing with format validation while locking administrative academic fields, live room occupancy showcase with vacant bed metrics, complete residential allocation timeline, sensitive field redaction, 12 backend integration tests bringing suite to 75 tests with 100% pass rate, and responsive multi-tab Student Portal frontend at `/student` with real-time feedback).
+- **Phase 3E (Complete)**: Warden Portal and Hostel Operations (Normalized `WardenHostelAssignment` entity and repository enforcing strict hostel-level operational boundaries, admin-only assignment management under `/api/admin/wardens/**`, dedicated `WardenOperationsService` and `WardenOperationsController` under `/api/warden/**` restricted to `ROLE_WARDEN`, principal-derived hostel authorization preventing wardens from viewing unassigned hostels or resident records, aggregated dashboard metrics across assigned premises, room inventory inspection with bed occupancy pills and active resident breakdowns, resident directory with real-time multi-field search, allocation history timeline with status and search filters, 13 new integration tests bringing full test suite to 88 tests with 100% pass rate, responsive 5-tab Warden Operations Portal at `/warden`, and Admin Portal Warden Oversight tab for hostel assignment and revocation).
+- **Phase 4 (Complete)**: Hostel Attendance Management (Comprehensive nightly roll call management with `Attendance` entity, `AttendanceStatus` [PRESENT, ABSENT, ON_LEAVE], database composite uniqueness constraint `(student_id, attendance_date)`, strict active allocation requirement, warden hostel jurisdiction enforcement, local timezone date validation rejecting future dates and limiting backdating to <= 7 days, transactional bulk roll call upserting, single-record editing, history search with filters, dedicated controllers for Warden, Admin, and Student roles, 18 new integration tests bringing full backend suite to 106 tests with 100% pass rate, zero Oxlint warnings, production Vite build, and responsive UIs in Warden Portal [Night Roll Call], Admin Portal [Attendance Oversight], and Student Portal [My Attendance]).
+- **Phase 5**: Digital gate pass system, grievance/complaint ticketing, and fee verification.
+- **Phase 6**: Admin reporting, exportable PDF/Excel rosters, and institutional notification broadcast.
+
 
 

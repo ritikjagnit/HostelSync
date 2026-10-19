@@ -72,8 +72,7 @@ public class AdminHostelController {
             @PathVariable Long hostelId,
             @Valid @RequestBody RoomRequestDto requestDto) {
         RoomResponseDto created = roomService.createRoom(hostelId, requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create("/api/admin/rooms/" + created.id()))
+        return ResponseEntity.created(URI.create("/api/admin/rooms/" + created.id()))
                 .body(created);
     }
 }

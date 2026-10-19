@@ -23,6 +23,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByUserId(Long userId);
 
+    Optional<Student> findByUserEmail(String email);
+
     List<Student> findByCourse(String course);
 
     List<Student> findAllByOrderByIdDesc();
@@ -33,5 +35,10 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
            "OR LOWER(s.course) LIKE LOWER(CONCAT('%', :query, '%')) " +
            "ORDER BY s.id DESC")
     List<Student> searchStudents(@Param("query") String query);
+
+    @Query("SELECT s FROM Student s WHERE s.user.active = true AND NOT EXISTS (" +
+           "SELECT ra FROM RoomAllocation ra WHERE ra.student.id = s.id AND ra.status = com.hostelsync.backend.entity.AllocationStatus.ACTIVE) " +
+           "ORDER BY s.user.fullName ASC")
+    List<Student> findAvailableStudentsForAllocation();
 }
 

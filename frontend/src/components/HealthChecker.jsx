@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getApiUrl } from '../config/api';
 import './HealthChecker.css';
 
 export default function HealthChecker() {
@@ -11,7 +12,7 @@ export default function HealthChecker() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/health');
+      const response = await fetch(getApiUrl('/api/health'));
       if (!response.ok) {
         throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
       }
@@ -29,7 +30,7 @@ export default function HealthChecker() {
   useEffect(() => {
     let active = true;
 
-    fetch('/api/health')
+    fetch(getApiUrl('/api/health'))
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP Error ${res.status}: ${res.statusText}`);

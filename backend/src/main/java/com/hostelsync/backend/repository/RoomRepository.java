@@ -1,7 +1,9 @@
 package com.hostelsync.backend.repository;
 
 import com.hostelsync.backend.entity.Room;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,10 @@ import java.util.Optional;
  */
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT r FROM Room r WHERE r.id = :id")
+    Optional<Room> findByIdWithLock(@Param("id") Long id);
 
     List<Room> findByHostelId(Long hostelId);
 
@@ -31,6 +37,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     @Query("SELECT COALESCE(SUM(r.capacity), 0) FROM Room r WHERE r.hostel.id = :hostelId")
     int sumCapacityByHostelId(@Param("hostelId") Long hostelId);
+
+    @Query("SELECT COALESCE(SUM(r.capacity), 0) FROM Room r WHERE r.hostel.id IN :hostelIds")
+    int sumCapacityByHostelIdIn(@Param("hostelIds") java.util.Collection<Long> hostelIds);
+
+    @Query("SELECT COUNT(r) FROM Room r WHERE r.hostel.id IN :hostelIds")
+    long countByHostelIdIn(@Param("hostelIds") java.util.Collection<Long> hostelIds);
+
+    java.util.List<Room> findByHostelIdInOrderByHostelIdAscRoomNumberAsc(java.util.Collection<Long> hostelIds);
 
     @Query("SELECT COALESCE(SUM(r.capacity), 0) FROM Room r")
     long sumTotalCapacity();

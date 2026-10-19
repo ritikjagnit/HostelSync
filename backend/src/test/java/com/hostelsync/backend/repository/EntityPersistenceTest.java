@@ -33,6 +33,12 @@ class EntityPersistenceTest {
     @Autowired
     private RoomAllocationRepository roomAllocationRepository;
 
+    @Autowired
+    private WardenHostelAssignmentRepository wardenHostelAssignmentRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+
     @Test
     @DisplayName("Persist and query User entity successfully")
     void shouldPersistAndFindUser() {
@@ -180,5 +186,76 @@ class EntityPersistenceTest {
         assertTrue(completedAlloc.isPresent());
         assertEquals(AllocationStatus.COMPLETED, completedAlloc.get().getStatus());
         assertEquals(LocalDate.of(2026, 12, 15), completedAlloc.get().getVacatingDate());
+    }
+
+    @Test
+    @DisplayName("Persist and query WardenHostelAssignment relationship successfully")
+    void shouldPersistAndQueryWardenHostelAssignment() {
+        User wardenUser = new User("Suresh Warden", "suresh.warden@gpsakoli.ac.in", "hash_warden_123", Role.WARDEN, true);
+        userRepository.save(wardenUser);
+
+        Hostel hostel = new Hostel("Sahyadri West Wing", HostelType.BOYS, "Campus West Block", true);
+        hostelRepository.save(hostel);
+
+        com.hostelsync.backend.entity.WardenHostelAssignment assignment =
+                new com.hostelsync.backend.entity.WardenHostelAssignment(wardenUser, hostel);
+        com.hostelsync.backend.entity.WardenHostelAssignment saved =
+                wardenHostelAssignmentRepository.save(assignment);
+
+        assertNotNull(saved.getId());
+        assertNotNull(saved.getAssignedAt());
+        assertEquals(wardenUser.getId(), saved.getWarden().getId());
+        assertEquals(hostel.getId(), saved.getHostel().getId());
+
+        assertTrue(wardenHostelAssignmentRepository.existsByWardenEmailAndHostelId(
+                "suresh.warden@gpsakoli.ac.in", hostel.getId()));
+    }
+
+    @Test
+    @DisplayName("Persist and query Attendance record successfully")
+    void shouldPersistAttendanceRecord() {
+        User studentUser = new User("Vikas Gore", "vikas.att@gpsakoli.ac.in", "hash_pwd", Role.STUDENT, true);
+        userRepository.save(studentUser);
+        Student student = new Student("EN_ATT_01", "Civil Engineering", 2, "9812345678", studentUser);
+        studentRepository.save(student);
+
+        User wardenUser = new User("Prakash Warden", "prakash.att@gpsakoli.ac.in", "hash_pwd", Role.WARDEN, true);
+        userRepository.save(wardenUser);
+
+        LocalDate attDate = LocalDate.of(2026, 10, 19);
+        Attendance attendance = new Attendance(student, attDate, AttendanceStatus.PRESENT, wardenUser, "Room 101 roll call");
+        Attendance saved = attendanceRepository.save(attendance);
+
+        assertNotNull(saved.getId());
+        assertNotNull(saved.getCreatedAt());
+        assertEquals(AttendanceStatus.PRESENT, saved.getStatus());
+        assertEquals("Room 101 roll call", saved.getRemarks());
+        assertEquals(student.getId(), saved.getStudent().getId());
+        assertEquals(wardenUser.getId(), saved.getRecordedBy().getId());
+
+        Optional<Attendance> found = attendanceRepository.findByStudentIdAndAttendanceDate(student.getId(), attDate);
+        assertTrue(found.isPresent());
+        assertEquals(saved.getId(), found.get().getId());
+    }
+
+    @Test
+    @DisplayName("Enforce unique constraint on Attendance (student_id, attendance_date)")
+    void shouldEnforceUniqueAttendanceConstraint() {
+        User studentUser = new User("Nitin Unique", "nitin.att@gpsakoli.ac.in", "hash_pwd", Role.STUDENT, true);
+        userRepository.save(studentUser);
+        Student student = new Student("EN_ATT_02", "Mechanical", 3, "9812345679", studentUser);
+        studentRepository.save(student);
+
+        User wardenUser = new User("Kiran Warden", "kiran.att@gpsakoli.ac.in", "hash_pwd", Role.WARDEN, true);
+        userRepository.save(wardenUser);
+
+        LocalDate attDate = LocalDate.of(2026, 10, 19);
+        Attendance first = new Attendance(student, attDate, AttendanceStatus.PRESENT, wardenUser, "First marking");
+        attendanceRepository.saveAndFlush(first);
+
+        Attendance duplicate = new Attendance(student, attDate, AttendanceStatus.ABSENT, wardenUser, "Duplicate marking");
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            attendanceRepository.saveAndFlush(duplicate);
+        });
     }
 }

@@ -51,6 +51,12 @@ class AdminStudentManagementTest {
     private RoomAllocationRepository roomAllocationRepository;
 
     @Autowired
+    private WardenHostelAssignmentRepository assignmentRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -65,6 +71,8 @@ class AdminStudentManagementTest {
 
     @BeforeEach
     void setUp() {
+        attendanceRepository.deleteAll();
+        assignmentRepository.deleteAll();
         roomAllocationRepository.deleteAll();
         studentRepository.deleteAll();
         roomRepository.deleteAll();

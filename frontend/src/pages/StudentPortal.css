@@ -1,0 +1,754 @@
+/* ===================================================================
+   HostelSync — Student Resident Portal Styles
+   Institution: Government Polytechnic Sakoli
+   =================================================================== */
+
+.student-portal-wrapper {
+  padding: 2.5rem 0 4rem;
+  min-height: calc(100vh - 4.25rem - 180px);
+}
+
+/* Header & Welcome Banner */
+.student-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 6px solid var(--primary-600);
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.student-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.student-portal-title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.student-portal-subtitle {
+  font-size: 0.9375rem;
+  color: var(--slate-600);
+  margin-top: 0.35rem;
+}
+
+.student-header-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Tab Navigation */
+.student-tabs-nav {
+  display: flex;
+  gap: 0.5rem;
+  background: #f1f5f9;
+  padding: 0.375rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  border: 1px solid var(--slate-200);
+}
+
+.student-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.student-tab-btn:hover {
+  color: var(--primary-800);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.student-tab-btn.active {
+  color: var(--primary-800);
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Stat & KPI Cards */
+.student-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.student-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.stat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.stat-card-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-500);
+}
+
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  margin-bottom: 0.25rem;
+}
+
+.stat-card-detail {
+  font-size: 0.875rem;
+  color: var(--slate-600);
+}
+
+/* Room Showcase Component */
+.room-showcase-card {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.room-showcase-header {
+  background: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-700) 100%);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.room-hero-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.room-hero-subtitle {
+  font-size: 0.95rem;
+  color: #bfdbfe;
+  margin: 0;
+}
+
+.room-showcase-body {
+  padding: 2rem;
+}
+
+.room-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.room-metric-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.metric-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--primary-900);
+}
+
+/* Empty States */
+.empty-state-panel {
+  text-align: center;
+  padding: 3.5rem 2rem;
+  background: white;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--slate-300);
+  margin-bottom: 2rem;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  color: var(--slate-400);
+  margin-bottom: 1rem;
+}
+
+.empty-state-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-desc {
+  font-size: 0.95rem;
+  color: var(--slate-600);
+  max-width: 540px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+/* Tables & Lists */
+.student-data-table-wrap {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.student-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.student-data-table th {
+  background: var(--slate-50);
+  color: var(--slate-600);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.student-data-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--slate-100);
+  color: var(--slate-700);
+}
+
+.student-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.student-data-table tr:hover td {
+  background: #f8fafc;
+}
+
+/* Status Badges */
+.status-badge-active {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.status-badge-completed {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* Profile Form & Layout */
+.profile-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.readonly-field-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lock-badge {
+  font-size: 0.75rem;
+  color: var(--slate-400);
+  font-weight: 500;
+}
+
+/* Modal Overlay */
+.student-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.student-modal-card {
+  background: white;
+  border-radius: var(--radius-md);
+  max-width: 500px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.student-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.student-modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-900);
+  margin: 0;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--slate-400);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-close-modal:hover {
+  color: var(--slate-700);
+}
+
+/* Alerts */
+.student-alert-success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.student-alert-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+/* Guidelines Box */
+.guidelines-box {
+  background: #f8fafc;
+  border-left: 4px solid var(--accent-gold);
+  padding: 1.5rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 1.5rem;
+}
+
+.guidelines-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin: 0 0 0.75rem 0;
+}
+
+.guidelines-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* Student Attendance Styles */
+.student-attendance-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.student-attendance-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.student-attendance-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-600);
+}
+
+.student-attendance-card.card-green::before {
+  background: #16a34a;
+}
+
+.student-attendance-card.card-red::before {
+  background: #dc2626;
+}
+
+.student-attendance-card.card-amber::before {
+  background: #d97706;
+}
+
+.student-attendance-card.card-blue::before {
+  background: #0284c7;
+}
+
+.attendance-percentage-gauge {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.attendance-percentage-gauge.good {
+  color: #16a34a;
+}
+
+.attendance-percentage-gauge.warning {
+  color: #d97706;
+}
+
+.attendance-percentage-gauge.danger {
+  color: #dc2626;
+}
+
+.attendance-calc-formula {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-left: 4px solid #16a34a;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.75rem;
+  font-size: 0.875rem;
+  color: #14532d;
+  line-height: 1.5;
+}
+
+.student-filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  background: white;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive queries */
+@media (max-width: 768px) {
+  .student-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .student-portal-title {
+    font-size: 1.5rem;
+  }
+  
+  .room-showcase-header {
+    flex-direction: column;
+  }
+  
+  .profile-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Student Accommodation Banner (Overview Tab) */
+.student-accommodation-banner {
+  display: flex;
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-accommodation-banner:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.accommodation-banner-media {
+  position: relative;
+  width: 240px;
+  min-height: 180px;
+  flex-shrink: 0;
+  background: var(--primary-900);
+}
+
+.accommodation-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.accommodation-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 25, 44, 0.2) 0%, rgba(11, 25, 44, 0.6) 100%);
+}
+
+.accommodation-banner-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.accommodation-banner-content {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.accommodation-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.accommodation-hostel-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-700);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.accommodation-room-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  margin: 0 0 0.35rem 0;
+}
+
+.accommodation-address {
+  font-size: 0.8125rem;
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.accommodation-alloc-date {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.accommodation-alloc-date .alloc-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.accommodation-alloc-date .alloc-val {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--slate-800);
+}
+
+.accommodation-metrics-pills {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.acc-pill {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.acc-pill-lbl {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  font-weight: 600;
+}
+
+.acc-pill-val {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--primary-900);
+}
+
+/* Room Showcase Photo Hero (My Room Tab) */
+.room-showcase-photo-banner {
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  background: var(--primary-900);
+}
+
+.room-showcase-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+}
+
+.room-showcase-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 25, 44, 0.4) 0%, rgba(11, 25, 44, 0.92) 100%);
+}
+
+.room-showcase-photo-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  width: 100%;
+  color: var(--white);
+}
+
+.room-showcase-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.room-allotted-since {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.room-allotted-since .allotted-lbl {
+  font-size: 0.75rem;
+  color: var(--slate-300);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.room-allotted-since .allotted-date {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .student-accommodation-banner {
+    flex-direction: column;
+  }
+  .accommodation-banner-media {
+    width: 100%;
+    height: 160px;
+  }
+  .accommodation-alloc-date {
+    text-align: left;
+  }
+}
+
+

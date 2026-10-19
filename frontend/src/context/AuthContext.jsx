@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { getApiUrl } from '../config/api';
 
 const AuthContext = createContext(null);
 
@@ -40,7 +41,7 @@ export function AuthProvider({ children }) {
     }
 
     let isMounted = true;
-    fetch('/api/auth/me', {
+    fetch(getApiUrl('/api/auth/me'), {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -74,7 +75,7 @@ export function AuthProvider({ children }) {
   }, [token, logout]);
 
   const login = async (email, password) => {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(getApiUrl('/api/auth/login'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -106,7 +107,7 @@ export function AuthProvider({ children }) {
       ...options.headers,
       ...(token ? { Authorization: `Bearer ${token}` } : {})
     };
-    return fetch(url, { ...options, headers });
+    return fetch(getApiUrl(url), { ...options, headers });
   }, [token]);
 
   const value = {

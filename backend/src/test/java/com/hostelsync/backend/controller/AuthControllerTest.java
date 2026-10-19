@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hostelsync.backend.dto.LoginRequestDto;
 import com.hostelsync.backend.entity.Role;
 import com.hostelsync.backend.entity.User;
-import com.hostelsync.backend.repository.UserRepository;
+import com.hostelsync.backend.repository.*;
 import com.hostelsync.backend.security.JwtTokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -44,6 +44,18 @@ class AuthControllerTest {
     private UserRepository userRepository;
 
     @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private RoomAllocationRepository roomAllocationRepository;
+
+    @Autowired
+    private WardenHostelAssignmentRepository assignmentRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -57,6 +69,10 @@ class AuthControllerTest {
 
     @BeforeEach
     void setUp() {
+        attendanceRepository.deleteAll();
+        assignmentRepository.deleteAll();
+        roomAllocationRepository.deleteAll();
+        studentRepository.deleteAll();
         userRepository.deleteAll();
 
         activeStudentUser = new User(

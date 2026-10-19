@@ -1,0 +1,424 @@
+/* Admin Admissions Manager Styles */
+.adm-manager-root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: admFadeIn 0.25s ease-out;
+}
+
+@keyframes admFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Feedback Alerts */
+.adm-mgr-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.adm-mgr-alert.success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.adm-mgr-alert.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.adm-mgr-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.adm-mgr-close:hover {
+  opacity: 1;
+}
+
+/* Header Banner */
+.adm-mgr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.adm-mgr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+.adm-mgr-flag {
+  display: inline-block;
+  width: 14px;
+  height: 9px;
+  background: linear-gradient(to bottom, #ff9933 33%, #ffffff 33%, #ffffff 66%, #138808 66%);
+  border-radius: 1px;
+}
+
+.adm-mgr-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-900);
+}
+
+.adm-mgr-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--slate-600);
+  max-width: 780px;
+}
+
+/* Stats Cards Strip */
+.adm-mgr-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+}
+
+.adm-mgr-stat-card {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.adm-mgr-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.adm-mgr-stat-card.total::before { background: #3b82f6; }
+.adm-mgr-stat-card.pending::before { background: #f59e0b; }
+.adm-mgr-stat-card.selected::before { background: #0284c7; }
+.adm-mgr-stat-card.admitted::before { background: #10b981; }
+.adm-mgr-stat-card.rejected::before { background: #ef4444; }
+
+.adm-mgr-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.adm-mgr-stat-val {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--primary-900);
+  line-height: 1;
+}
+
+.adm-mgr-stat-lbl {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--slate-700);
+  margin-top: 0.35rem;
+}
+
+.adm-mgr-stat-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  margin-top: 0.15rem;
+}
+
+/* Filters Card */
+.adm-mgr-filters-card {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
+  gap: 1rem;
+  align-items: flex-end;
+  box-shadow: var(--shadow-sm);
+}
+
+.adm-mgr-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.adm-mgr-filter-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--slate-600);
+  letter-spacing: 0.05em;
+}
+
+.adm-mgr-filter-group input,
+.adm-mgr-filter-group select {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--slate-800);
+  background: #ffffff;
+}
+
+.adm-mgr-filter-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Table Card */
+.adm-mgr-table-card {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.adm-mgr-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--slate-200);
+  background: #f8fafc;
+}
+
+.adm-mgr-table-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-900);
+}
+
+.adm-mgr-sort-hint {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+}
+
+.adm-mgr-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.adm-mgr-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-600);
+  border-bottom: 1px solid var(--slate-200);
+  background: #ffffff;
+}
+
+.adm-mgr-table td {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: middle;
+}
+
+.adm-mgr-table tr:hover {
+  background: #f8fafc;
+}
+
+.adm-app-code {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--primary-800);
+}
+
+.adm-date-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+}
+
+.adm-student-name {
+  font-weight: 700;
+  color: var(--slate-900);
+}
+
+.adm-student-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+}
+
+.adm-course-name {
+  font-size: 0.8rem;
+  color: var(--slate-800);
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adm-block-pill {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.adm-block-pill.boys {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.adm-block-pill.girls {
+  background: #fdf2f8;
+  color: #9d174d;
+  border: 1px solid #fbcfe8;
+}
+
+.adm-merit-val {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--primary-900);
+}
+
+.adm-cat-tag {
+  font-size: 0.7rem;
+  color: var(--slate-600);
+  background: #f1f5f9;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.adm-dist-val {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--slate-800);
+}
+
+.adm-home-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Action Buttons */
+.adm-action-btn-group {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.adm-action-btn {
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+
+.adm-action-btn.view {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.adm-action-btn.view:hover {
+  background: #e2e8f0;
+}
+
+.adm-action-btn.select {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+.adm-action-btn.select:hover {
+  background: #dbeafe;
+}
+
+.adm-action-btn.reject {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+.adm-action-btn.reject:hover {
+  background: #fee2e2;
+}
+
+.adm-action-btn.admit {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
+.adm-action-btn.admit:hover {
+  background: #047857;
+}
+
+.adm-admitted-label {
+  display: inline-block;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  border-radius: 9999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.adm-mgr-loading,
+.adm-mgr-empty {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--slate-500);
+}
+
+.adm-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}

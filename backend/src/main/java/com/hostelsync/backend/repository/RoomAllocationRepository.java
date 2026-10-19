@@ -18,6 +18,8 @@ public interface RoomAllocationRepository extends JpaRepository<RoomAllocation, 
 
     List<RoomAllocation> findByStudentId(Long studentId);
 
+    List<RoomAllocation> findByStudentIdOrderByIdDesc(Long studentId);
+
     boolean existsByStudentId(Long studentId);
 
     int countByStudentId(Long studentId);
@@ -27,6 +29,8 @@ public interface RoomAllocationRepository extends JpaRepository<RoomAllocation, 
     List<RoomAllocation> findByStatus(AllocationStatus status);
 
     Optional<RoomAllocation> findByStudentIdAndStatus(Long studentId, AllocationStatus status);
+
+    boolean existsByStudentIdAndStatus(Long studentId, AllocationStatus status);
 
     long countByRoomIdAndStatus(Long roomId, AllocationStatus status);
 
@@ -39,5 +43,57 @@ public interface RoomAllocationRepository extends JpaRepository<RoomAllocation, 
     long countByHostelIdAndStatus(@Param("hostelId") Long hostelId, @Param("status") AllocationStatus status);
 
     long countByStatus(AllocationStatus status);
+
+    @Query("SELECT COUNT(ra) FROM RoomAllocation ra WHERE ra.room.hostel.id IN :hostelIds AND ra.status = :status")
+    long countByRoomHostelIdInAndStatus(@Param("hostelIds") java.util.Collection<Long> hostelIds, @Param("status") AllocationStatus status);
+
+    List<RoomAllocation> findAllByOrderByIdDesc();
+
+    @Query("SELECT ra FROM RoomAllocation ra WHERE " +
+           "(:status IS NULL OR ra.status = :status) AND " +
+           "(:hostelId IS NULL OR ra.room.hostel.id = :hostelId) AND " +
+           "(:roomId IS NULL OR ra.room.id = :roomId) AND " +
+           "(:query IS NULL OR :query = '' OR " +
+           " LOWER(ra.student.user.fullName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+           " LOWER(ra.student.enrollmentNumber) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+           "ORDER BY ra.id DESC")
+    List<RoomAllocation> searchAllocations(
+            @Param("status") AllocationStatus status,
+            @Param("hostelId") Long hostelId,
+            @Param("roomId") Long roomId,
+            @Param("query") String query
+    );
+
+    @Query("SELECT ra FROM RoomAllocation ra WHERE " +
+           "ra.room.hostel.id IN :hostelIds AND " +
+           "(:status IS NULL OR ra.status = :status) AND " +
+           "(:hostelId IS NULL OR ra.room.hostel.id = :hostelId) AND " +
+           "(:roomId IS NULL OR ra.room.id = :roomId) AND " +
+           "(:query IS NULL OR :query = '' OR " +
+           " LOWER(ra.student.user.fullName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+           " LOWER(ra.student.enrollmentNumber) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+           "ORDER BY ra.id DESC")
+    List<RoomAllocation> searchWardenAllocations(
+            @Param("hostelIds") java.util.Collection<Long> hostelIds,
+            @Param("status") AllocationStatus status,
+            @Param("hostelId") Long hostelId,
+            @Param("roomId") Long roomId,
+            @Param("query") String query
+    );
+
+    @Query("SELECT ra FROM RoomAllocation ra WHERE " +
+           "ra.room.hostel.id IN :hostelIds AND " +
+           "ra.status = 'ACTIVE' AND " +
+           "(:hostelId IS NULL OR ra.room.hostel.id = :hostelId) AND " +
+           "(:query IS NULL OR :query = '' OR " +
+           " LOWER(ra.student.user.fullName) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+           " LOWER(ra.student.enrollmentNumber) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+           " LOWER(ra.student.phone) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+           "ORDER BY ra.room.roomNumber ASC, ra.student.user.fullName ASC")
+    List<RoomAllocation> findActiveResidentsForHostelIds(
+            @Param("hostelIds") java.util.Collection<Long> hostelIds,
+            @Param("hostelId") Long hostelId,
+            @Param("query") String query
+    );
 }
 
