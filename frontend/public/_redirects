@@ -1,3 +1,5 @@
+# Cloudflare Pages API Proxy to Live Render Backend
+/api/*  https://hostelsync-backend-o54z.onrender.com/api/:splat  200
+
 # Cloudflare Pages SPA Routing
-# Ensures direct visits and refreshes to client-side routes (/login, /admin, /warden, /student) serve index.html
-/*    /index.html   200
+/*      /index.html                                              200
