@@ -30,6 +30,10 @@ public interface RoomAllocationRepository extends JpaRepository<RoomAllocation, 
 
     Optional<RoomAllocation> findByStudentIdAndStatus(Long studentId, AllocationStatus status);
 
+    default Optional<RoomAllocation> findActiveByStudentId(Long studentId) {
+        return findByStudentIdAndStatus(studentId, AllocationStatus.ACTIVE);
+    }
+
     boolean existsByStudentIdAndStatus(Long studentId, AllocationStatus status);
 
     long countByRoomIdAndStatus(Long roomId, AllocationStatus status);

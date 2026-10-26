@@ -1,0 +1,517 @@
+/* Digital Gate Pass Styles */
+.digital-gatepass-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gatepass-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
+  border: 1px solid #a7f3d0;
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.gatepass-badge-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.gatepass-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #064e3b;
+  margin-bottom: 0.25rem;
+}
+
+.gatepass-subtitle {
+  color: #374151;
+  font-size: 0.875rem;
+  max-width: 650px;
+  line-height: 1.45;
+}
+
+.btn-apply-gatepass {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
+  background-color: #059669;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-apply-gatepass:hover {
+  background-color: #047857;
+  transform: translateY(-2px);
+}
+
+/* Stats */
+.gatepass-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.gatepass-stat-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gatepass-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.gatepass-stat-card .stat-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b7280;
+  display: block;
+}
+
+.gatepass-stat-card .stat-num {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #111827;
+  display: block;
+  margin: 0.25rem 0;
+}
+
+.gatepass-stat-card .stat-sub {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.card-total { border-left: 4px solid #3b82f6; }
+.card-pending { border-left: 4px solid #f59e0b; }
+.card-out { border-left: 4px solid #10b981; }
+.card-overdue { border-left: 4px solid #ef4444; }
+
+/* Toolbar */
+.gatepass-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: #ffffff;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.toolbar-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+}
+
+.gatepass-search-input {
+  width: 100%;
+  padding: 0.55rem 1.8rem 0.55rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.btn-clear-search {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.gatepass-select {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+/* Cards Grid */
+.gatepass-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.gatepass-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.gatepass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-border-overdue {
+  border: 2px solid #ef4444;
+  background: #fff5f5;
+  animation: pulseOverdue 2s infinite;
+}
+
+@keyframes pulseOverdue {
+  0%, 100% { border-color: #ef4444; }
+  50% { border-color: #f87171; }
+}
+
+.pass-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pass-number {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: #0369a1;
+  background: #e0f2fe;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.gate-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.badge-pending { background: #fef3c7; color: #b45309; }
+.badge-approved { background: #dcfce7; color: #15803d; }
+.badge-out { background: #e0e7ff; color: #4338ca; }
+.badge-returned { background: #f1f5f9; color: #475569; }
+.badge-overdue { background: #fee2e2; color: #b91c1c; font-weight: 700; }
+.badge-rejected { background: #fee2e2; color: #991b1b; }
+.badge-cancelled { background: #f3f4f6; color: #6b7280; }
+
+.pass-meta-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pass-type-chip, .pass-room-chip {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #374151;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+.student-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: #111827;
+}
+
+.student-sub {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.pass-timing-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+}
+
+.time-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-label {
+  font-size: 0.6875rem;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.time-val {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.time-arrow {
+  color: #9ca3af;
+  font-weight: bold;
+}
+
+.pass-detail-row {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+}
+
+.detail-key {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.detail-val {
+  color: #1f2937;
+}
+
+.pass-remarks-snippet {
+  background: #ecfeff;
+  border-left: 3px solid #06b6d4;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #0e7490;
+}
+
+.pass-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.gatepass-empty-state, .gatepass-loading {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Modals */
+.gatepass-modal {
+  max-width: 580px;
+  width: 95%;
+  background: #ffffff;
+  border-radius: 14px;
+}
+
+.review-summary-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  margin-bottom: 1rem;
+}
+
+/* Printable Pass Slip */
+.print-pass-modal {
+  max-width: 650px;
+  width: 95%;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.printable-pass-container {
+  padding: 1.5rem;
+  border: 2px dashed #0f172a;
+  border-radius: 10px;
+  margin: 1.5rem;
+  background: #fafafa;
+}
+
+.pass-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.college-crest-mini {
+  font-size: 2.25rem;
+}
+
+.college-heading h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.03em;
+}
+
+.college-heading h4 {
+  margin: 0.15rem 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.college-heading p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.pass-qr-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.qr-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pass-serial {
+  text-align: right;
+}
+
+.serial-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.serial-val {
+  font-family: monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.pass-status-pill {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.pass-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-bottom: 1.5rem;
+}
+
+.pass-table th, .pass-table td {
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+}
+
+.pass-table th {
+  background: #f1f5f9;
+  font-weight: 600;
+  color: #334155;
+  width: 25%;
+}
+
+.pass-footer-signs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.sign-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  color: #475569;
+  font-weight: 600;
+  min-width: 130px;
+}
+
+.sign-line {
+  width: 100%;
+  border-bottom: 1px solid #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.sign-stamp {
+  font-size: 0.625rem;
+  font-weight: 800;
+  color: #15803d;
+  border: 1.5px solid #15803d;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  transform: rotate(-4deg);
+  margin-bottom: 0.5rem;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-pass-container, .printable-pass-container * {
+    visibility: visible;
+  }
+  .printable-pass-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+}

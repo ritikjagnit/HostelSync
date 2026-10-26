@@ -2,6 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import ImageWithFallback from '../components/ImageWithFallback';
 import StudentComplaintSection from '../components/StudentComplaintSection';
+import DigitalGatePassManager from '../components/DigitalGatePassManager';
+import NoticeBoardManager from '../components/NoticeBoardManager';
+import MessManagementSection from '../components/MessManagementSection';
+import FeeManagerSection from '../components/FeeManagerSection';
+import ResidentIdCardModal from '../components/ResidentIdCardModal';
+import RoomQrCodeModal from '../components/RoomQrCodeModal';
 import { MEDIA_REGISTRY, getHostelImage } from '../config/media';
 import './PortalCommon.css';
 import './StudentPortal.css';
@@ -39,6 +45,10 @@ export default function StudentPortal() {
   const [editPhoneModalOpen, setEditPhoneModalOpen] = useState(false);
   const [phoneInput, setPhoneInput] = useState('');
   const [savingPhone, setSavingPhone] = useState(false);
+
+  // Advanced Features Modals
+  const [idCardModalOpen, setIdCardModalOpen] = useState(false);
+  const [roomQrModalOpen, setRoomQrModalOpen] = useState(false);
 
   // Feedback States
   const [feedbackSuccess, setFeedbackSuccess] = useState('');
@@ -270,7 +280,15 @@ export default function StudentPortal() {
             </p>
           </div>
 
-          <div className="student-header-actions">
+          <div className="student-header-actions" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <button
+              onClick={() => setIdCardModalOpen(true)}
+              className="btn btn-primary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}
+              title="View & Print Official Hostel ID Card"
+            >
+              <span>🪪</span> Resident ID Card
+            </button>
             <button
               id="btn-student-logout"
               onClick={logout}
@@ -332,6 +350,34 @@ export default function StudentPortal() {
             onClick={() => handleTabChange('complaints')}
           >
             <span>&#128295;</span> Maintenance &amp; Grievances
+          </button>
+          <button
+            id="tab-student-gatepass"
+            className={`student-tab-btn ${activeTab === 'gatepass' ? 'active' : ''}`}
+            onClick={() => handleTabChange('gatepass')}
+          >
+            <span>🎫</span> Gate Pass &amp; Outing
+          </button>
+          <button
+            id="tab-student-mess"
+            className={`student-tab-btn ${activeTab === 'mess' ? 'active' : ''}`}
+            onClick={() => handleTabChange('mess')}
+          >
+            <span>🍽️</span> Mess &amp; Food
+          </button>
+          <button
+            id="tab-student-fees"
+            className={`student-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
+            onClick={() => handleTabChange('fees')}
+          >
+            <span>💳</span> Fees &amp; No-Dues (NOC)
+          </button>
+          <button
+            id="tab-student-notices"
+            className={`student-tab-btn ${activeTab === 'notices' ? 'active' : ''}`}
+            onClick={() => handleTabChange('notices')}
+          >
+            <span>📢</span> Notice Board
           </button>
           <button
             id="tab-student-profile"
@@ -597,6 +643,16 @@ export default function StudentPortal() {
                     <p style={{ fontSize: '0.875rem', color: 'var(--slate-600)', margin: 0, lineHeight: '1.6' }}>
                       Bed allocations are registered to your verified institutional identity (Enrollment: {profile?.enrollmentNumber}). Vacating or re-allocating requires administrative completion and checkout by the Hostel Office.
                     </p>
+                  </div>
+
+                  <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.75rem' }}>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setRoomQrModalOpen(true)}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}
+                    >
+                      <span>🚪</span> Print Room QR Door Poster
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1070,6 +1126,34 @@ export default function StudentPortal() {
         )}
 
         {/* ============================================================= */}
+        {/* TAB 6: DIGITAL GATE PASS & OUTING                             */}
+        {/* ============================================================= */}
+        {activeTab === 'gatepass' && (
+          <DigitalGatePassManager role="STUDENT" />
+        )}
+
+        {/* ============================================================= */}
+        {/* TAB 7: MESS TIMETABLE & QUALITY INDEX                         */}
+        {/* ============================================================= */}
+        {activeTab === 'mess' && (
+          <MessManagementSection role="STUDENT" />
+        )}
+
+        {/* ============================================================= */}
+        {/* TAB 8: FEES, RECEIPTS & NO-DUES CLEARANCE (NOC)               */}
+        {/* ============================================================= */}
+        {activeTab === 'fees' && (
+          <FeeManagerSection role="STUDENT" />
+        )}
+
+        {/* ============================================================= */}
+        {/* TAB 9: DIGITAL NOTICE BOARD & CIRCULARS                       */}
+        {/* ============================================================= */}
+        {activeTab === 'notices' && (
+          <NoticeBoardManager role="STUDENT" />
+        )}
+
+        {/* ============================================================= */}
         {/* MODAL: EDIT PHONE NUMBER                                      */}
         {/* ============================================================= */}
 
@@ -1136,6 +1220,31 @@ export default function StudentPortal() {
               </form>
             </div>
           </div>
+        )}
+
+        {/* MODAL: RESIDENT ID CARD */}
+        {idCardModalOpen && (
+          <ResidentIdCardModal
+            student={{
+              fullName: profile?.fullName || user?.fullName,
+              enrollmentNumber: profile?.enrollmentNumber || user?.enrollmentNumber,
+              course: profile?.course,
+              semester: profile?.semester,
+              phone: profile?.phone,
+              hostelName: dashboardData?.currentAllocation?.room?.hostel?.name || 'Sahyadri Boys Hostel',
+              roomNumber: dashboardData?.currentAllocation?.room?.roomNumber || '104'
+            }}
+            onClose={() => setIdCardModalOpen(false)}
+          />
+        )}
+
+        {/* MODAL: ROOM QR CODE POSTER */}
+        {roomQrModalOpen && (
+          <RoomQrCodeModal
+            room={dashboardData?.currentAllocation?.room || { roomNumber: '104', capacity: 3, floor: 'Floor 1' }}
+            hostelName={dashboardData?.currentAllocation?.room?.hostel?.name || 'Sahyadri Boys Hostel'}
+            onClose={() => setRoomQrModalOpen(false)}
+          />
         )}
       </div>
     </div>

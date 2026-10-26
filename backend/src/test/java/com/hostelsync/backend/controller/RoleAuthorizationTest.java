@@ -50,6 +50,18 @@ class RoleAuthorizationTest {
     @Autowired(required = false)
     private com.hostelsync.backend.repository.ComplaintRepository complaintRepository;
 
+    @Autowired(required = false)
+    private com.hostelsync.backend.repository.GatePassRepository gatePassRepository;
+
+    @Autowired(required = false)
+    private com.hostelsync.backend.repository.FeeRecordRepository feeRecordRepository;
+
+    @Autowired(required = false)
+    private com.hostelsync.backend.repository.MealFeedbackRepository mealFeedbackRepository;
+
+    @Autowired(required = false)
+    private com.hostelsync.backend.repository.HostelNoticeRepository noticeRepository;
+
     private String adminToken;
     private String wardenToken;
     private String studentToken;
@@ -58,6 +70,18 @@ class RoleAuthorizationTest {
     void setUp() {
         if (complaintRepository != null) {
             complaintRepository.deleteAll();
+        }
+        if (gatePassRepository != null) {
+            gatePassRepository.deleteAll();
+        }
+        if (feeRecordRepository != null) {
+            feeRecordRepository.deleteAll();
+        }
+        if (mealFeedbackRepository != null) {
+            mealFeedbackRepository.deleteAll();
+        }
+        if (noticeRepository != null) {
+            noticeRepository.deleteAll();
         }
         attendanceRepository.deleteAll();
         assignmentRepository.deleteAll();

@@ -4,6 +4,13 @@ import ImageWithFallback from '../components/ImageWithFallback';
 import { getHostelImage } from '../config/media';
 import AdminAdmissionsManager from '../components/AdminAdmissionsManager';
 import GrievanceMaintenanceManager from '../components/GrievanceMaintenanceManager';
+import DigitalGatePassManager from '../components/DigitalGatePassManager';
+import NoticeBoardManager from '../components/NoticeBoardManager';
+import MessManagementSection from '../components/MessManagementSection';
+import FeeManagerSection from '../components/FeeManagerSection';
+import CampusAnalyticsSection from '../components/CampusAnalyticsSection';
+import RoomQrCodeModal from '../components/RoomQrCodeModal';
+import ResidentIdCardModal from '../components/ResidentIdCardModal';
 import './PortalCommon.css';
 import './AdminPortal.css';
 
@@ -40,6 +47,10 @@ export default function AdminPortal() {
   const [actionLoading, setActionLoading] = useState(false);
   const [feedbackError, setFeedbackError] = useState('');
   const [feedbackSuccess, setFeedbackSuccess] = useState('');
+
+  // Advanced Features Modals
+  const [activeQrRoom, setActiveQrRoom] = useState(null);
+  const [activeIdCardStudent, setActiveIdCardStudent] = useState(null);
 
   // Warden Assignment Modal State
   const [assignWardenModalOpen, setAssignWardenModalOpen] = useState(false);
@@ -1210,6 +1221,61 @@ export default function AdminPortal() {
           >
             &#128295; Grievance Redressal
           </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'gatepass'}
+            className={`admin-tab ${activeTab === 'gatepass' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('gatepass');
+            }}
+          >
+            🎫 Gate Pass Oversight
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'mess'}
+            className={`admin-tab ${activeTab === 'mess' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('mess');
+            }}
+          >
+            🍽️ Mess &amp; Ratings
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'fees'}
+            className={`admin-tab ${activeTab === 'fees' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('fees');
+            }}
+          >
+            💳 Fee Ledger &amp; Receipts
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'notices'}
+            className={`admin-tab ${activeTab === 'notices' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('notices');
+            }}
+          >
+            📢 Notice Board
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === 'analytics'}
+            className={`admin-tab ${activeTab === 'analytics' ? 'active' : ''}`}
+            onClick={() => {
+              clearFeedback();
+              setActiveTab('analytics');
+            }}
+          >
+            📊 Analytics &amp; CSV Export
+          </button>
         </div>
 
         {/* TAB 1: EXECUTIVE DASHBOARD */}
@@ -1755,13 +1821,22 @@ export default function AdminPortal() {
                         </div>
                       </div>
 
-                      <button
-                        className="btn btn-secondary btn-sm"
-                        style={{ marginTop: 'auto' }}
-                        onClick={() => openEditRoomModal(room)}
-                      >
-                        Edit Room
-                      </button>
+                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          style={{ flex: 1 }}
+                          onClick={() => openEditRoomModal(room)}
+                        >
+                          Edit Room
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => setActiveQrRoom(room)}
+                          title="Print Room QR Poster"
+                        >
+                          🚪 Poster
+                        </button>
+                      </div>
                     </div>
                   );
                 })}
@@ -1942,6 +2017,21 @@ export default function AdminPortal() {
                                 onClick={() => handleViewStudentDetail(student.id)}
                               >
                                 View
+                              </button>
+                              <button
+                                className="btn btn-secondary btn-sm"
+                                onClick={() => setActiveIdCardStudent({
+                                  fullName: student.fullName,
+                                  enrollmentNumber: student.enrollmentNumber,
+                                  course: student.course,
+                                  semester: student.semester,
+                                  phone: student.phone,
+                                  hostelName: student.currentAllocation?.room?.hostel?.name || 'Sahyadri Boys Hostel',
+                                  roomNumber: student.currentAllocation?.room?.roomNumber || '104'
+                                })}
+                                title="View Printable Resident ID Card"
+                              >
+                                🪪 ID Card
                               </button>
                               <button
                                 className="btn btn-secondary btn-sm"
@@ -2598,6 +2688,31 @@ export default function AdminPortal() {
             role="ADMIN"
             hostels={hostels}
           />
+        )}
+
+        {/* TAB 10: GATE PASS OVERSIGHT */}
+        {activeTab === 'gatepass' && (
+          <DigitalGatePassManager role="ADMIN" />
+        )}
+
+        {/* TAB 11: MESS TIMETABLE & QUALITY INDEX */}
+        {activeTab === 'mess' && (
+          <MessManagementSection role="ADMIN" />
+        )}
+
+        {/* TAB 12: FEE LEDGER, RECEIPTS & NO-DUES */}
+        {activeTab === 'fees' && (
+          <FeeManagerSection role="ADMIN" />
+        )}
+
+        {/* TAB 13: DIGITAL NOTICE BOARD */}
+        {activeTab === 'notices' && (
+          <NoticeBoardManager role="ADMIN" />
+        )}
+
+        {/* TAB 14: CAMPUS ANALYTICS & CSV EXPORT */}
+        {activeTab === 'analytics' && (
+          <CampusAnalyticsSection />
         )}
 
 
@@ -3583,6 +3698,23 @@ export default function AdminPortal() {
               </form>
             </div>
           </div>
+        )}
+
+        {/* Modal: Room QR Poster */}
+        {activeQrRoom && (
+          <RoomQrCodeModal
+            room={activeQrRoom}
+            hostelName={hostels.find((h) => String(h.id) === selectedHostelId)?.name || 'Sahyadri Boys Hostel'}
+            onClose={() => setActiveQrRoom(null)}
+          />
+        )}
+
+        {/* Modal: Resident ID Card */}
+        {activeIdCardStudent && (
+          <ResidentIdCardModal
+            student={activeIdCardStudent}
+            onClose={() => setActiveIdCardStudent(null)}
+          />
         )}
       </div>
     </div>

@@ -1,0 +1,257 @@
+/* ResidentIdCardModal.css */
+.id-card-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  padding: 1rem;
+}
+
+.id-card-modal-dialog {
+  background: #ffffff;
+  border-radius: 1rem;
+  max-width: 520px;
+  width: 100%;
+  padding: 1.75rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+}
+
+.id-card-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+/* Smart ID Card Badge Aspect Ratio & Styling */
+.id-card-badge {
+  width: 400px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2px solid #cbd5e1;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+  overflow: hidden;
+  position: relative;
+  border-top: 6px solid #1e3a8a;
+}
+
+.id-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #1e3a8a;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+}
+
+.id-gov-logo {
+  font-size: 1.75rem;
+}
+
+.id-inst-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.inst-name {
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.inst-sub {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #93c5fd;
+  letter-spacing: 0.04em;
+}
+
+.inst-session {
+  font-size: 0.625rem;
+  color: #dbeafe;
+}
+
+/* ID Body */
+.id-body {
+  display: flex;
+  padding: 1.25rem 1rem;
+  gap: 1rem;
+}
+
+.id-photo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.id-photo-frame {
+  width: 90px;
+  height: 105px;
+  border: 2px solid #94a3b8;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.id-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.id-photo-fallback {
+  font-size: 3rem;
+  color: #94a3b8;
+}
+
+.id-role-tag {
+  background: #1e3a8a;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.id-details-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.id-student-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.25;
+}
+
+.id-meta-row {
+  display: flex;
+  font-size: 0.75rem;
+  gap: 0.35rem;
+  align-items: baseline;
+}
+
+.id-label {
+  color: #64748b;
+  font-weight: 600;
+  width: 85px;
+  flex-shrink: 0;
+}
+
+.id-value {
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.highlight-room {
+  color: #1d4ed8;
+  background: #eff6ff;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+/* Footer / Barcode */
+.id-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.75rem 1rem;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+
+.id-barcode-graphic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.barcode-bars {
+  width: 120px;
+  height: 22px;
+  background: repeating-linear-gradient(
+    90deg,
+    #0f172a 0px,
+    #0f172a 2px,
+    transparent 2px,
+    transparent 4px,
+    #0f172a 4px,
+    #0f172a 7px,
+    transparent 7px,
+    transparent 9px
+  );
+}
+
+.barcode-code {
+  font-size: 0.65rem;
+  font-family: monospace;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.1em;
+  margin-top: 0.15rem;
+}
+
+.id-sign-graphic {
+  text-align: center;
+}
+
+.sign-line {
+  width: 90px;
+  height: 1px;
+  background: #0f172a;
+  margin-bottom: 0.2rem;
+}
+
+.sign-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.btn-print-id {
+  background: #1e3a8a;
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-print-id:hover {
+  background: #1e40af;
+}
+
+/* Print Media Query */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-resident-id-card, #printable-resident-id-card * {
+    visibility: visible;
+  }
+  #printable-resident-id-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

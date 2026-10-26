@@ -29,6 +29,8 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     List<Attendance> findByStudentIdInAndAttendanceDate(Collection<Long> studentIds, LocalDate attendanceDate);
 
+    List<Attendance> findByAttendanceDate(LocalDate attendanceDate);
+
     long countByStudentIdAndStatus(Long studentId, AttendanceStatus status);
 
     @Query("SELECT COUNT(a) FROM Attendance a WHERE a.student.id = :studentId " +

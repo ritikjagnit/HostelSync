@@ -4,6 +4,11 @@ import ImageWithFallback from '../components/ImageWithFallback';
 import { getHostelImage } from '../config/media';
 import AdminAdmissionsManager from '../components/AdminAdmissionsManager';
 import GrievanceMaintenanceManager from '../components/GrievanceMaintenanceManager';
+import DigitalGatePassManager from '../components/DigitalGatePassManager';
+import NoticeBoardManager from '../components/NoticeBoardManager';
+import MessManagementSection from '../components/MessManagementSection';
+import RoomQrCodeModal from '../components/RoomQrCodeModal';
+import ResidentIdCardModal from '../components/ResidentIdCardModal';
 import './PortalCommon.css';
 import './WardenPortal.css';
 
@@ -35,6 +40,10 @@ export default function WardenPortal() {
   const [residentSearch, setResidentSearch] = useState('');
   const [allocationStatusFilter, setAllocationStatusFilter] = useState('ALL');
   const [allocationSearch, setAllocationSearch] = useState('');
+
+  // Advanced Features Modals
+  const [activeQrRoom, setActiveQrRoom] = useState(null);
+  const [activeIdCardStudent, setActiveIdCardStudent] = useState(null);
 
   // Loading & Feedback States
   const [loadingDashboard, setLoadingDashboard] = useState(true);
@@ -510,6 +519,27 @@ export default function WardenPortal() {
           >
             &#128221; Admissions &amp; Selection
           </button>
+          <button
+            className={`tab-btn ${activeTab === 'gatepass' ? 'active' : ''}`}
+            onClick={() => setActiveTab('gatepass')}
+            id="tab-warden-gatepass"
+          >
+            🎫 Gate Passes &amp; Outings
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'mess' ? 'active' : ''}`}
+            onClick={() => setActiveTab('mess')}
+            id="tab-warden-mess"
+          >
+            🍽️ Mess &amp; Ratings
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'notices' ? 'active' : ''}`}
+            onClick={() => setActiveTab('notices')}
+            id="tab-warden-notices"
+          >
+            📢 Notice Board
+          </button>
         </div>
 
         {/* ---------------------------------------------------- */}
@@ -911,9 +941,19 @@ export default function WardenPortal() {
                         <span className="warden-room-num">Room {room.roomNumber}</span>
                         <div className="warden-room-floor">Floor {room.floor} &bull; Capacity {room.capacity}</div>
                       </div>
-                      <span className={`badge ${room.availableBeds === 0 ? 'badge-error' : room.currentOccupancy === 0 ? 'badge-success' : 'badge-gold'}`}>
-                        {room.availableBeds === 0 ? 'FULL' : `${room.availableBeds} Bed${room.availableBeds > 1 ? 's' : ''} Left`}
-                      </span>
+                      <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                        <span className={`badge ${room.availableBeds === 0 ? 'badge-error' : room.currentOccupancy === 0 ? 'badge-success' : 'badge-gold'}`}>
+                          {room.availableBeds === 0 ? 'FULL' : `${room.availableBeds} Bed${room.availableBeds > 1 ? 's' : ''} Left`}
+                        </span>
+                        <button
+                          onClick={() => setActiveQrRoom(room)}
+                          className="btn btn-secondary"
+                          style={{ fontSize: '0.72rem', padding: '0.2rem 0.5rem' }}
+                          title="Print Room Door QR Poster"
+                        >
+                          🚪 Poster
+                        </button>
+                      </div>
                     </div>
 
                     <div style={{ fontSize: '0.8125rem', color: 'var(--slate-600)', marginBottom: '0.5rem' }}>
@@ -1037,6 +1077,7 @@ export default function WardenPortal() {
                         <th>Contact Phone</th>
                         <th>Hostel &amp; Room</th>
                         <th>Allocation Date</th>
+                        <th>ID Card</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1054,6 +1095,23 @@ export default function WardenPortal() {
                             <div style={{ fontSize: '0.8125rem', color: 'var(--slate-600)' }}>Room {res.roomNumber}</div>
                           </td>
                           <td>{res.allocationDate}</td>
+                          <td>
+                            <button
+                              className="btn btn-secondary"
+                              style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem' }}
+                              onClick={() => setActiveIdCardStudent({
+                                fullName: res.studentName,
+                                enrollmentNumber: res.enrollmentNumber,
+                                course: res.course,
+                                semester: res.semester,
+                                phone: res.phone,
+                                hostelName: res.hostelName,
+                                roomNumber: res.roomNumber
+                              })}
+                            >
+                              🪪 View ID
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -1198,6 +1256,27 @@ export default function WardenPortal() {
             role="WARDEN"
             hostels={hostels}
           />
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB: GATE PASSES & OUTING SYSTEM */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'gatepass' && (
+          <DigitalGatePassManager role="WARDEN" />
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB: MESS & NUTRITION TIMETABLE */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'mess' && (
+          <MessManagementSection role="WARDEN" />
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB: DIGITAL NOTICE BOARD */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'notices' && (
+          <NoticeBoardManager role="WARDEN" />
         )}
 
         {/* ---------------------------------------------------- */}
@@ -1662,6 +1741,23 @@ export default function WardenPortal() {
               </form>
             </div>
           </div>
+        )}
+
+        {/* Modal: Room QR Poster */}
+        {activeQrRoom && (
+          <RoomQrCodeModal
+            room={activeQrRoom}
+            hostelName={hostels.find((h) => String(h.id) === selectedHostelId)?.name || 'Sahyadri Boys Hostel'}
+            onClose={() => setActiveQrRoom(null)}
+          />
+        )}
+
+        {/* Modal: Resident ID Card */}
+        {activeIdCardStudent && (
+          <ResidentIdCardModal
+            student={activeIdCardStudent}
+            onClose={() => setActiveIdCardStudent(null)}
+          />
         )}
       </div>
     </div>
