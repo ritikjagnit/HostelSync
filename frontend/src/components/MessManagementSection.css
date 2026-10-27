@@ -522,13 +522,66 @@
 }
 
 /* Feedback Modal & Interactive Stars */
-.feedback-modal {
-  max-width: 520px;
-  width: 95%;
+.mess-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.25rem;
+  animation: messModalFadeIn 0.2s ease-out;
+}
+
+@keyframes messModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mess-modal-dialog {
   background: #ffffff;
   border-radius: 1.25rem;
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3);
+  max-width: 540px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
   border: 1px solid #e2e8f0;
+  padding: 1.75rem 2rem;
+  animation: messModalZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes messModalZoom {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.mess-rating-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-top: 1rem;
+}
+
+.mess-input {
+  width: 100%;
+  padding: 0.7rem 0.95rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.625rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.mess-input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
 }
 
 .star-rating-row {

@@ -848,115 +848,146 @@ export default function StudentPortal() {
         {/* TAB 4: MY PROFILE                                             */}
         {/* ============================================================= */}
         {activeTab === 'profile' && (
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-              <div>
-                <h2 style={{ fontSize: '1.25rem', color: 'var(--primary-900)', margin: 0 }}>
-                  Verified Resident Profile
-                </h2>
-                <p style={{ fontSize: '0.875rem', color: 'var(--slate-500)', margin: '0.25rem 0 0' }}>
-                  Academic records and editable personal contact information
-                </p>
+          <div className="profile-section-container">
+            {/* Executive Profile Hero Banner */}
+            <div className="profile-hero-card">
+              <div className="profile-hero-left">
+                <div className="profile-avatar-large">
+                  <span>{(profile?.fullName || user?.fullName || 'Student').split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()}</span>
+                </div>
+                <div className="profile-hero-info">
+                  <div className="profile-badge-row">
+                    <span className="profile-verified-badge">
+                      <span className="verified-shield">🛡️</span> Verified MSBTE Resident
+                    </span>
+                    <span className="profile-quota-tag">Govt. Polytechnic Sakoli</span>
+                  </div>
+                  <h2 className="profile-name-title">{profile?.fullName || user?.fullName}</h2>
+                  <div className="profile-meta-pills">
+                    <span className="meta-chip">🆔 {profile?.enrollmentNumber || user?.enrollmentNumber || 'EN2026CS001'}</span>
+                    <span className="meta-chip">🎓 {profile?.course || 'Computer Engineering'}</span>
+                    <span className="meta-chip">📚 Semester {profile?.semester || '4'}</span>
+                    <span className="meta-chip room-chip">🚪 Room {dashboardData?.currentAllocation?.room?.roomNumber || '101'}</span>
+                  </div>
+                </div>
               </div>
 
-              <button
-                id="btn-edit-phone"
-                onClick={openEditPhoneModal}
-                className="btn btn-primary"
-              >
-                &#9998; Update Phone Number
-              </button>
+              <div className="profile-hero-actions">
+                <button
+                  onClick={() => setIdCardModalOpen(true)}
+                  className="btn btn-id-card"
+                  id="btn-profile-view-id"
+                >
+                  <span>🪪</span> Smart Resident ID
+                </button>
+                <button
+                  id="btn-edit-phone"
+                  onClick={openEditPhoneModal}
+                  className="btn btn-edit-contact"
+                >
+                  <span>✏️</span> Edit Phone
+                </button>
+              </div>
             </div>
 
+            {/* Profile Information Dual Cards */}
             <div className="profile-card-grid">
-              {/* Card 1: Academic & Registration Identity */}
-              <div className="card">
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-900)', marginBottom: '1rem' }}>
-                  Institutional Academic Records
-                </h3>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Full Name:</span>
-                  <span className="info-value">{profile?.fullName}</span>
+              {/* Card 1: Academic & Institutional Identity */}
+              <div className="profile-data-card">
+                <div className="card-heading-bar">
+                  <div className="card-icon-tag icon-blue">🏛️</div>
+                  <div>
+                    <h3 className="card-main-title">Institutional Academic Records</h3>
+                    <p className="card-sub-title">Official MSBTE enrolment and polytechnic registration</p>
+                  </div>
                 </div>
 
-                <div className="portal-info-item">
-                  <span className="info-label">Enrollment Number:</span>
-                  <span className="info-value">
-                    <span className="badge badge-primary">{profile?.enrollmentNumber}</span>
-                  </span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Engineering Course:</span>
-                  <span className="info-value">{profile?.course}</span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Current Semester:</span>
-                  <span className="info-value">Semester {profile?.semester}</span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Institution:</span>
-                  <span className="info-value">Govt. Polytechnic Sakoli</span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Admission Record Status:</span>
-                  <span className="info-value">
-                    <span className="badge badge-success">ACTIVE ENROLLMENT</span>
-                  </span>
+                <div className="profile-field-list">
+                  <div className="profile-field-row">
+                    <span className="field-label">Student Full Name</span>
+                    <span className="field-value strong">{profile?.fullName}</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">MSBTE Enrollment Number</span>
+                    <span className="field-value badge-val">
+                      <span className="enrollment-badge">{profile?.enrollmentNumber}</span>
+                    </span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Engineering Discipline</span>
+                    <span className="field-value">{profile?.course}</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Current Academic Semester</span>
+                    <span className="field-value">Semester {profile?.semester} (Active)</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Campus Institute</span>
+                    <span className="field-value">Government Polytechnic Sakoli</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Admission Standing</span>
+                    <span className="field-value">
+                      <span className="status-badge-active">ACTIVE ENROLLMENT</span>
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Card 2: Contact & Account Details */}
-              <div className="card">
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--primary-900)', marginBottom: '1rem' }}>
-                  Contact & Security Profile
-                </h3>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Institutional Email:</span>
-                  <span className="info-value">{profile?.email || user?.email}</span>
+              {/* Card 2: Contact & Security Credentials */}
+              <div className="profile-data-card">
+                <div className="card-heading-bar">
+                  <div className="card-icon-tag icon-emerald">🔐</div>
+                  <div>
+                    <h3 className="card-main-title">Contact &amp; Account Credentials</h3>
+                    <p className="card-sub-title">Portal security, contact phone and residential assignment</p>
+                  </div>
                 </div>
 
-                <div className="portal-info-item">
-                  <span className="info-label">Registered Phone:</span>
-                  <span className="info-value" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <strong>{profile?.phone}</strong>
-                    <button
-                      onClick={openEditPhoneModal}
-                      style={{ background: 'none', border: 'none', color: 'var(--primary-600)', cursor: 'pointer', fontSize: '0.8125rem', textDecoration: 'underline' }}
-                    >
-                      Change
-                    </button>
-                  </span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Account Role:</span>
-                  <span className="info-value">
-                    <span className="badge badge-primary">{user?.role || 'STUDENT'}</span>
-                  </span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Student ID:</span>
-                  <span className="info-value">#{profile?.id}</span>
-                </div>
-
-                <div className="portal-info-item">
-                  <span className="info-label">Account Security:</span>
-                  <span className="info-value">BCrypt Hashed (Protected)</span>
+                <div className="profile-field-list">
+                  <div className="profile-field-row">
+                    <span className="field-label">Institutional Email</span>
+                    <span className="field-value">{profile?.email || user?.email}</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Registered Contact Phone</span>
+                    <span className="field-value phone-val">
+                      <strong>{profile?.phone || 'Not Registered'}</strong>
+                      <button
+                        onClick={openEditPhoneModal}
+                        className="btn-link-edit"
+                        title="Update contact phone"
+                      >
+                        Change
+                      </button>
+                    </span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Residential Hostel</span>
+                    <span className="field-value">{dashboardData?.currentAllocation?.room?.hostel?.name || 'Sahyadri Boys Hostel'}</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Allotted Bed &amp; Room</span>
+                    <span className="field-value">Room {dashboardData?.currentAllocation?.room?.roomNumber || '101'} (Floor {dashboardData?.currentAllocation?.room?.floor || '1'})</span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">System Account Role</span>
+                    <span className="field-value">
+                      <span className="role-chip">{user?.role || 'STUDENT'}</span>
+                    </span>
+                  </div>
+                  <div className="profile-field-row">
+                    <span className="field-label">Data Privacy &amp; Security</span>
+                    <span className="field-value text-muted">BCrypt 256-bit Protected</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Administrative Integrity Notice */}
-            <div className="guidelines-box">
-              <h4 className="guidelines-title">Administrative Record Integrity Policy</h4>
-              <p style={{ fontSize: '0.875rem', color: 'var(--slate-600)', margin: 0, lineHeight: '1.6' }}>
+            <div className="guidelines-box profile-notice-box">
+              <h4 className="guidelines-title">Institutional Record Integrity &amp; Identity Policy</h4>
+              <p style={{ fontSize: '0.875rem', color: '#475569', margin: 0, lineHeight: '1.6' }}>
                 Academic records, including your Full Name, Enrollment Number, Course, and Semester, are managed directly by Government Polytechnic Sakoli. If any academic details require updates or corrections, please contact the Polytechnic Student Section with supporting documentation.
               </p>
             </div>
