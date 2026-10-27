@@ -93,6 +93,14 @@ public class NoticeService {
         noticeRepository.deleteById(noticeId);
     }
 
+    @Transactional
+    public NoticeResponseDto togglePinNotice(Long noticeId) {
+        HostelNotice notice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Notice not found"));
+        notice.setPinned(!notice.isPinned());
+        return mapToDto(noticeRepository.save(notice));
+    }
+
     private NoticeResponseDto mapToDto(HostelNotice n) {
         return new NoticeResponseDto(
                 n.getId(),

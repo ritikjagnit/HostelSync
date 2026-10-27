@@ -73,7 +73,16 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
       const list = await resList.json();
       setPasses(list);
 
-      if (resStats && resStats.ok) {
+      if (role === 'STUDENT') {
+        setStats({
+          total: list.length,
+          pending: list.filter((p) => p.status === 'PENDING').length,
+          approved: list.filter((p) => p.status === 'APPROVED').length,
+          outOfCampus: list.filter((p) => p.status === 'OUT_OF_CAMPUS').length,
+          returned: list.filter((p) => p.status === 'RETURNED').length,
+          overdue: list.filter((p) => p.status === 'OVERDUE').length
+        });
+      } else if (resStats && resStats.ok) {
         const statsData = await resStats.json();
         setStats(statsData);
       }

@@ -1080,22 +1080,27 @@ export default function AdminPortal() {
     <div className="portal-wrapper">
       <div className="container">
         {/* Header Section */}
-        <div className="card portal-header-card">
-          <div>
-            <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>
-              Institutional Governance
-            </span>
-            <h1 className="portal-title">Administrator Portal</h1>
+        {/* Luxury Admin Header */}
+        <div className="card portal-header-card admin-luxury-banner">
+          <div className="admin-banner-info">
+            <div className="admin-badge-row">
+              <span className="admin-live-pill">
+                <span className="live-dot" /> LIVE GOVERNANCE
+              </span>
+              <span className="admin-role-tag">Principal &amp; Rector Command</span>
+            </div>
+            <h1 className="portal-title">Administrator Central Operations</h1>
             <p className="portal-subtitle">
-              Government Polytechnic Sakoli &bull; Principal & Rector Administration
+              Government Polytechnic Sakoli &bull; Comprehensive Institutional Governance, Financial Ledgers &amp; Admissions
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <span className="badge badge-primary" style={{ padding: '0.4rem 0.8rem' }}>
-              {user?.fullName} ({user?.role})
-            </span>
-            <button id="btn-admin-logout" onClick={logout} className="btn btn-secondary btn-sm">
+          <div className="admin-banner-user">
+            <div className="user-profile-badge">
+              <span className="user-name">{user?.fullName || 'Chief Administrator'}</span>
+              <span className="user-email">{user?.email || 'admin@gpsakoli.ac.in'}</span>
+            </div>
+            <button id="btn-admin-logout" onClick={logout} className="btn-admin-signout">
               Sign Out
             </button>
           </div>

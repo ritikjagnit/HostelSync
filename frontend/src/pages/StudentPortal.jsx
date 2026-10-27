@@ -265,37 +265,47 @@ export default function StudentPortal() {
     <div className="student-portal-wrapper">
       <div className="container">
         {/* Portal Header */}
-        <div className="card student-header-card">
-          <div>
+        <div className="student-header-card">
+          <div className="student-header-left">
             <div className="student-welcome-badge">
-              <span className="badge badge-primary">Student Resident</span>
-              <span className="badge badge-success">Active Account</span>
+              <span className="live-pulse-dot"></span>
+              <span className="inst-badge-text">GOVT. POLYTECHNIC SAKOLI &bull; SMART RESIDENT PORTAL</span>
             </div>
             <h1 className="student-portal-title">
               {profile ? profile.fullName : user?.fullName || 'Student Resident'}
             </h1>
-            <p className="student-portal-subtitle">
-              Government Polytechnic Sakoli &bull; {profile ? `${profile.course} (Semester ${profile.semester})` : 'Diploma Engineering'}
-              {profile?.enrollmentNumber ? ` &bull; Enrollment: ${profile.enrollmentNumber}` : ''}
-            </p>
+            <div className="student-header-meta">
+              <span className="meta-pill">
+                🎓 {profile ? `${profile.course} (Sem ${profile.semester})` : 'Diploma Engineering'}
+              </span>
+              <span className="meta-pill font-mono">
+                🆔 {profile?.enrollmentNumber || user?.enrollmentNumber || 'EN2026CS001'}
+              </span>
+              {roomAllocated && currentRoom && (
+                <span className="meta-pill room-pill">
+                  🛏️ Room {currentRoom.roomNumber} &bull; {currentRoom.hostelName}
+                </span>
+              )}
+            </div>
           </div>
 
-          <div className="student-header-actions" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <div className="student-header-actions">
             <button
               onClick={() => setIdCardModalOpen(true)}
-              className="btn btn-primary"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}
+              className="btn btn-id-card"
               title="View & Print Official Hostel ID Card"
             >
-              <span>🪪</span> Resident ID Card
+              <span className="btn-icon">🪪</span>
+              <span>Resident ID Card</span>
             </button>
             <button
               id="btn-student-logout"
               onClick={logout}
-              className="btn btn-secondary"
+              className="btn btn-logout"
               title="Sign out of student account"
             >
-              Sign Out
+              <span>Sign Out</span>
+              <span className="logout-arrow">&rarr;</span>
             </button>
           </div>
         </div>
@@ -321,70 +331,70 @@ export default function StudentPortal() {
             className={`student-tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => handleTabChange('overview')}
           >
-            <span>&#128187;</span> Dashboard Overview
+            <span className="tab-icon">📊</span> Overview
           </button>
           <button
             id="tab-student-room"
             className={`student-tab-btn ${activeTab === 'my-room' ? 'active' : ''}`}
             onClick={() => handleTabChange('my-room')}
           >
-            <span>&#128716;</span> My Room
-          </button>
-          <button
-            id="tab-student-history"
-            className={`student-tab-btn ${activeTab === 'allocations' ? 'active' : ''}`}
-            onClick={() => handleTabChange('allocations')}
-          >
-            <span>&#128220;</span> Allocation History
-          </button>
-          <button
-            id="tab-student-attendance"
-            className={`student-tab-btn ${activeTab === 'attendance' ? 'active' : ''}`}
-            onClick={() => handleTabChange('attendance')}
-          >
-            <span>&#128197;</span> My Attendance
-          </button>
-          <button
-            id="tab-student-complaints"
-            className={`student-tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
-            onClick={() => handleTabChange('complaints')}
-          >
-            <span>&#128295;</span> Maintenance &amp; Grievances
+            <span className="tab-icon">🛏️</span> My Room
           </button>
           <button
             id="tab-student-gatepass"
             className={`student-tab-btn ${activeTab === 'gatepass' ? 'active' : ''}`}
             onClick={() => handleTabChange('gatepass')}
           >
-            <span>🎫</span> Gate Pass &amp; Outing
+            <span className="tab-icon">🎫</span> Gate Pass
           </button>
           <button
             id="tab-student-mess"
             className={`student-tab-btn ${activeTab === 'mess' ? 'active' : ''}`}
             onClick={() => handleTabChange('mess')}
           >
-            <span>🍽️</span> Mess &amp; Food
+            <span className="tab-icon">🍽️</span> Mess Menu
           </button>
           <button
             id="tab-student-fees"
             className={`student-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
             onClick={() => handleTabChange('fees')}
           >
-            <span>💳</span> Fees &amp; No-Dues (NOC)
+            <span className="tab-icon">💳</span> Fees &amp; NOC
           </button>
           <button
             id="tab-student-notices"
             className={`student-tab-btn ${activeTab === 'notices' ? 'active' : ''}`}
             onClick={() => handleTabChange('notices')}
           >
-            <span>📢</span> Notice Board
+            <span className="tab-icon">📢</span> Notices
+          </button>
+          <button
+            id="tab-student-complaints"
+            className={`student-tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
+            onClick={() => handleTabChange('complaints')}
+          >
+            <span className="tab-icon">🛠️</span> Grievances
+          </button>
+          <button
+            id="tab-student-attendance"
+            className={`student-tab-btn ${activeTab === 'attendance' ? 'active' : ''}`}
+            onClick={() => handleTabChange('attendance')}
+          >
+            <span className="tab-icon">📝</span> Attendance
+          </button>
+          <button
+            id="tab-student-history"
+            className={`student-tab-btn ${activeTab === 'allocations' ? 'active' : ''}`}
+            onClick={() => handleTabChange('allocations')}
+          >
+            <span className="tab-icon">📜</span> History
           </button>
           <button
             id="tab-student-profile"
             className={`student-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
             onClick={() => handleTabChange('profile')}
           >
-            <span>&#128100;</span> My Profile
+            <span className="tab-icon">👤</span> Profile
           </button>
         </nav>
 
@@ -548,6 +558,84 @@ export default function StudentPortal() {
                     </button>
                   </div>
                 )}
+
+                {/* Quick Services Hub */}
+                <div className="quick-services-section">
+                  <div className="section-header-row">
+                    <div>
+                      <h3 className="section-heading-title">⚡ Resident Services &amp; Daily Life</h3>
+                      <p className="section-heading-sub">Instant access to digital gate passes, mess reviews, fee ledger, and circulars</p>
+                    </div>
+                  </div>
+
+                  <div className="quick-services-grid">
+                    <div className="service-hub-card" onClick={() => handleTabChange('gatepass')}>
+                      <div className="service-icon-box box-amber">
+                        <span>🎫</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Digital Gate Pass</h4>
+                        <p>Apply for day outing, home visit, or view approved pass slip with QR.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+
+                    <div className="service-hub-card" onClick={() => handleTabChange('mess')}>
+                      <div className="service-icon-box box-emerald">
+                        <span>🍽️</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Mess &amp; Dining</h4>
+                        <p>Weekly vegetarian timetable, chef's special, and daily quality ratings.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+
+                    <div className="service-hub-card" onClick={() => handleTabChange('fees')}>
+                      <div className="service-icon-box box-indigo">
+                        <span>💳</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Fees &amp; No-Dues (NOC)</h4>
+                        <p>View rent invoices, printable payment receipts, and clearance certificate.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+
+                    <div className="service-hub-card" onClick={() => handleTabChange('notices')}>
+                      <div className="service-icon-box box-blue">
+                        <span>📢</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Notice Board</h4>
+                        <p>Official announcements, exam quiet hours, and campus circulars.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+
+                    <div className="service-hub-card" onClick={() => handleTabChange('complaints')}>
+                      <div className="service-icon-box box-purple">
+                        <span>🛠️</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Grievance Tickets</h4>
+                        <p>Report electrical, plumbing, carpentry or Wi-Fi maintenance issues.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+
+                    <div className="service-hub-card" onClick={() => setIdCardModalOpen(true)}>
+                      <div className="service-icon-box box-sky">
+                        <span>🪪</span>
+                      </div>
+                      <div className="service-content">
+                        <h4>Smart Resident ID</h4>
+                        <p>View and print your official college hostel smart card badge.</p>
+                      </div>
+                      <span className="service-arrow">&rarr;</span>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Guidelines & Institutional Notice */}
                 <div className="guidelines-box">

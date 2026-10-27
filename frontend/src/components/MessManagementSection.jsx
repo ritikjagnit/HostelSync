@@ -70,26 +70,34 @@ export default function MessManagementSection({ role = 'STUDENT' }) {
     setLoading(true);
     setFeedbackError('');
     try {
-      const [menuRes, statsRes, feedbackRes] = await Promise.all([
-        authFetch(`${apiBase}/menu`),
-        authFetch(`${apiBase}/stats`),
-        authFetch(`${apiBase}/feedbacks`)
-      ]);
-
+      // 1. Menu
+      const menuRes = await authFetch(`${apiBase}/menu`);
       if (menuRes.ok) {
         const menuData = await menuRes.json();
         setWeeklyMenu(menuData);
       }
-      if (statsRes.ok) {
+
+      // 2. Stats / Summary
+      let statsRes = await authFetch(`${apiBase}/stats`);
+      if (!statsRes.ok) {
+        statsRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/summary' : '/api/warden/mess/feedback/summary');
+      }
+      if (statsRes && statsRes.ok) {
         const statsData = await statsRes.json();
         setStats(statsData);
       }
-      if (feedbackRes.ok) {
+
+      // 3. Feedbacks
+      let feedbackRes = await authFetch(`${apiBase}/feedbacks`);
+      if (!feedbackRes.ok) {
+        feedbackRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/my' : '/api/warden/mess/feedbacks');
+      }
+      if (feedbackRes && feedbackRes.ok) {
         const fbData = await feedbackRes.json();
         setFeedbacks(fbData);
       }
-    } catch (err) {
-      setFeedbackError(err.message || 'Error loading mess data');
+    } catch {
+      // Fallback gracefully without showing blocking error banner
     } finally {
       setLoading(false);
     }

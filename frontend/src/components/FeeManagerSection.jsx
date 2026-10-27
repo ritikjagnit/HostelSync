@@ -66,14 +66,18 @@ export default function FeeManagerSection({ role = 'STUDENT' }) {
     setFeedbackError('');
     try {
       if (role === 'STUDENT') {
-        const [feeRes, nocRes] = await Promise.all([
-          authFetch('/api/student/fees/my'),
-          authFetch('/api/student/fees/no-dues')
-        ]);
-
+        let feeRes = await authFetch('/api/student/fees');
+        if (!feeRes.ok) {
+          feeRes = await authFetch('/api/student/fees/my');
+        }
         if (feeRes.ok) {
           const fees = await feeRes.json();
           setFeeRecords(fees);
+        }
+
+        let nocRes = await authFetch('/api/student/fees/no-dues-status');
+        if (!nocRes.ok) {
+          nocRes = await authFetch('/api/student/fees/no-dues');
         }
         if (nocRes.ok) {
           const noc = await nocRes.json();

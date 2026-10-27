@@ -22,13 +22,13 @@ public class FeeController {
     }
 
     // Student Endpoints
-    @GetMapping("/api/student/fees")
+    @GetMapping({"/api/student/fees", "/api/student/fees/my"})
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<List<FeeResponseDto>> getStudentFees(Authentication authentication) {
         return ResponseEntity.ok(feeService.getStudentFees(authentication.getName()));
     }
 
-    @GetMapping("/api/student/fees/no-dues-status")
+    @GetMapping({"/api/student/fees/no-dues-status", "/api/student/fees/no-dues"})
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<NoDuesResponseDto> getMyNoDuesStatus(Authentication authentication) {
         return ResponseEntity.ok(feeService.getNoDuesStatus(authentication.getName()));
@@ -51,7 +51,7 @@ public class FeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    @PatchMapping("/api/admin/fees/{id}/pay")
+    @RequestMapping(value = "/api/admin/fees/{id}/pay", method = {RequestMethod.PATCH, RequestMethod.POST})
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<FeeResponseDto> recordPayment(
             @PathVariable Long id,

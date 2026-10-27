@@ -38,20 +38,26 @@ public class MessController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    @GetMapping("/api/student/mess/feedback/my")
+    @GetMapping({"/api/student/mess/stats", "/api/student/mess/feedback/summary"})
+    @PreAuthorize("hasRole('STUDENT')")
+    public ResponseEntity<MessStatsDto> getStudentMessSummary() {
+        return ResponseEntity.ok(messService.getMessSummary(null));
+    }
+
+    @GetMapping({"/api/student/mess/feedbacks", "/api/student/mess/feedback/my"})
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<List<MealFeedbackResponseDto>> getMyFeedback(Authentication authentication) {
         return ResponseEntity.ok(messService.getStudentFeedbacks(authentication.getName()));
     }
 
     // Warden Endpoints
-    @GetMapping("/api/warden/mess/menu")
+    @GetMapping({"/api/warden/mess/menu", "/api/admin/mess/menu"})
     @PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
     public ResponseEntity<List<MessMenuDto>> getWardenMenu(@RequestParam(required = false) Long hostelId) {
         return ResponseEntity.ok(messService.getWeeklyMenu(hostelId));
     }
 
-    @PutMapping("/api/warden/mess/menu/{dayOfWeek}")
+    @PutMapping({"/api/warden/mess/menu/{dayOfWeek}", "/api/admin/mess/menu/{dayOfWeek}"})
     @PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
     public ResponseEntity<MessMenuDto> updateWardenMenu(
             @PathVariable DayOfWeek dayOfWeek,
@@ -61,22 +67,15 @@ public class MessController {
         return ResponseEntity.ok(messService.updateMenuDay(hostelId, dayOfWeek, dto));
     }
 
-    @GetMapping("/api/warden/mess/feedback/summary")
+    @GetMapping({"/api/warden/mess/stats", "/api/warden/mess/feedback/summary", "/api/admin/mess/stats", "/api/admin/mess/feedback/summary"})
     @PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
     public ResponseEntity<MessStatsDto> getWardenMessSummary(@RequestParam(required = false) Long hostelId) {
         return ResponseEntity.ok(messService.getMessSummary(hostelId));
     }
 
-    @GetMapping("/api/warden/mess/feedbacks")
+    @GetMapping({"/api/warden/mess/feedbacks", "/api/admin/mess/feedbacks"})
     @PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
     public ResponseEntity<List<MealFeedbackResponseDto>> getWardenFeedbacks(@RequestParam(required = false) Long hostelId) {
         return ResponseEntity.ok(messService.getHostelFeedbacks(hostelId));
-    }
-
-    // Admin Endpoints
-    @GetMapping("/api/admin/mess/feedback/summary")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MessStatsDto> getAdminMessSummary(@RequestParam(required = false) Long hostelId) {
-        return ResponseEntity.ok(messService.getMessSummary(hostelId));
     }
 }

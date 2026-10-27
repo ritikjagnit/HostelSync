@@ -418,24 +418,27 @@ export default function WardenPortal() {
     <div className="portal-wrapper">
       <div className="container">
         {/* Header Card */}
-        <div className="card portal-header-card">
-          <div>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-              <span className="badge badge-primary">Warden Operations</span>
-              <span className="badge badge-success">Hostel Superintendent</span>
+        {/* Luxury Header Card */}
+        <div className="card portal-header-card warden-luxury-banner">
+          <div className="warden-banner-info">
+            <div className="warden-badge-row">
+              <span className="warden-live-pill">
+                <span className="live-dot" /> LIVE SUPERVISION
+              </span>
+              <span className="warden-role-tag">Hostel Superintendent</span>
             </div>
-            <h1 className="portal-title">Warden Operations Portal</h1>
+            <h1 className="portal-title">Warden Operations Command</h1>
             <p className="portal-subtitle">
-              Government Polytechnic Sakoli &bull; Overseeing Assigned Hostels &amp; Resident Life
+              Government Polytechnic Sakoli &bull; Comprehensive Campus Oversight, Resident Life &amp; Night Roll Call
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ textAlign: 'right', display: 'none', md: 'block' }}>
-              <div style={{ fontWeight: 600, color: 'var(--slate-900)' }}>{user?.fullName}</div>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--slate-500)' }}>{user?.email}</div>
+          <div className="warden-banner-user">
+            <div className="user-profile-badge">
+              <span className="user-name">{user?.fullName || 'Hostel Superintendent'}</span>
+              <span className="user-email">{user?.email || 'warden@gpsakoli.ac.in'}</span>
             </div>
-            <button id="btn-warden-logout" onClick={logout} className="btn btn-secondary">
+            <button id="btn-warden-logout" onClick={logout} className="btn-warden-signout">
               Sign Out
             </button>
           </div>
@@ -462,83 +465,83 @@ export default function WardenPortal() {
         )}
 
         {/* Tab Navigation */}
-        <div className="portal-tabs" style={{ marginBottom: '1.5rem' }}>
+        <div className="portal-tabs warden-tabs-pill-row">
           <button
             className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
             id="tab-warden-overview"
           >
-            Dashboard Overview
+            <span>📊</span> Dashboard Overview
           </button>
           <button
             className={`tab-btn ${activeTab === 'attendance' ? 'active' : ''}`}
             onClick={() => setActiveTab('attendance')}
             id="tab-warden-attendance"
           >
-            Night Roll Call
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
-            onClick={() => setActiveTab('complaints')}
-            id="tab-warden-complaints"
-          >
-            &#128295; Complaints &amp; Maintenance
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'hostels' ? 'active' : ''}`}
-            onClick={() => setActiveTab('hostels')}
-            id="tab-warden-hostels"
-          >
-            Assigned Hostels ({hostels.length})
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
-            onClick={() => setActiveTab('rooms')}
-            id="tab-warden-rooms"
-          >
-            Room Inventory
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'residents' ? 'active' : ''}`}
-            onClick={() => setActiveTab('residents')}
-            id="tab-warden-residents"
-          >
-            Resident Directory
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'allocations' ? 'active' : ''}`}
-            onClick={() => setActiveTab('allocations')}
-            id="tab-warden-allocations"
-          >
-            Allocation History
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'admissions' ? 'active' : ''}`}
-            onClick={() => setActiveTab('admissions')}
-            id="tab-warden-admissions"
-          >
-            &#128221; Admissions &amp; Selection
+            <span>📋</span> Night Roll Call
           </button>
           <button
             className={`tab-btn ${activeTab === 'gatepass' ? 'active' : ''}`}
             onClick={() => setActiveTab('gatepass')}
             id="tab-warden-gatepass"
           >
-            🎫 Gate Passes &amp; Outings
+            <span>🎫</span> Gate Passes
           </button>
           <button
             className={`tab-btn ${activeTab === 'mess' ? 'active' : ''}`}
             onClick={() => setActiveTab('mess')}
             id="tab-warden-mess"
           >
-            🍽️ Mess &amp; Ratings
+            <span>🍽️</span> Mess &amp; Food
           </button>
           <button
             className={`tab-btn ${activeTab === 'notices' ? 'active' : ''}`}
             onClick={() => setActiveTab('notices')}
             id="tab-warden-notices"
           >
-            📢 Notice Board
+            <span>📢</span> Notice Board
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
+            onClick={() => setActiveTab('complaints')}
+            id="tab-warden-complaints"
+          >
+            <span>🔧</span> Maintenance &amp; Complaints
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'hostels' ? 'active' : ''}`}
+            onClick={() => setActiveTab('hostels')}
+            id="tab-warden-hostels"
+          >
+            <span>🏢</span> Assigned Hostels ({hostels.length})
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
+            onClick={() => setActiveTab('rooms')}
+            id="tab-warden-rooms"
+          >
+            <span>🚪</span> Room Inventory
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'residents' ? 'active' : ''}`}
+            onClick={() => setActiveTab('residents')}
+            id="tab-warden-residents"
+          >
+            <span>👥</span> Resident Directory
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'allocations' ? 'active' : ''}`}
+            onClick={() => setActiveTab('allocations')}
+            id="tab-warden-allocations"
+          >
+            <span>📜</span> Allocation History
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'admissions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('admissions')}
+            id="tab-warden-admissions"
+          >
+            <span>📝</span> Admissions
           </button>
         </div>
 

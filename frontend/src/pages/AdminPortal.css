@@ -1,55 +1,167 @@
 /* AdminPortal.css — Advanced Management UI for HostelSync */
 
+/* Luxury Admin Banner */
+.admin-luxury-banner {
+  background: linear-gradient(135deg, #091e3a 0%, #172554 50%, #1e3a8a 100%) !important;
+  border: 1px solid rgba(147, 197, 253, 0.25) !important;
+  border-left: 6px solid #3b82f6 !important;
+  border-radius: 1.25rem !important;
+  padding: 1.75rem 2.25rem !important;
+  box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.45) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 1.5rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.admin-luxury-banner .portal-title {
+  color: #ffffff !important;
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.35rem 0 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.admin-luxury-banner .portal-subtitle {
+  color: #bfdbfe !important;
+  font-size: 0.92rem !important;
+  margin: 0 !important;
+}
+
+.admin-badge-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.admin-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(191, 219, 254, 0.35);
+  color: #bfdbfe;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+.admin-role-tag {
+  background: rgba(255, 255, 255, 0.12);
+  color: #eff6ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.admin-banner-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-banner-user .user-profile-badge {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.admin-banner-user .user-name {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.admin-banner-user .user-email {
+  color: #93c5fd;
+  font-size: 0.8rem;
+}
+
+.btn-admin-signout {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.btn-admin-signout:hover {
+  background: #ffffff;
+  color: #1e3a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Modern Segmented Admin Pill Tabs */
 .admin-tabs {
   display: flex;
-  gap: 0.5rem;
-  border-bottom: 2px solid var(--slate-200);
+  gap: 0.45rem;
+  padding: 0.45rem;
+  background: #f1f5f9;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
   margin-bottom: 2rem;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .admin-tab {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--slate-600);
+  padding: 0.7rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
   background: transparent;
   border: none;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .admin-tab:hover {
-  color: var(--primary-600);
-  background-color: var(--primary-50);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
 }
 
 .admin-tab.active {
-  color: var(--primary-700);
-  border-bottom-color: var(--primary-600);
-  background-color: var(--white);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  color: #1e3a8a;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(30, 58, 138, 0.2);
 }
 
 .admin-tab .tab-count {
-  background-color: var(--slate-200);
-  color: var(--slate-700);
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
+  background-color: #e2e8f0;
+  color: #475569;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.5rem;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .admin-tab.active .tab-count {
-  background-color: var(--primary-100);
-  color: var(--primary-800);
+  background-color: #dbeafe;
+  color: #1e40af;
 }
 
 /* KPI Dashboard Cards */

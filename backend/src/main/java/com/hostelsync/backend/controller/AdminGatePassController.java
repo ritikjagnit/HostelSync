@@ -45,4 +45,22 @@ public class AdminGatePassController {
     ) {
         return ResponseEntity.ok(gatePassService.updatePassStatus(id, authentication.getName(), updateDto));
     }
+
+    @PatchMapping("/{id}/mark-exit")
+    public ResponseEntity<GatePassResponseDto> markExit(
+            Authentication authentication,
+            @PathVariable Long id
+    ) {
+        GatePassStatusUpdateDto update = new GatePassStatusUpdateDto(GatePassStatus.OUT_OF_CAMPUS, "Exit from hostel gate recorded.");
+        return ResponseEntity.ok(gatePassService.updatePassStatus(id, authentication.getName(), update));
+    }
+
+    @PatchMapping("/{id}/mark-entry")
+    public ResponseEntity<GatePassResponseDto> markEntry(
+            Authentication authentication,
+            @PathVariable Long id
+    ) {
+        GatePassStatusUpdateDto update = new GatePassStatusUpdateDto(GatePassStatus.RETURNED, "Return to hostel gate recorded.");
+        return ResponseEntity.ok(gatePassService.updatePassStatus(id, authentication.getName(), update));
+    }
 }

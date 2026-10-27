@@ -3,7 +3,15 @@
  * Live cloud backend on Render: https://hostelsync-backend-o54z.onrender.com
  * Supports override via VITE_API_BASE_URL environment variable if needed.
  */
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'https://hostelsync-backend-o54z.onrender.com').replace(/\/+$/, '');
+export const API_BASE_URL = (() => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL.replace(/\/+$/, '');
+  }
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://localhost:8080';
+  }
+  return 'https://hostelsync-backend-o54z.onrender.com';
+})();
 
 export const getApiUrl = (endpoint) => {
   if (!endpoint) return API_BASE_URL;

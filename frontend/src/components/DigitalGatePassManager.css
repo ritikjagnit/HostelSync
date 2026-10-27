@@ -1,109 +1,216 @@
-/* Digital Gate Pass Styles */
+/* ===================================================================
+   DigitalGatePassManager.css — Premium Security & Outing Management
+   Government Polytechnic Sakoli • Student Residential Campus
+   =================================================================== */
+
 .digital-gatepass-manager {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-bottom: 2rem;
+  font-family: inherit;
 }
 
+/* Header Luxury Banner */
 .gatepass-header-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);
-  border: 1px solid #a7f3d0;
-  border-radius: 14px;
-  padding: 1.5rem 1.75rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  border-radius: 1.25rem;
+  padding: 1.75rem 2.25rem;
+  box-shadow: 0 12px 30px -8px rgba(6, 78, 59, 0.45);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.gatepass-header-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(110, 231, 183, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .gatepass-badge-row {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  align-items: center;
+}
+
+.gatepass-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(167, 243, 208, 0.35);
+  color: #a7f3d0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  background: #34d399;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulse-gate-live 2s infinite ease-in-out;
+}
+
+@keyframes pulse-gate-live {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
 }
 
 .gatepass-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #064e3b;
-  margin-bottom: 0.25rem;
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
 }
 
 .gatepass-subtitle {
-  color: #374151;
-  font-size: 0.875rem;
-  max-width: 650px;
-  line-height: 1.45;
+  color: #d1fae5;
+  font-size: 0.92rem;
+  max-width: 680px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .btn-apply-gatepass {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: 10px;
-  font-weight: 600;
-  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.25);
-  background-color: #059669;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  color: #065f46;
   border: none;
-  color: #fff;
   cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-apply-gatepass:hover {
-  background-color: #047857;
+  background: #ecfdf5;
+  color: #047857;
   transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Stats */
+/* Feedback Alerts */
+.gatepass-alert-msg {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.35rem;
+  border-radius: 0.75rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  animation: slideInGateMsg 0.3s ease;
+}
+
+@keyframes slideInGateMsg {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gatepass-alert-msg.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+}
+
+.gatepass-alert-msg.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+/* Stats Cards Grid */
 .gatepass-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.15rem;
 }
 
 .gatepass-stat-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.35rem 1.5rem;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .gatepass-stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.1);
 }
+
+.gatepass-stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.card-total::after { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.card-pending::after { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.card-out::after { background: linear-gradient(90deg, #10b981, #34d399); }
+.card-overdue::after { background: linear-gradient(90deg, #ef4444, #f87171); }
 
 .gatepass-stat-card .stat-label {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #6b7280;
+  letter-spacing: 0.06em;
+  color: #64748b;
   display: block;
+  margin-bottom: 0.4rem;
 }
 
 .gatepass-stat-card .stat-num {
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: #111827;
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #0f172a;
   display: block;
-  margin: 0.25rem 0;
+  line-height: 1.1;
+  font-feature-settings: "tnum";
 }
 
 .gatepass-stat-card .stat-sub {
-  font-size: 0.75rem;
-  color: #9ca3af;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 0.35rem;
+  display: block;
+  font-weight: 500;
 }
-
-.card-total { border-left: 4px solid #3b82f6; }
-.card-pending { border-left: 4px solid #f59e0b; }
-.card-out { border-left: 4px solid #10b981; }
-.card-overdue { border-left: 4px solid #ef4444; }
 
 /* Toolbar */
 .gatepass-toolbar {
@@ -111,120 +218,189 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
   background: #ffffff;
-  padding: 0.85rem 1.25rem;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  padding: 1rem 1.4rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .toolbar-search {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   flex: 1;
-  min-width: 250px;
+  min-width: 260px;
   position: relative;
 }
 
 .gatepass-search-input {
   width: 100%;
-  padding: 0.55rem 1.8rem 0.55rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  padding: 0.65rem 2rem 0.65rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.625rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+}
+
+.gatepass-search-input:focus {
+  outline: none;
+  border-color: #059669;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
 }
 
 .btn-clear-search {
   position: absolute;
-  right: 0.5rem;
+  right: 0.65rem;
   background: none;
   border: none;
-  font-size: 1.1rem;
-  color: #9ca3af;
+  font-size: 1.25rem;
+  color: #94a3b8;
   cursor: pointer;
+  line-height: 1;
+}
+
+.btn-clear-search:hover {
+  color: #334155;
 }
 
 .toolbar-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   align-items: center;
 }
 
 .gatepass-select {
-  padding: 0.55rem 0.85rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.625rem;
   font-size: 0.875rem;
   background: #ffffff;
+  font-weight: 600;
+  color: #1e293b;
   cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.gatepass-select:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
 }
 
 /* Cards Grid */
 .gatepass-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.35rem;
 }
 
 .gatepass-card {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 1.25rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  border-radius: 1.15rem;
+  padding: 1.4rem;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: all 0.2s ease;
+  gap: 0.85rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
 .gatepass-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.1);
+  border-color: #cbd5e1;
 }
 
 .card-border-overdue {
   border: 2px solid #ef4444;
-  background: #fff5f5;
-  animation: pulseOverdue 2s infinite;
+  background: #fffafa;
+  animation: pulseOverdueBorder 2.5s infinite;
 }
 
-@keyframes pulseOverdue {
-  0%, 100% { border-color: #ef4444; }
-  50% { border-color: #f87171; }
+@keyframes pulseOverdueBorder {
+  0%, 100% { border-color: #ef4444; box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+  50% { border-color: #f87171; box-shadow: 0 0 12px rgba(239, 68, 68, 0.25); }
 }
 
 .pass-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .pass-number {
-  font-family: monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 700;
   font-size: 0.8125rem;
   color: #0369a1;
-  background: #e0f2fe;
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.5rem;
 }
 
+/* Status Badges */
 .gate-badge {
   font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.25rem 0.6rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
   border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  letter-spacing: 0.02em;
 }
 
-.badge-pending { background: #fef3c7; color: #b45309; }
-.badge-approved { background: #dcfce7; color: #15803d; }
-.badge-out { background: #e0e7ff; color: #4338ca; }
-.badge-returned { background: #f1f5f9; color: #475569; }
-.badge-overdue { background: #fee2e2; color: #b91c1c; font-weight: 700; }
-.badge-rejected { background: #fee2e2; color: #991b1b; }
-.badge-cancelled { background: #f3f4f6; color: #6b7280; }
+.badge-pending {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-approved {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-out {
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #c7d2fe;
+}
+
+.badge-returned {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.badge-overdue {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  font-weight: 800;
+}
+
+.badge-rejected {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.badge-cancelled {
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
 
 .pass-meta-row {
   display: flex;
@@ -235,185 +411,245 @@
 .pass-type-chip, .pass-room-chip {
   font-size: 0.75rem;
   font-weight: 600;
-  background: #f3f4f6;
-  color: #374151;
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
+  background: #f1f5f9;
+  color: #334155;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
 }
 
 .student-name {
   font-weight: 700;
-  font-size: 0.9375rem;
-  color: #111827;
+  font-size: 1rem;
+  color: #0f172a;
 }
 
 .student-sub {
-  font-size: 0.75rem;
-  color: #6b7280;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 0.15rem;
 }
 
+/* Timing Card Inside Pass */
 .pass-timing-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 0.6rem 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
 }
 
 .time-col {
   display: flex;
   flex-direction: column;
+  gap: 0.15rem;
 }
 
 .time-label {
   font-size: 0.6875rem;
-  color: #6b7280;
+  color: #64748b;
   text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .time-val {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #111827;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .time-arrow {
-  color: #9ca3af;
+  color: #94a3b8;
+  font-size: 1rem;
   font-weight: bold;
 }
 
 .pass-detail-row {
   display: flex;
-  gap: 0.35rem;
-  font-size: 0.8125rem;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  align-items: baseline;
 }
 
 .detail-key {
-  color: #6b7280;
+  color: #64748b;
   font-weight: 600;
+  min-width: 70px;
 }
 
 .detail-val {
-  color: #1f2937;
+  color: #1e293b;
+  font-weight: 500;
 }
 
 .pass-remarks-snippet {
-  background: #ecfeff;
-  border-left: 3px solid #06b6d4;
-  padding: 0.4rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: #0e7490;
+  background: #f0fdf4;
+  border-left: 3.5px solid #10b981;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  color: #065f46;
+  font-weight: 500;
 }
 
 .pass-card-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid #f3f4f6;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
 }
 
+.pass-card-actions .btn {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.5rem;
+}
+
+/* Empty & Loading states */
 .gatepass-empty-state, .gatepass-loading {
   text-align: center;
-  padding: 3.5rem 1.5rem;
+  padding: 4rem 2rem;
   background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
 }
 
 .empty-icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Modals */
+/* Modals General */
 .gatepass-modal {
   max-width: 580px;
   width: 95%;
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.gatepass-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.gatepass-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.625rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.gatepass-input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
 }
 
 .review-summary-box {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.15rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  font-size: 0.8125rem;
-  margin-bottom: 1rem;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  margin-bottom: 1.15rem;
 }
 
-/* Printable Pass Slip */
+/* ===================================================================
+   Official Printable Security Gate Pass Slip
+   =================================================================== */
 .print-pass-modal {
-  max-width: 650px;
+  max-width: 660px;
   width: 95%;
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3);
 }
 
 .printable-pass-container {
-  padding: 1.5rem;
-  border: 2px dashed #0f172a;
-  border-radius: 10px;
+  padding: 1.75rem 2rem;
+  border: 2px solid #0f172a;
+  border-radius: 1rem;
   margin: 1.5rem;
-  background: #fafafa;
+  background: #ffffff;
+  position: relative;
+  box-shadow: inset 0 0 0 3px #f1f5f9;
 }
 
 .pass-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   border-bottom: 2px solid #0f172a;
-  padding-bottom: 0.75rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .college-crest-mini {
-  font-size: 2.25rem;
+  font-size: 2.75rem;
+  line-height: 1;
 }
 
 .college-heading h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #0f172a;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .college-heading h4 {
-  margin: 0.15rem 0;
-  font-size: 0.9rem;
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #0369a1;
+  letter-spacing: 0.02em;
 }
 
 .college-heading p {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: #64748b;
+  font-weight: 500;
 }
 
 .pass-qr-badge {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .qr-box {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #ffffff;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
 }
 
 .pass-serial {
@@ -424,79 +660,88 @@
   font-size: 0.6875rem;
   font-weight: 700;
   color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .serial-val {
-  font-family: monospace;
-  font-size: 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #0f172a;
+  letter-spacing: 0.02em;
 }
 
 .pass-status-pill {
   display: inline-block;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
   font-size: 0.75rem;
   font-weight: 700;
-  background: #dcfce7;
-  color: #15803d;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .pass-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8125rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.75rem;
 }
 
 .pass-table th, .pass-table td {
   border: 1px solid #cbd5e1;
-  padding: 0.5rem 0.65rem;
+  padding: 0.65rem 0.85rem;
   text-align: left;
 }
 
 .pass-table th {
   background: #f1f5f9;
-  font-weight: 600;
-  color: #334155;
-  width: 25%;
+  font-weight: 700;
+  color: #1e293b;
+  width: 28%;
 }
 
 .pass-footer-signs {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   text-align: center;
+  gap: 1rem;
 }
 
 .sign-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.6875rem;
+  gap: 0.35rem;
+  font-size: 0.72rem;
   color: #475569;
-  font-weight: 600;
-  min-width: 130px;
+  font-weight: 700;
+  min-width: 140px;
 }
 
 .sign-line {
   width: 100%;
-  border-bottom: 1px solid #0f172a;
-  margin-bottom: 0.25rem;
+  border-bottom: 1.5px solid #0f172a;
+  margin-bottom: 0.35rem;
 }
 
 .sign-stamp {
-  font-size: 0.625rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  color: #15803d;
-  border: 1.5px solid #15803d;
-  padding: 0.15rem 0.35rem;
-  border-radius: 4px;
-  transform: rotate(-4deg);
-  margin-bottom: 0.5rem;
+  color: #065f46;
+  border: 1.5px solid #059669;
+  background: #ecfdf5;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
+  transform: rotate(-3deg);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
 }
 
 @media print {
@@ -512,6 +757,7 @@
     top: 0;
     width: 100%;
     margin: 0;
-    padding: 20px;
+    padding: 24px;
+    border: 2px solid #000000;
   }
 }

@@ -51,6 +51,12 @@ public class NoticeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/api/warden/notices/{id}/pin")
+    @PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
+    public ResponseEntity<NoticeResponseDto> toggleWardenPin(@PathVariable Long id) {
+        return ResponseEntity.ok(noticeService.togglePinNotice(id));
+    }
+
     // Admin notices
     @GetMapping("/api/admin/notices")
     @PreAuthorize("hasRole('ADMIN')")
@@ -65,6 +71,12 @@ public class NoticeController {
             @Valid @RequestBody NoticeCreateDto dto
     ) {
         return ResponseEntity.status(HttpStatus.CREATED).body(noticeService.createNotice(authentication.getName(), dto));
+    }
+
+    @PutMapping("/api/admin/notices/{id}/pin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<NoticeResponseDto> toggleAdminPin(@PathVariable Long id) {
+        return ResponseEntity.ok(noticeService.togglePinNotice(id));
     }
 
     @DeleteMapping("/api/admin/notices/{id}")

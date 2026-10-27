@@ -15,7 +15,7 @@ const CATEGORIES = [
 const PRIORITIES = [
   { value: 'LOW', label: 'Low', badge: 'priority-low' },
   { value: 'NORMAL', label: 'Normal', badge: 'priority-normal' },
-  { value: 'HIGH', label: 'High Priority', badge: 'priority-high' },
+  { value: 'IMPORTANT', label: 'Important (महत्त्वाचे)', badge: 'priority-high' },
   { value: 'URGENT', label: 'Urgent / Alert 🔥', badge: 'priority-urgent' }
 ];
 
@@ -92,9 +92,9 @@ export default function NoticeBoardManager({ role = 'STUDENT' }) {
         content: formData.content.trim(),
         category: formData.category,
         priority: formData.priority,
-        target: formData.target,
-        pinned: formData.pinned,
-        expiresAt: formData.expiresAt || null
+        targetAudience: formData.target || 'ALL',
+        isPinned: Boolean(formData.pinned),
+        hostelId: null
       };
 
       const res = await authFetch(apiBase, {
@@ -166,8 +166,8 @@ export default function NoticeBoardManager({ role = 'STUDENT' }) {
     return true;
   });
 
-  const pinnedNotices = filteredNotices.filter((n) => n.pinned);
-  const regularNotices = filteredNotices.filter((n) => !n.pinned);
+  const pinnedNotices = filteredNotices.filter((n) => n.isPinned || n.pinned);
+  const regularNotices = filteredNotices.filter((n) => !n.isPinned && !n.pinned);
 
   return (
     <div className="notice-board-container">
@@ -474,19 +474,21 @@ export default function NoticeBoardManager({ role = 'STUDENT' }) {
 }
 
 function NoticeCard({ notice, isStaff, onTogglePin, onDelete, onReadMore }) {
-  const isUrgent = notice.priority === 'URGENT' || notice.priority === 'HIGH';
+  const isPinned = Boolean(notice.isPinned || notice.pinned);
+  const isUrgent = notice.priority === 'URGENT' || notice.priority === 'IMPORTANT' || notice.priority === 'HIGH';
+  const target = notice.targetAudience || notice.target || 'ALL';
 
   return (
-    <div className={`notice-card ${notice.pinned ? 'card-pinned' : ''} ${isUrgent ? 'card-urgent' : ''}`}>
+    <div className={`notice-card ${isPinned ? 'card-pinned' : ''} ${isUrgent ? 'card-urgent' : ''}`}>
       <div className="card-top-row">
         <div className="badge-cluster">
           <span className={`priority-badge priority-${notice.priority?.toLowerCase()}`}>
             {notice.priority === 'URGENT' ? '🔥 URGENT' : notice.priority}
           </span>
           <span className="category-badge">{notice.category}</span>
-          {notice.target !== 'ALL' && (
+          {target !== 'ALL' && (
             <span className="target-badge">
-              {notice.target === 'BOYS_HOSTEL' ? '🚹 Boys' : '🚺 Girls'}
+              {target === 'BOYS_HOSTEL' ? '🚹 Boys' : '🚺 Girls'}
             </span>
           )}
         </div>
@@ -494,8 +496,8 @@ function NoticeCard({ notice, isStaff, onTogglePin, onDelete, onReadMore }) {
         {isStaff && (
           <div className="staff-actions">
             <button
-              className={`action-icon-btn ${notice.pinned ? 'pinned-active' : ''}`}
-              title={notice.pinned ? 'Unpin Notice' : 'Pin Notice to Top'}
+              className={`action-icon-btn ${isPinned ? 'pinned-active' : ''}`}
+              title={isPinned ? 'Unpin Notice' : 'Pin Notice to Top'}
               onClick={() => onTogglePin(notice.id)}
             >
               📌

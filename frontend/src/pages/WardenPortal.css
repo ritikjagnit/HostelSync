@@ -1,5 +1,156 @@
 /* Warden Operations Portal Styling */
 
+/* Luxury Warden Banner */
+.warden-luxury-banner {
+  background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #065f46 100%) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  border-left: 6px solid #10b981 !important;
+  border-radius: 1.25rem !important;
+  padding: 1.75rem 2.25rem !important;
+  box-shadow: 0 16px 36px -10px rgba(6, 78, 59, 0.45) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 1.5rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.warden-luxury-banner .portal-title {
+  color: #ffffff !important;
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.35rem 0 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.warden-luxury-banner .portal-subtitle {
+  color: #d1fae5 !important;
+  font-size: 0.92rem !important;
+  margin: 0 !important;
+}
+
+.warden-badge-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.warden-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(167, 243, 208, 0.35);
+  color: #a7f3d0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+}
+
+.warden-role-tag {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f0fdf4;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.warden-banner-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.warden-banner-user .user-profile-badge {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.warden-banner-user .user-name {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.warden-banner-user .user-email {
+  color: #a7f3d0;
+  font-size: 0.8rem;
+}
+
+.btn-warden-signout {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.btn-warden-signout:hover {
+  background: #ffffff;
+  color: #064e3b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Segmented Pill Tabs for Warden */
+.warden-tabs-pill-row {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.4rem;
+  background: #f1f5f9;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+  scrollbar-width: thin;
+}
+
+.warden-tabs-pill-row .tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.15rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.warden-tabs-pill-row .tab-btn:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.warden-tabs-pill-row .tab-btn.active {
+  background: #ffffff;
+  color: #065f46;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Dashboard Stats */
 .warden-dashboard-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
