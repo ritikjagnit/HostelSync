@@ -1,15 +1,18 @@
 /* ===================================================================
-   HostelSync — Student Resident Portal Luxury Design System
+   HostelSync — Student Resident Portal Senior-Grade Design System
    Institution: Government Polytechnic Sakoli (MSBTE)
+   Architect: Senior UI/UX Engineer
    Aesthetic: Ultra-Modern Institutional SaaS, Obsidian-Indigo, Glassmorphism
    =================================================================== */
 
 .student-portal-wrapper {
   padding: 1.75rem 0 4rem;
   min-height: calc(100vh - 4.25rem - 140px);
-  background: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.04) 0px, transparent 50%),
-              radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+  background: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+              radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
               #f8fafc;
+  font-family: inherit;
+  color: #0f172a;
 }
 
 /* ===================================================================
@@ -22,11 +25,12 @@
   flex-wrap: wrap;
   gap: 1.5rem;
   margin-bottom: 1.75rem;
-  background: linear-gradient(135deg, #0b1329 0%, #172554 45%, #1e3a8a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, #09152e 0%, #172554 45%, #1e3a8a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 6px solid #3b82f6;
   border-radius: 1.25rem;
   padding: 1.75rem 2.25rem;
-  box-shadow: 0 20px 40px -15px rgba(11, 19, 41, 0.35), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+  box-shadow: 0 20px 40px -15px rgba(11, 19, 41, 0.4), 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
   color: #ffffff;
   position: relative;
   overflow: hidden;
@@ -37,9 +41,9 @@
   position: absolute;
   top: -50%;
   right: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.22) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -68,7 +72,7 @@
   background: #10b981;
   border-radius: 50%;
   box-shadow: 0 0 10px #10b981;
-  animation: pulse-dot 2s infinite;
+  animation: pulse-dot 2s infinite ease-in-out;
 }
 
 @keyframes pulse-dot {
@@ -85,7 +89,7 @@
 }
 
 .student-portal-title {
-  font-size: 2rem;
+  font-size: 2.15rem;
   font-weight: 850;
   color: #ffffff;
   letter-spacing: -0.025em;
@@ -105,16 +109,16 @@
   font-weight: 600;
   background: rgba(255, 255, 255, 0.12);
   color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   backdrop-filter: blur(6px);
 }
 
 .room-pill {
-  background: rgba(16, 185, 129, 0.18);
+  background: rgba(16, 185, 129, 0.2);
   color: #a7f3d0;
-  border-color: rgba(16, 185, 129, 0.35);
+  border-color: rgba(16, 185, 129, 0.4);
 }
 
 .student-header-actions {
@@ -128,22 +132,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 0.75rem 1.35rem;
+  padding: 0.75rem 1.4rem;
   border-radius: 0.75rem;
   font-size: 0.9375rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
 }
 
 .btn-id-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.5);
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
 }
 
 .btn-logout {
@@ -163,9 +167,9 @@
 }
 
 .btn-logout:hover {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.25);
   color: #fecaca;
-  border-color: rgba(239, 68, 68, 0.4);
+  border-color: rgba(239, 68, 68, 0.45);
 }
 
 /* ===================================================================
@@ -196,9 +200,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.65rem 1.15rem;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
   color: #64748b;
   background: transparent;
   border: none;
@@ -211,13 +215,15 @@
 .student-tab-btn:hover {
   color: #0f172a;
   background: #f1f5f9;
+  transform: translateY(-1px);
 }
 
 .student-tab-btn.active {
   color: #ffffff;
   background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  font-weight: 750;
+  transform: translateY(-1px);
 }
 
 .tab-icon {
@@ -232,9 +238,9 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.875rem 1.25rem;
+  padding: 0.9rem 1.35rem;
   border-radius: 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -257,14 +263,14 @@
    =================================================================== */
 .student-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
   gap: 1.25rem;
   margin-bottom: 2rem;
 }
 
 .student-stat-card {
   background: #ffffff;
-  padding: 1.35rem 1.5rem;
+  padding: 1.4rem 1.6rem;
   border-radius: 1rem;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
@@ -272,12 +278,24 @@
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .student-stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px -5px rgba(15, 23, 42, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -5px rgba(15, 23, 42, 0.09);
   border-color: #cbd5e1;
+}
+
+.student-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #3b82f6;
 }
 
 .stat-card-header {
@@ -288,25 +306,50 @@
 }
 
 .stat-card-title {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: #64748b;
 }
 
 .stat-card-value {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 850;
   color: #0f172a;
   letter-spacing: -0.02em;
   margin-bottom: 0.35rem;
+  line-height: 1.1;
 }
 
 .stat-card-detail {
   font-size: 0.8125rem;
   color: #64748b;
   font-weight: 500;
+}
+
+.status-badge-active {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-badge-completed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 /* ===================================================================
@@ -326,7 +369,7 @@
 }
 
 .section-heading-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
@@ -334,7 +377,7 @@
 }
 
 .section-heading-sub {
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: #64748b;
   margin: 0.25rem 0 0 0;
 }
@@ -410,7 +453,7 @@
 
 .service-hub-card:hover .service-arrow {
   color: #2563eb;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 /* ===================================================================
@@ -466,6 +509,14 @@
   justify-content: space-between;
 }
 
+.accommodation-banner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .accommodation-hostel-tag {
   font-size: 0.72rem;
   font-weight: 800;
@@ -491,6 +542,28 @@
   align-items: center;
   gap: 0.4rem;
   margin: 0;
+}
+
+.accommodation-alloc-date {
+  text-align: right;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.625rem;
+  padding: 0.4rem 0.75rem;
+}
+
+.alloc-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+}
+
+.alloc-val {
+  font-size: 0.85rem;
+  font-weight: 750;
+  color: #0f172a;
 }
 
 .accommodation-metrics-pills {
@@ -532,6 +605,7 @@
   border-left: 4px solid #3b82f6;
   border-radius: 0.875rem;
   padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .guidelines-title {
@@ -550,7 +624,424 @@
 }
 
 /* ===================================================================
-   8. Responsive Behavior
+   8. Room Showcase Tab (My Room)
+   =================================================================== */
+.room-showcase-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  margin-bottom: 2rem;
+}
+
+.room-showcase-photo-banner {
+  position: relative;
+  min-height: 240px;
+  background: #0f172a;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.room-showcase-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.room-showcase-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 100%);
+}
+
+.room-showcase-photo-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem 2.25rem;
+  width: 100%;
+  color: #ffffff;
+}
+
+.room-showcase-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.room-allotted-since {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.allotted-lbl {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+
+.allotted-date {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.room-hero-title {
+  font-size: 1.85rem;
+  font-weight: 850;
+  color: #ffffff;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: -0.02em;
+}
+
+.room-hero-subtitle {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.room-showcase-body {
+  padding: 2rem 2.25rem;
+}
+
+.room-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.room-metric-box {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.875rem;
+  padding: 1.15rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.room-metric-box:hover {
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.metric-value {
+  font-size: 1.45rem;
+  font-weight: 850;
+  color: #0f172a;
+}
+
+/* ===================================================================
+   9. Tables (Allocation History & Attendance Logs)
+   =================================================================== */
+.student-data-table-wrap {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.student-data-table,
+.allocations-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.student-data-table thead th,
+.allocations-table thead th {
+  background: #f8fafc;
+  padding: 0.9rem 1.15rem;
+  font-size: 0.76rem;
+  font-weight: 750;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.student-data-table tbody td,
+.allocations-table tbody td {
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+}
+
+.student-data-table tbody tr:hover,
+.allocations-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ===================================================================
+   10. Profile Card Grid
+   =================================================================== */
+.profile-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-card-grid .card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.15rem;
+  padding: 1.75rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.portal-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.9rem;
+}
+
+.portal-info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #64748b;
+}
+
+.info-value {
+  font-weight: 700;
+  color: #0f172a;
+  text-align: right;
+}
+
+/* ===================================================================
+   11. Attendance Dashboard (Night Roll Call)
+   =================================================================== */
+.section-action-bar {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.attendance-calc-formula {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-left: 4px solid #0284c7;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.85rem;
+  color: #0369a1;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.attendance-calc-formula code {
+  background: #e0f2fe;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  font-weight: 700;
+}
+
+.student-attendance-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 1.75rem;
+}
+
+.student-attendance-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.35rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 4px solid #3b82f6;
+}
+
+.student-attendance-card.card-green { border-top-color: #10b981; }
+.student-attendance-card.card-amber { border-top-color: #f59e0b; }
+.student-attendance-card.card-red { border-top-color: #ef4444; }
+.student-attendance-card.card-blue { border-top-color: #2563eb; }
+
+.attendance-percentage-gauge {
+  font-size: 2.25rem;
+  font-weight: 900;
+  margin: 0.4rem 0;
+  letter-spacing: -0.02em;
+}
+
+.attendance-percentage-gauge.good { color: #16a34a; }
+.attendance-percentage-gauge.warning { color: #d97706; }
+.attendance-percentage-gauge.danger { color: #dc2626; }
+
+.student-filter-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.attendance-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.attendance-badge.present {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.attendance-badge.absent {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.attendance-badge.on_leave,
+.attendance-badge.on-leave {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+/* ===================================================================
+   12. Empty States
+   =================================================================== */
+.empty-state-panel {
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 1.25rem;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.empty-state-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state-desc {
+  font-size: 0.92rem;
+  color: #64748b;
+  max-width: 540px;
+  margin: 0 auto 1.5rem auto;
+  line-height: 1.55;
+}
+
+/* ===================================================================
+   13. Modals
+   =================================================================== */
+.student-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.student-modal-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  max-width: 500px;
+  width: 100%;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3);
+  border: 1px solid #e2e8f0;
+  animation: modalZoomIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalZoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.student-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.student-modal-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #94a3b8;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-close-modal:hover {
+  color: #0f172a;
+}
+
+/* ===================================================================
+   14. Responsive Behavior
    =================================================================== */
 @media (max-width: 900px) {
   .student-accommodation-banner {
