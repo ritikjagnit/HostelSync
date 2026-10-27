@@ -19,6 +19,72 @@ const MEAL_TYPES = [
   { value: 'DINNER', label: 'Dinner (रात्रीचे जेवण)', icon: '🍲', timing: '8:00 PM - 9:30 PM' }
 ];
 
+const DEFAULT_WEEKLY_SCHEDULE = {
+  MONDAY: {
+    dayOfWeek: 'MONDAY',
+    breakfast: 'Kanda Poha with Sev & Coconut Chutney, Sprouted Moong, Masala Chai / Warm Milk',
+    lunch: 'Tawa Roti (Ghee), Dal Tadka, Aloo Gobhi Matar Sabzi, Steamed Kolam Rice, Roasted Papad, Salad & Lemon Pickle',
+    snacks: 'Special Ginger Cardamom Tea with Crisp Khari & Biscuits',
+    dinner: 'Soft Chapati, Shev Bhaji (Khandeshi Style), Varan Bhat with Pure Ghee, Tomato Saar, Gulab Jamun',
+    isSpecial: false,
+    notes: 'Breakfast includes fresh sprouted moong rich in protein for all residents.'
+  },
+  TUESDAY: {
+    dayOfWeek: 'TUESDAY',
+    breakfast: 'Steamed Idli with Drumstick Sambhar, Fresh Coconut Chutney, Filter Coffee / Tea',
+    lunch: 'Phulka Roti, Amritsari Chana Masala (Chole), Jeera Rice, Mixed Veg Cucumber Raita, Roasted Papad, Pickle',
+    snacks: 'Hot Masala Chai with Crispy Bhakarwadi & Mathri',
+    dinner: 'Jowar Bhakri / Chapati, Baingan Bharta, Yellow Moong Dal Fry, Steamed Rice, Warm Besan Ladoo',
+    isSpecial: false,
+    notes: 'Traditional roasted Baingan Bharta and fresh Jowar Bhakri served today.'
+  },
+  WEDNESDAY: {
+    dayOfWeek: 'WEDNESDAY',
+    breakfast: 'Rava Upma with Roasted Peanuts, Shev & Lemon, Groundnut Chutney, Elaichi Tea / Milk',
+    lunch: 'Butter Roti, Paneer Butter Masala, Home-Style Dal Tadka, Green Peas Pulao, Kachumber Salad, Papad',
+    snacks: 'Evening Masala Chai with Crispy Batata Vada & Mint-Coriander Chutney',
+    dinner: 'Tawa Chapati, Methi Aloo Sabzi, Masoor Dal Tadka, Steamed Rice, Roasted Papad, Fresh Fruit Salad',
+    isSpecial: false,
+    notes: 'Special Paneer feast lunch prepared fresh by student mess committee request.'
+  },
+  THURSDAY: {
+    dayOfWeek: 'THURSDAY',
+    breakfast: 'Sabudana Khichdi with Roasted Peanuts & Lemon Curd, Masala Chai / Badam Milk',
+    lunch: 'Wheat Chapati, Punjabi Rajma Masala, Palak Dal (Spinach), Steamed Jeera Rice, Sweet Curd, Salad',
+    snacks: 'Hot Ginger Tea with Crispy Kanda Bhaji (Onion Pakoda) & Fried Green Chillies',
+    dinner: 'Phulka Roti, Matar Paneer Bhaji, Dal Fry, Steamed Kolam Rice, Homemade Vermicelli Kheer (शेवयांची खीर)',
+    isSpecial: false,
+    notes: 'Upvaas / Fasting meal (Sabudana Khichdi & Curd) available on request.'
+  },
+  FRIDAY: {
+    dayOfWeek: 'FRIDAY',
+    breakfast: 'Kolhapuri Misal Pav with Spicy Tari, Farsan, Chopped Onions & Lemon, Masala Chai',
+    lunch: 'Soft Chapati, Masaledar Bhindi Fry, Gujarati Kadi / Toor Dal, Steamed Rice, Roasted Papad, Mango Pickle',
+    snacks: 'Evening Lemon Tea / Regular Tea with Cream Toast & Biscuits',
+    dinner: 'Tawa Roti, Kashmiri Dum Aloo, Dal Tadka, Steamed Jeera Rice, Crispy Jalebi / Sweet Boondi',
+    isSpecial: false,
+    notes: 'Authentic Maharashtrian Misal Pav breakfast with fresh lemon & coriander.'
+  },
+  SATURDAY: {
+    dayOfWeek: 'SATURDAY',
+    breakfast: 'Crispy Medu Vada & Uttapam with Sambhar & Coconut Chutney, Hot Tea / Milk',
+    lunch: 'Chapati, Mixed Veg Kolhapuri, Dal Fry, Fragrant Lemon Rice, Roasted Papad, Fresh Tomato Salad',
+    snacks: 'Hot Masala Tea with Crispy Vegetable Samosa & Sweet-Sour Imli Chutney',
+    dinner: 'Poori (Puri), Sukhi Aloo Bhaji, Chana Dal Fry, Steamed Rice, Elaichi Shrikhand',
+    isSpecial: false,
+    notes: 'Poori and traditional Shrikhand weekend special dinner served.'
+  },
+  SUNDAY: {
+    dayOfWeek: 'SUNDAY',
+    breakfast: 'Stuffed Aloo Paratha with Amul Butter, Fresh Curd, Mixed Pickle, Special Masala Tea',
+    lunch: 'Butter Naan / Poori, Paneer Angara Deluxe, Dal Makhani, Royal Veg Dum Biryani, Boondi Raita, Hot Gulab Jamun',
+    snacks: 'Evening Tea with Mysore Pak & Assorted Dry Snacks',
+    dinner: 'Soft Phulkas, Malai Kofta Curry, Tadka Dal, Steamed Basmati Rice, Fruit Custard with Jelly',
+    isSpecial: true,
+    notes: 'Weekly Grand Hostel Feast! Pure vegetarian royal menu with ice-cream / sweet.'
+  }
+};
+
 function getTodayDayOfWeek() {
   const dayNames = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
   return dayNames[new Date().getDay()];
@@ -195,14 +261,11 @@ export default function MessManagementSection({ role = 'STUDENT' }) {
     }
   };
 
-  const currentDayMenu = weeklyMenu.find((m) => m.dayOfWeek === activeDay) || {
-    dayOfWeek: activeDay,
-    breakfast: 'Poha / Upma, Chutney, Tea / Milk',
-    lunch: 'Roti, Dal Tadka, Seasonal Sabzi, Jeera Rice, Salad, Pickle',
-    snacks: 'Evening Tea with Biscuits / Bhajiya',
-    dinner: 'Chapati, Mix Veg Handi, Dal Fry, Steamed Rice, Sweet (Gulab Jamun / Kheer)',
-    isSpecial: activeDay === 'SUNDAY'
-  };
+  const backendMenu = weeklyMenu.find((m) => m.dayOfWeek === activeDay);
+  const fallbackMenu = DEFAULT_WEEKLY_SCHEDULE[activeDay] || DEFAULT_WEEKLY_SCHEDULE.MONDAY;
+  const currentDayMenu = backendMenu && (backendMenu.breakfast || backendMenu.lunch || backendMenu.dinner)
+    ? { ...fallbackMenu, ...backendMenu }
+    : fallbackMenu;
 
   const satisfactionPercentage = stats.averageRating ? Math.round((stats.averageRating / 5) * 100) : 88;
 
