@@ -78,23 +78,31 @@ export default function MessManagementSection({ role = 'STUDENT' }) {
       }
 
       // 2. Stats / Summary
-      let statsRes = await authFetch(`${apiBase}/stats`);
-      if (!statsRes.ok) {
-        statsRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/summary' : '/api/warden/mess/feedback/summary');
-      }
-      if (statsRes && statsRes.ok) {
-        const statsData = await statsRes.json();
-        setStats(statsData);
+      try {
+        let statsRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/summary' : '/api/warden/mess/stats');
+        if (!statsRes.ok) {
+          statsRes = await authFetch(`${apiBase}/stats`);
+        }
+        if (statsRes && statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      } catch {
+        // Default stats fallback already handled gracefully
       }
 
       // 3. Feedbacks
-      let feedbackRes = await authFetch(`${apiBase}/feedbacks`);
-      if (!feedbackRes.ok) {
-        feedbackRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/my' : '/api/warden/mess/feedbacks');
-      }
-      if (feedbackRes && feedbackRes.ok) {
-        const fbData = await feedbackRes.json();
-        setFeedbacks(fbData);
+      try {
+        let feedbackRes = await authFetch(role === 'STUDENT' ? '/api/student/mess/feedback/my' : '/api/warden/mess/feedbacks');
+        if (!feedbackRes.ok) {
+          feedbackRes = await authFetch(`${apiBase}/feedbacks`);
+        }
+        if (feedbackRes && feedbackRes.ok) {
+          const fbData = await feedbackRes.json();
+          setFeedbacks(fbData);
+        }
+      } catch {
+        // Ignore gracefully
       }
     } catch {
       // Fallback gracefully without showing blocking error banner
