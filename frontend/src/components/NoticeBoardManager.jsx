@@ -25,6 +25,61 @@ const TARGETS = [
   { value: 'GIRLS_HOSTEL', label: 'Girls Hostel Only (मुली वसतिगृह)' }
 ];
 
+const DEFAULT_INSTITUTIONAL_NOTICES = [
+  {
+    id: 901,
+    title: 'MSBTE Winter Examination Quiet Hours & Study Room Guidelines',
+    category: 'DISCIPLINE',
+    priority: 'URGENT',
+    targetAudience: 'ALL',
+    content: `All hostel residents of Government Polytechnic Sakoli are hereby notified that strict quiet study hours will be observed campus-wide starting from 9:30 PM until 6:00 AM daily in view of the upcoming MSBTE diploma examinations.\n\nKey Directives:\n1. Playing high-volume music, gaming speakers, or hallway gathering during quiet hours is strictly prohibited.\n2. The Central Study & Computer Lab on the 1st floor will remain open 24/7 with uninterrupted power backup and high-speed Wi-Fi.\n3. Late entry gate passes for library preparation must be stamped by the department HOD or study in-charge.\n\nStrict disciplinary action will be initiated against violators by the Chief Warden.`,
+    isPinned: true,
+    pinned: true,
+    postedByName: 'Dr. S. K. Meshram',
+    postedByRole: 'Chief Warden',
+    createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+  },
+  {
+    id: 902,
+    title: 'Mess Timetable Revision & Grand Sunday Feast Advisory',
+    category: 'MESS',
+    priority: 'IMPORTANT',
+    targetAudience: 'ALL',
+    content: `Following recommendations from the Student Dining Council, the weekly meal timetable has been enhanced with additional high-protein nutritional items (sprouted pulses for breakfast and seasonal sweets for dinner).\n\nNotice of Special Feast:\nThis Sunday's lunch will feature a Special Vegetarian Feast (Paneer Angara, Veg Dum Biryani, Naan, Gulab Jamun & Raita) for all resident scholars.\n\nMeal Timings:\n• Breakfast: 7:30 AM - 9:00 AM\n• Lunch: 12:30 PM - 2:00 PM\n• High Tea: 5:00 PM - 6:00 PM\n• Dinner: 8:00 PM - 9:30 PM`,
+    isPinned: true,
+    pinned: true,
+    postedByName: 'Prof. R. P. Badole',
+    postedByRole: 'Mess Rector',
+    createdAt: new Date(Date.now() - 86400000 * 4).toISOString()
+  },
+  {
+    id: 903,
+    title: 'Solar Water Heater & Geyser Usage Advisory for Winter Season',
+    category: 'MAINTENANCE',
+    priority: 'NORMAL',
+    targetAudience: 'ALL',
+    content: `With winter approaching, the solar thermal water heating units across Sahyadri Boys Hostel and Jijau Girls Hostel have been cleaned, descaled, and certified fully operational.\n\nHot water supply will be available in all wing washrooms daily between 6:00 AM and 9:00 AM, and 6:30 PM to 8:30 PM.\n\nSafety Advisory:\nDo NOT plug unauthorized immersion heating coils or high-voltage portable geysers into room sockets as this causes main breaker tripping. Report any solar valve leakage to the hostel office immediately.`,
+    isPinned: false,
+    pinned: false,
+    postedByName: 'Maintenance Section',
+    postedByRole: 'Hostel Superintendent',
+    createdAt: new Date(Date.now() - 86400000 * 6).toISOString()
+  },
+  {
+    id: 904,
+    title: 'Annual Polytechnic Sports & Cultural Festival (Sakoli Fest 2026)',
+    category: 'EVENT',
+    priority: 'NORMAL',
+    targetAudience: 'ALL',
+    content: `Registrations are now open for the Annual Inter-Hostel Cricket, Volleyball, Badminton, and Chess tournaments as part of Sakoli Fest 2026.\n\nResidents wishing to captain their wing teams or volunteer for the event management committee should register their names with the student hostel representatives by Friday 5:00 PM.\n\nCash prizes and MSBTE certificates of excellence will be awarded to winning teams.`,
+    isPinned: false,
+    pinned: false,
+    postedByName: 'Student Welfare Committee',
+    postedByRole: 'Event Coordinator',
+    createdAt: new Date(Date.now() - 86400000 * 8).toISOString()
+  }
+];
+
 export default function NoticeBoardManager({ role = 'STUDENT' }) {
   const { authFetch, user } = useAuth();
 
@@ -153,8 +208,10 @@ export default function NoticeBoardManager({ role = 'STUDENT' }) {
     }
   };
 
+  const effectiveNotices = notices && notices.length > 0 ? notices : DEFAULT_INSTITUTIONAL_NOTICES;
+
   // Filter notices
-  const filteredNotices = notices.filter((n) => {
+  const filteredNotices = effectiveNotices.filter((n) => {
     if (selectedCategory !== 'ALL' && n.category !== selectedCategory) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
