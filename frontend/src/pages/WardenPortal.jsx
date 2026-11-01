@@ -11,6 +11,19 @@ import RoomQrCodeModal from '../components/RoomQrCodeModal';
 import RoomDoorQrModal from '../components/RoomDoorQrModal';
 import ResidentIdCardModal from '../components/ResidentIdCardModal';
 import SosAlertMonitorBanner from '../components/SosAlertMonitorBanner';
+import {
+  IconOverview,
+  IconAttendance,
+  IconGatePass,
+  IconMess,
+  IconNotice,
+  IconGrievance,
+  IconBuilding,
+  IconRoom,
+  IconUsers,
+  IconHistory,
+  IconGraduationCap
+} from '../components/icons/PortalIcons';
 import './PortalCommon.css';
 import './WardenPortal.css';
 
@@ -493,77 +506,77 @@ export default function WardenPortal() {
             onClick={() => setActiveTab('overview')}
             id="tab-warden-overview"
           >
-            <span>📊</span> Dashboard Overview
+            <IconOverview size={17} /> Dashboard Overview
           </button>
           <button
             className={`tab-btn ${activeTab === 'attendance' ? 'active' : ''}`}
             onClick={() => setActiveTab('attendance')}
             id="tab-warden-attendance"
           >
-            <span>📋</span> Night Roll Call
+            <IconAttendance size={17} /> Night Roll Call
           </button>
           <button
             className={`tab-btn ${activeTab === 'gatepass' ? 'active' : ''}`}
             onClick={() => setActiveTab('gatepass')}
             id="tab-warden-gatepass"
           >
-            <span>🎫</span> Gate Passes
+            <IconGatePass size={17} /> Gate Passes
           </button>
           <button
             className={`tab-btn ${activeTab === 'mess' ? 'active' : ''}`}
             onClick={() => setActiveTab('mess')}
             id="tab-warden-mess"
           >
-            <span>🍽️</span> Mess &amp; Food
+            <IconMess size={17} /> Mess &amp; Food
           </button>
           <button
             className={`tab-btn ${activeTab === 'notices' ? 'active' : ''}`}
             onClick={() => setActiveTab('notices')}
             id="tab-warden-notices"
           >
-            <span>📢</span> Notice Board
+            <IconNotice size={17} /> Notice Board
           </button>
           <button
             className={`tab-btn ${activeTab === 'complaints' ? 'active' : ''}`}
             onClick={() => setActiveTab('complaints')}
             id="tab-warden-complaints"
           >
-            <span>🔧</span> Maintenance &amp; Complaints
+            <IconGrievance size={17} /> Maintenance &amp; Complaints
           </button>
           <button
             className={`tab-btn ${activeTab === 'hostels' ? 'active' : ''}`}
             onClick={() => setActiveTab('hostels')}
             id="tab-warden-hostels"
           >
-            <span>🏢</span> Assigned Hostels ({hostels.length})
+            <IconBuilding size={17} /> Assigned Hostels ({hostels.length})
           </button>
           <button
             className={`tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
             onClick={() => setActiveTab('rooms')}
             id="tab-warden-rooms"
           >
-            <span>🚪</span> Room Inventory
+            <IconRoom size={17} /> Room Inventory
           </button>
           <button
             className={`tab-btn ${activeTab === 'residents' ? 'active' : ''}`}
             onClick={() => setActiveTab('residents')}
             id="tab-warden-residents"
           >
-            <span>👥</span> Resident Directory
+            <IconUsers size={17} /> Resident Directory
           </button>
           <button
             className={`tab-btn ${activeTab === 'allocations' ? 'active' : ''}`}
             onClick={() => setActiveTab('allocations')}
             id="tab-warden-allocations"
           >
-            <span>📜</span> Allocation History
+            <IconHistory size={17} /> Allocation History
           </button>
           <button
             className={`tab-btn ${activeTab === 'admissions' ? 'active' : ''}`}
             onClick={() => setActiveTab('admissions')}
             id="tab-warden-admissions"
           >
-            <span>📝</span> Admissions
+            <IconGraduationCap size={17} /> Admissions
           </button>
         </div>
 

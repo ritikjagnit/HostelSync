@@ -12,6 +12,22 @@ import CampusAnalyticsSection from '../components/CampusAnalyticsSection';
 import RoomQrCodeModal from '../components/RoomQrCodeModal';
 import ResidentIdCardModal from '../components/ResidentIdCardModal';
 import SosAlertMonitorBanner from '../components/SosAlertMonitorBanner';
+import {
+  IconOverview,
+  IconAttendance,
+  IconGatePass,
+  IconMess,
+  IconNotice,
+  IconGrievance,
+  IconBuilding,
+  IconRoom,
+  IconUsers,
+  IconHistory,
+  IconGraduationCap,
+  IconFees,
+  IconSparkles,
+  IconShield
+} from '../components/icons/PortalIcons';
 import './PortalCommon.css';
 import './AdminPortal.css';
 
@@ -1156,7 +1172,7 @@ export default function AdminPortal() {
               setActiveTab('dashboard');
             }}
           >
-            &#128202; Executive Dashboard
+            <IconOverview size={16} /> Executive Dashboard
           </button>
           <button
             role="tab"
@@ -1167,7 +1183,7 @@ export default function AdminPortal() {
               setActiveTab('hostels');
             }}
           >
-            &#127970; Hostels Directory <span className="tab-count">{hostels.length}</span>
+            <IconBuilding size={16} /> Hostels Directory <span className="tab-count">{hostels.length}</span>
           </button>
           <button
             role="tab"
@@ -1178,7 +1194,7 @@ export default function AdminPortal() {
               setActiveTab('rooms');
             }}
           >
-            &#128716; Room Inventory <span className="tab-count">{rooms.length}</span>
+            <IconRoom size={16} /> Room Inventory <span className="tab-count">{rooms.length}</span>
           </button>
           <button
             role="tab"
@@ -1189,7 +1205,7 @@ export default function AdminPortal() {
               setActiveTab('students');
             }}
           >
-            &#127891; Student Directory <span className="tab-count">{students.length}</span>
+            <IconUsers size={16} /> Student Directory <span className="tab-count">{students.length}</span>
           </button>
           <button
             role="tab"
@@ -1200,7 +1216,7 @@ export default function AdminPortal() {
               setActiveTab('allocations');
             }}
           >
-            &#128719; Room Allocations <span className="tab-count">{allocations.length}</span>
+            <IconHistory size={16} /> Room Allocations <span className="tab-count">{allocations.length}</span>
           </button>
           <button
             role="tab"
@@ -1211,7 +1227,7 @@ export default function AdminPortal() {
               setActiveTab('admissions');
             }}
           >
-            &#128221; Hostel Admissions
+            <IconGraduationCap size={16} /> Hostel Admissions
           </button>
           <button
             role="tab"
@@ -1222,7 +1238,7 @@ export default function AdminPortal() {
               setActiveTab('wardens');
             }}
           >
-            &#128110; Warden Oversight <span className="tab-count">{wardens.length}</span>
+            <IconShield size={16} /> Warden Oversight <span className="tab-count">{wardens.length}</span>
           </button>
           <button
             role="tab"
@@ -1233,7 +1249,7 @@ export default function AdminPortal() {
               setActiveTab('attendance');
             }}
           >
-            &#128197; Attendance Oversight
+            <IconAttendance size={16} /> Attendance Oversight
           </button>
           <button
             role="tab"
@@ -1244,7 +1260,7 @@ export default function AdminPortal() {
               setActiveTab('complaints');
             }}
           >
-            &#128295; Grievance Redressal
+            <IconGrievance size={16} /> Grievance Redressal
           </button>
           <button
             role="tab"
