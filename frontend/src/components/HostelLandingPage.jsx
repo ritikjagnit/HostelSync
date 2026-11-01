@@ -6,6 +6,14 @@ import HealthChecker from './HealthChecker';
 import ArchitectureCard from './ArchitectureCard';
 import HostelRegistrationModal from './HostelRegistrationModal';
 import AdmissionStatusModal from './AdmissionStatusModal';
+import {
+  IconBuilding,
+  IconGraduationCap,
+  IconShield,
+  IconCheck,
+  IconArrowRight,
+  IconRoom
+} from './icons/PortalIcons';
 import './HostelLandingPage.css';
 
 export default function HostelLandingPage() {
@@ -64,7 +72,7 @@ export default function HostelLandingPage() {
       date: '18 OCT 2026',
       tag: 'Mandatory',
       title: 'Daily Night Roll Call Compliance Notice',
-      desc: 'All residents of Sahyadri and Jijau Hostels must be present in their respective rooms during the evening roll call between 7:00 PM and 8:30 PM.'
+      desc: 'All residents of Sahyadri and Jijau Hostels must be present in their respective rooms during the evening roll call between 7:00 PM – 8:30 PM.'
     },
     {
       date: '15 OCT 2026',
@@ -140,7 +148,7 @@ export default function HostelLandingPage() {
                 className="btn btn-primary gov-btn-cta gov-btn-apply-hero"
                 onClick={() => setIsRegModalOpen(true)}
               >
-                &#128221; Online Hostel Admission (2026-27) &rarr;
+                Online Hostel Admission (2026-27) &rarr;
               </button>
               <button
                 type="button"
@@ -151,7 +159,7 @@ export default function HostelLandingPage() {
                   setIsStatusModalOpen(true);
                 }}
               >
-                &#128269; Track Status
+                Track Status
               </button>
               <Link to="/login" id="hero-btn-login" className="btn btn-secondary gov-btn-sec">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -189,7 +197,7 @@ export default function HostelLandingPage() {
               />
               <div className="gov-hero-img-overlay"></div>
               <div className="gov-hero-floating-tag">
-                <div className="tag-symbol">&#127963;</div>
+                <div className="tag-symbol"><IconBuilding size={24} /></div>
                 <div>
                   <div className="tag-headline">Sendurwafa Campus Residential Complex</div>
                   <div className="tag-subline">Sakoli, Bhandara District, Maharashtra &bull; Pin: 441802</div>
@@ -262,7 +270,7 @@ export default function HostelLandingPage() {
           <div className="gov-admission-workflow-grid">
             <div className="gov-step-card">
               <div className="gov-step-num">01</div>
-              <div className="gov-step-icon">&#128221;</div>
+              <div className="gov-step-icon"><IconGraduationCap size={28} /></div>
               <h3 className="gov-step-title">Online Registration</h3>
               <p className="gov-step-desc">
                 Prospective student submits personal details, diploma course, semester, SSC / Diploma merit percentage, and permanent home address with distance from Sakoli.
@@ -271,7 +279,7 @@ export default function HostelLandingPage() {
 
             <div className="gov-step-card">
               <div className="gov-step-num">02</div>
-              <div className="gov-step-icon">&#128269;</div>
+              <div className="gov-step-icon"><IconShield size={28} /></div>
               <h3 className="gov-step-title">In-Charge Scrutiny</h3>
               <p className="gov-step-desc">
                 Hostel In-Charge (Rector Dr. K. N. Potode &amp; Wardens) review applications against DTE Maharashtra merit norms, reservation quota, and travel distance criteria.
@@ -280,7 +288,7 @@ export default function HostelLandingPage() {
 
             <div className="gov-step-card">
               <div className="gov-step-num">03</div>
-              <div className="gov-step-icon">&#9989;</div>
+              <div className="gov-step-icon"><IconCheck size={28} /></div>
               <h3 className="gov-step-title">Shortlisting &amp; Selection</h3>
               <p className="gov-step-desc">
                 Hostel In-Charge selects eligible candidates to the official Shortlist (Status: SELECTED). Applicants can track their live status using their application reference.
@@ -289,7 +297,7 @@ export default function HostelLandingPage() {
 
             <div className="gov-step-card">
               <div className="gov-step-num">04</div>
-              <div className="gov-step-icon">&#128716;</div>
+              <div className="gov-step-icon"><IconRoom size={28} /></div>
               <h3 className="gov-step-title">Room Allotment &amp; Key Handover</h3>
               <p className="gov-step-desc">
                 Warden assigns the resident to a vacant room bed in Sahyadri Boys Hostel or Jijau Girls Hostel. Student login portal is automatically activated upon admission!
@@ -308,7 +316,7 @@ export default function HostelLandingPage() {
                 className="btn btn-primary gov-btn-cta"
                 onClick={() => setIsRegModalOpen(true)}
               >
-                &#128221; Apply for Hostel Admission
+                Apply for Hostel Admission &rarr;
               </button>
               <button
                 type="button"
@@ -318,7 +326,7 @@ export default function HostelLandingPage() {
                   setIsStatusModalOpen(true);
                 }}
               >
-                &#128269; Track Application Status
+                Track Application Status
               </button>
             </div>
           </div>

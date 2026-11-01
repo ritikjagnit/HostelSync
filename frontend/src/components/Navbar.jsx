@@ -32,7 +32,7 @@ export default function Navbar() {
         <div className="container gov-official-container">
           <div className="gov-official-left">
             <span className="gov-tricolor-strip" aria-hidden="true"></span>
-            <span className="gov-dept-name">महाराष्ट्र शासन &bull; Government of Maharashtra</span>
+            <span className="gov-dept-name">उच्च व तंत्र शिक्षण विभाग &bull; Government of Maharashtra</span>
             <span className="gov-bar-divider">|</span>
             <span className="gov-code-tag">DTE Institute Code: <strong>04008</strong></span>
           </div>
