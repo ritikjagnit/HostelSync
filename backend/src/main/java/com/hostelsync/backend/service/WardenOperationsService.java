@@ -51,6 +51,10 @@ public class WardenOperationsService {
      * Retrieves IDs of all hostels assigned to this warden.
      */
     public List<Long> getAssignedHostelIds(String email) {
+        User user = getWardenUser(email);
+        if (user.getRole() == Role.ADMIN) {
+            return hostelRepository.findAll().stream().map(Hostel::getId).toList();
+        }
         return assignmentRepository.findAssignedHostelIdsByWardenEmail(email);
     }
 
@@ -58,6 +62,10 @@ public class WardenOperationsService {
      * Enforces that the authenticated warden is assigned to the specified hostel.
      */
     public void assertHostelAccess(String email, Long hostelId) {
+        User user = getWardenUser(email);
+        if (user.getRole() == Role.ADMIN) {
+            return;
+        }
         if (!assignmentRepository.existsByWardenEmailAndHostelId(email, hostelId)) {
             throw new AccessDeniedException("Access denied: You are not authorized to access hostel with ID: " + hostelId);
         }
@@ -88,7 +96,9 @@ public class WardenOperationsService {
      */
     public WardenDashboardDto getDashboard(String wardenEmail) {
         User warden = getWardenUser(wardenEmail);
-        List<Hostel> assignedHostels = assignmentRepository.findAssignedHostelsByWardenEmail(wardenEmail);
+        List<Hostel> assignedHostels = (warden.getRole() == Role.ADMIN)
+                ? hostelRepository.findAll()
+                : assignmentRepository.findAssignedHostelsByWardenEmail(wardenEmail);
 
         if (assignedHostels.isEmpty()) {
             return new WardenDashboardDto(
@@ -146,7 +156,10 @@ public class WardenOperationsService {
      * Returns assigned hostels with live room and bed counts.
      */
     public List<WardenHostelSummaryDto> getAssignedHostels(String wardenEmail) {
-        List<Hostel> assignedHostels = assignmentRepository.findAssignedHostelsByWardenEmail(wardenEmail);
+        User warden = getWardenUser(wardenEmail);
+        List<Hostel> assignedHostels = (warden.getRole() == Role.ADMIN)
+                ? hostelRepository.findAll()
+                : assignmentRepository.findAssignedHostelsByWardenEmail(wardenEmail);
         return assignedHostels.stream()
                 .map(this::mapToHostelSummaryDto)
                 .toList();

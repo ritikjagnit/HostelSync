@@ -648,3 +648,18 @@
   margin-top: 0.25rem;
 }
 
+
+
+/* Sick-Bay / Medical Rest Button and Badge Styling */
+.attendance-toggle-btn.btn-medical.selected {
+  background: #0891b2;
+  color: #ffffff;
+  border-color: #0e7490;
+  box-shadow: 0 2px 4px rgba(8, 145, 178, 0.25);
+}
+
+.attendance-badge.medical_rest {
+  background: #cffafe;
+  color: #0e7490;
+  border: 1px solid #a5f3fc;
+}

@@ -20,7 +20,7 @@ const STATUS_FILTERS = [
   { value: 'REJECTED', label: 'Rejected', badge: 'status-rejected', icon: '❌' }
 ];
 
-export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = null }) {
+export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = null, isAllocated = true }) {
   const { authFetch } = useAuth();
 
   const [passes, setPasses] = useState([]);
@@ -46,6 +46,8 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
   const [actionRemarks, setActionRemarks] = useState('');
   const [targetStatus, setTargetStatus] = useState('APPROVED');
   const [printPass, setPrintPass] = useState(null);
+  const [sentryScannerOpen, setSentryScannerOpen] = useState(false);
+  const [scannerQuery, setScannerQuery] = useState('');
 
   // Student apply form
   const [formData, setFormData] = useState({
@@ -252,14 +254,31 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
 
         {role === 'STUDENT' && (
           <button
-            onClick={() => setApplyModalOpen(true)}
+            onClick={() => {
+              if (!isAllocated) {
+                setFeedbackError('Only actively allocated hostel residents can apply for a gate pass. Please ensure your room is allocated by the warden.');
+                return;
+              }
+              setApplyModalOpen(true);
+            }}
             className="btn btn-primary btn-apply-gatepass"
             id="btn-apply-gatepass"
+            title={!isAllocated ? 'Room allocation required to apply for gate pass' : 'Apply for gate pass'}
           >
             <span>➕</span> Apply Gate Pass (नवीन अर्ज)
           </button>
         )}
       </div>
+
+      {/* Room allocation warning for unallocated students */}
+      {role === 'STUDENT' && !isAllocated && (
+        <div className="alert alert-warning" style={{ background: '#fffbeb', border: '1px solid #fde68a', color: '#b45309', padding: '0.75rem 1rem', borderRadius: '0.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⚠️</span>
+          <span>
+            <strong>Room Allocation Required:</strong> You do not currently have an active hostel room allocation. Gate passes can only be submitted by actively residing students. Please contact your hostel warden or administrator to complete your room allotment.
+          </span>
+        </div>
+      )}
 
       {/* Staff Stats Grid */}
       {role !== 'STUDENT' && (
@@ -304,6 +323,16 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
         </div>
 
         <div className="toolbar-actions">
+          {role !== 'STUDENT' && (
+            <button
+              onClick={() => setSentryScannerOpen(true)}
+              className="btn btn-primary"
+              style={{ background: '#0b192c', borderColor: '#ff9933' }}
+              title="Open Security Gate Sentry Fast Scanner Mode"
+            >
+              📷 Sentry Gate Scanner
+            </button>
+          )}
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
@@ -316,6 +345,41 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
           <button onClick={loadData} className="btn btn-secondary">🔄 Refresh</button>
         </div>
       </div>
+
+      {/* Institutional Curfew Guidelines Strip */}
+      <div className="curfew-guideline-strip" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '0.5rem', padding: '0.65rem 1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem', fontSize: '0.8rem', color: '#475569' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⏰</span>
+          <span><strong>Campus Curfew Timings:</strong> Girls Hostel: <strong>08:00 PM</strong> &bull; Boys Hostel: <strong>08:30 PM</strong></span>
+        </div>
+        <span style={{ fontSize: '0.75rem', color: '#0284c7', fontWeight: '700' }}>
+          Strict Night Roll Call Verification Mandatory
+        </span>
+      </div>
+
+      {/* Overdue Curfew Alert Banner */}
+      {stats.overdue > 0 && role !== 'STUDENT' && (
+        <div className="overdue-radar-banner" style={{ background: '#fef2f2', border: '2px solid #ef4444', borderRadius: '0.75rem', padding: '0.85rem 1.25rem', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span style={{ fontSize: '1.5rem' }}>🚨</span>
+            <div>
+              <h4 style={{ margin: 0, color: '#991b1b', fontSize: '0.95rem', fontWeight: '800' }}>
+                CURFEW BREACH ALERT: {stats.overdue} Student(s) Overdue Return!
+              </h4>
+              <p style={{ margin: '0.15rem 0 0 0', color: '#7f1d1d', fontSize: '0.775rem' }}>
+                Residents have exceeded their approved return in-time deadline. Immediate warden phone contact required.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setStatusFilter('OVERDUE')}
+            className="btn btn-sm btn-danger"
+            style={{ background: '#dc2626', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '0.375rem', fontWeight: '800', cursor: 'pointer' }}
+          >
+            Inspect Overdue Passes &rarr;
+          </button>
+        </div>
+      )}
 
       {/* Passes List / Cards */}
       {loading ? (
@@ -447,6 +511,26 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
                         >
                           🏠 Mark Returned
                         </button>
+                      )}
+                      {p.parentContact && (
+                        <a
+                          href={`https://wa.me/91${p.parentContact.replace(/\D/g, '').slice(-10)}?text=${encodeURIComponent(
+                            `*GOVT. POLYTECHNIC SAKOLI - HOSTEL OUTING ALERT*\n\n` +
+                            `Dear Parent/Guardian,\n` +
+                            `Your ward *${p.studentName}* (${p.studentEnrollment}), resident of ${p.hostelName} (Room ${p.roomNumber || 'N/A'}), has current status: *${p.status}* for ${p.passType?.replace('_', ' ')} to *${p.destination}*.\n\n` +
+                            `📅 Departure: ${new Date(p.outTime).toLocaleString('en-IN')}\n` +
+                            `⏰ Expected Return: ${new Date(p.expectedInTime).toLocaleString('en-IN')}\n` +
+                            `📞 Warden Cell: 07186-295112\n\n` +
+                            `_Official SMS/WhatsApp Dispatch &bull; HostelSync Residential System_`
+                          )}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-sm btn-whatsapp"
+                          style={{ background: '#25D366', color: '#ffffff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', padding: '0.35rem 0.65rem', borderRadius: '0.375rem', fontSize: '0.75rem', fontWeight: '800' }}
+                          title="Send official outing alert via WhatsApp to parent"
+                        >
+                          📲 WhatsApp
+                        </a>
                       )}
                       <button
                         onClick={() => setPrintPass(p)}
@@ -716,10 +800,117 @@ export default function DigitalGatePassManager({ role = 'STUDENT', hostelId = nu
 
             <div className="modal-actions" style={{ marginTop: '1rem', padding: '0 1.5rem 1.5rem' }}>
               <button onClick={() => window.print()} className="btn btn-primary">
-                🖨️ Print Gate Pass Slip
+                📄 Save as PDF / Print Gate Pass
               </button>
               <button onClick={() => setPrintPass(null)} className="btn btn-secondary">
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Sentry Gate Scanner Mode */}
+      {sentryScannerOpen && (
+        <div className="modal-overlay" onClick={() => setSentryScannerOpen(false)}>
+          <div className="modal-content sentry-scanner-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '680px', borderRadius: '1rem', overflow: 'hidden' }}>
+            <div className="modal-header" style={{ background: '#0b192c', color: '#ffffff', borderBottom: '2px solid #ff9933' }}>
+              <div>
+                <span className="modal-badge" style={{ background: '#ff9933', color: '#0b192c', fontWeight: '900' }}>CAMPUS SENTRY MODE</span>
+                <h3 className="modal-title" style={{ color: '#ffffff', margin: 0 }}>📷 Security Gate Fast Scanner</h3>
+              </div>
+              <button onClick={() => setSentryScannerOpen(false)} className="modal-close-btn" style={{ color: '#cbd5e1' }}>&times;</button>
+            </div>
+
+            <div style={{ padding: '1.25rem' }}>
+              <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '0.5rem', padding: '0.75rem', marginBottom: '1rem', fontSize: '0.8rem', color: '#1e40af' }}>
+                💡 <strong>Guard Instructions:</strong> Search pass number or student enrollment below for instant 1-tap gate exit or safe return logging with parent WhatsApp dispatch.
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                <input
+                  type="text"
+                  placeholder="Enter Pass # (e.g. GP-2026-...) or Enrollment / Student Name..."
+                  value={scannerQuery}
+                  onChange={(e) => setScannerQuery(e.target.value)}
+                  style={{ flex: 1, padding: '0.75rem', borderRadius: '0.5rem', border: '2px solid #0284c7', fontSize: '0.9rem', fontWeight: '700' }}
+                  autoFocus
+                />
+                {scannerQuery && (
+                  <button onClick={() => setScannerQuery('')} className="btn btn-secondary">Clear</button>
+                )}
+              </div>
+
+              {/* Matching scanned results */}
+              <div style={{ maxHeight: '350px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {passes
+                  .filter((p) => {
+                    if (!scannerQuery.trim()) return ['APPROVED', 'OUT_OF_CAMPUS', 'OVERDUE'].includes(p.status);
+                    const q = scannerQuery.toLowerCase().trim();
+                    return p.passNumber.toLowerCase().includes(q) ||
+                      p.studentName.toLowerCase().includes(q) ||
+                      p.studentEnrollment.toLowerCase().includes(q);
+                  })
+                  .slice(0, 10)
+                  .map((p) => (
+                    <div key={p.id} style={{ background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '0.5rem', padding: '0.85rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.2rem' }}>
+                          <span style={{ fontWeight: '800', color: '#0f172a' }}>{p.studentName}</span>
+                          <span style={{ fontSize: '0.75rem', background: '#e2e8f0', padding: '0.1rem 0.4rem', borderRadius: '0.25rem' }}>{p.studentEnrollment}</span>
+                          <span className={`pass-badge ${p.status.toLowerCase()}`}>{p.status}</span>
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                          <span>{p.hostelName} (Room {p.roomNumber || 'N/A'}) &bull; Destination: <strong>{p.destination}</strong></span>
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '0.2rem' }}>
+                          <span>Expected Return: <strong>{new Date(p.expectedInTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</strong></span>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                        {p.status === 'APPROVED' && (
+                          <button
+                            onClick={() => handleQuickAction(p.id, 'mark-exit', `Gate entry logged: ${p.studentName} marked exited campus.`)}
+                            className="btn btn-sm btn-primary"
+                            style={{ background: '#2563eb' }}
+                          >
+                            🚶 Mark Exit
+                          </button>
+                        )}
+                        {['OUT_OF_CAMPUS', 'OVERDUE'].includes(p.status) && (
+                          <button
+                            onClick={() => handleQuickAction(p.id, 'mark-entry', `Gate return logged: ${p.studentName} marked safe entry.`)}
+                            className="btn btn-sm btn-primary"
+                            style={{ background: '#16a34a' }}
+                          >
+                            🏠 Mark Returned
+                          </button>
+                        )}
+                        {p.parentContact && (
+                          <a
+                            href={`https://wa.me/91${p.parentContact.replace(/\D/g, '').slice(-10)}?text=${encodeURIComponent(
+                              `*GOVT. POLYTECHNIC SAKOLI - SENTRY GATE LOG*\n\n` +
+                              `Dear Parent, your ward *${p.studentName}* gate status has been updated to *${p.status}* at Sakoli Campus Gate.\n` +
+                              `Destination: ${p.destination} | Helpdesk: 07186-295112`
+                            )}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn btn-sm"
+                            style={{ background: '#25D366', color: '#fff', textDecoration: 'none', padding: '0.35rem 0.55rem', borderRadius: '0.375rem', fontSize: '0.75rem', fontWeight: '800' }}
+                          >
+                            📲 Alert Parent
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="modal-actions" style={{ padding: '0.75rem 1.25rem', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+              <button onClick={() => setSentryScannerOpen(false)} className="btn btn-secondary">
+                Exit Sentry Mode
               </button>
             </div>
           </div>

@@ -173,6 +173,109 @@ public class AnalyticsExportService {
         return csv.toString().getBytes(StandardCharsets.UTF_8);
     }
 
+    @Transactional(readOnly = true)
+    public byte[] exportResidentsXls() {
+        List<String> headers = List.of("Student Name", "Enrollment Number", "Course", "Semester", "Phone", "Email", "Hostel", "Room Number", "Allocation Date", "Status");
+        List<List<String>> rows = new ArrayList<>();
+
+        List<RoomAllocation> allocs = roomAllocationRepository.findAll();
+        for (RoomAllocation a : allocs) {
+            Student s = a.getStudent();
+            rows.add(List.of(
+                    s.getUser().getFullName(),
+                    s.getEnrollmentNumber(),
+                    s.getCourse(),
+                    String.valueOf(s.getSemester()),
+                    s.getPhone() != null ? s.getPhone() : "",
+                    s.getUser().getEmail(),
+                    a.getRoom().getHostel().getName(),
+                    a.getRoom().getRoomNumber(),
+                    a.getAllocationDate().toString(),
+                    a.getStatus().name()
+            ));
+        }
+
+        return buildHtmlSpreadsheet("Student Residents Allocation Master Register", "Student Directory", headers, rows);
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportFeesXls() {
+        List<String> headers = List.of("Receipt Number", "Student Name", "Enrollment Number", "Hostel", "Fee Type", "Amount (INR)", "Paid Amount", "Due Date", "Status", "Payment Mode", "Transaction Ref");
+        List<List<String>> rows = new ArrayList<>();
+
+        List<FeeRecord> fees = feeRecordRepository.findAllByOrderByDueDateDesc();
+        for (FeeRecord f : fees) {
+            rows.add(List.of(
+                    f.getReceiptNumber(),
+                    f.getStudent().getUser().getFullName(),
+                    f.getStudent().getEnrollmentNumber(),
+                    f.getHostel().getName(),
+                    f.getFeeType().name(),
+                    String.valueOf(f.getAmount()),
+                    String.valueOf(f.getPaidAmount()),
+                    f.getDueDate().toString(),
+                    f.getStatus().name(),
+                    f.getPaymentMode() != null ? f.getPaymentMode() : "",
+                    f.getTransactionRef() != null ? f.getTransactionRef() : ""
+            ));
+        }
+
+        return buildHtmlSpreadsheet("Hostel Fee Collection & Revenue Ledger", "Treasury & Accounts", headers, rows);
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportComplaintsXls() {
+        List<String> headers = List.of("Ticket Number", "Student Name", "Hostel", "Room", "Category", "Urgency", "Status", "Title", "Created At", "Resolved By", "Resolution Notes");
+        List<List<String>> rows = new ArrayList<>();
+
+        List<Complaint> list = complaintRepository.findAllByOrderByCreatedAtDesc();
+        for (Complaint c : list) {
+            rows.add(List.of(
+                    c.getTicketNumber(),
+                    c.getStudent().getUser().getFullName(),
+                    c.getHostel().getName(),
+                    c.getRoom() != null ? c.getRoom().getRoomNumber() : "",
+                    c.getCategory().name(),
+                    c.getUrgency().name(),
+                    c.getStatus().name(),
+                    c.getTitle(),
+                    c.getCreatedAt().toString(),
+                    c.getResolvedBy() != null ? c.getResolvedBy().getFullName() : "",
+                    c.getResolutionNotes() != null ? c.getResolutionNotes() : ""
+            ));
+        }
+
+        return buildHtmlSpreadsheet("Grievance & Maintenance SLA Resolution Log", "Estate Maintenance", headers, rows);
+    }
+
+    private byte[] buildHtmlSpreadsheet(String title, String category, List<String> headers, List<List<String>> rows) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:x=\"urn:schemas-microsoft-com:office:excel\" xmlns=\"http://www.w3.org/TR/REC-html40\">");
+        sb.append("<head><meta http-equiv=\"content-type\" content=\"text/plain; charset=UTF-8\"/>");
+        sb.append("<style>body{font-family:Calibri,Arial,sans-serif;} table{border-collapse:collapse;width:100%;}</style></head><body>");
+        sb.append("<table>");
+        sb.append("<tr><td colspan=\"").append(headers.size()).append("\" style=\"font-size:14px;font-weight:bold;color:#0b192c;\">GOVERNMENT POLYTECHNIC SAKOLI &bull; DIRECTORATE OF TECHNICAL EDUCATION</td></tr>");
+        sb.append("<tr><td colspan=\"").append(headers.size()).append("\" style=\"font-size:12px;font-weight:bold;color:#0284c7;\">").append(title).append(" (").append(category).append(")</td></tr>");
+        sb.append("<tr><td colspan=\"").append(headers.size()).append("\" style=\"font-size:10px;color:#64748b;padding-bottom:8px;\">Generated on: ").append(LocalDate.now()).append(" | DTE Code: 04008</td></tr>");
+        sb.append("<thead><tr>");
+        for (String h : headers) {
+            sb.append("<th style=\"background-color:#0b192c;color:#ffffff;font-weight:bold;padding:6px 8px;border:1px solid #334155;font-size:11px;\">")
+              .append(h).append("</th>");
+        }
+        sb.append("</tr></thead><tbody>");
+        for (int i = 0; i < rows.size(); i++) {
+            String bg = (i % 2 == 0) ? "#ffffff" : "#f8fafc";
+            sb.append("<tr>");
+            for (String cell : rows.get(i)) {
+                sb.append("<td style=\"padding:5px 8px;border:1px solid #e2e8f0;font-size:11px;background-color:").append(bg).append(";\">")
+                  .append(cell != null ? cell : "").append("</td>");
+            }
+            sb.append("</tr>");
+        }
+        sb.append("</tbody></table></body></html>");
+        return sb.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
     private String escape(String val) {
         if (val == null) return "";
         if (val.contains(",") || val.contains("\"") || val.contains("\n")) {

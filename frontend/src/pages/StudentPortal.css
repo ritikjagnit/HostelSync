@@ -1392,3 +1392,34 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Student Emergency SOS Panic Button */
+.btn-student-sos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1px solid #ef4444;
+  padding: 0.65rem 1.15rem;
+  border-radius: 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+  animation: pulseStudentSos 2s infinite alternate;
+}
+
+.btn-student-sos:hover {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+}
+
+@keyframes pulseStudentSos {
+  0% { transform: scale(1); box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4); }
+  50% { transform: scale(1.02); box-shadow: 0 4px 20px rgba(220, 38, 38, 0.65); }
+  100% { transform: scale(1); box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4); }
+}

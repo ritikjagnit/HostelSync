@@ -51,4 +51,31 @@ public class AnalyticsExportController {
                 .contentType(MediaType.parseMediaType("text/csv; charset=UTF-8"))
                 .body(csv);
     }
+
+    @GetMapping("/export/residents.xls")
+    public ResponseEntity<byte[]> exportResidentsExcel() {
+        byte[] xls = analyticsExportService.exportResidentsXls();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"hostel_residents_master.xls\"")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel; charset=UTF-8"))
+                .body(xls);
+    }
+
+    @GetMapping("/export/fees.xls")
+    public ResponseEntity<byte[]> exportFeesExcel() {
+        byte[] xls = analyticsExportService.exportFeesXls();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"hostel_fee_register.xls\"")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel; charset=UTF-8"))
+                .body(xls);
+    }
+
+    @GetMapping("/export/complaints.xls")
+    public ResponseEntity<byte[]> exportComplaintsExcel() {
+        byte[] xls = analyticsExportService.exportComplaintsXls();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"hostel_maintenance_register.xls\"")
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel; charset=UTF-8"))
+                .body(xls);
+    }
 }

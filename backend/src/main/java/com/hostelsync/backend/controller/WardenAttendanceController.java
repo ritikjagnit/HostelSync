@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/warden/attendance")
-@PreAuthorize("hasRole('WARDEN')")
+@PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
 public class WardenAttendanceController {
 
     private final AttendanceService attendanceService;

@@ -9,6 +9,7 @@ const CATEGORIES = [
   { value: 'CARPENTRY', label: 'Carpentry', icon: '🪚' },
   { value: 'CLEANLINESS', label: 'Cleanliness', icon: '🧹' },
   { value: 'INTERNET_WIFI', label: 'Internet / Wi-Fi', icon: '📶' },
+  { value: 'ANTI_RAGGING', label: 'Anti-Ragging & Safety Cell', icon: '🛡️' },
   { value: 'OTHER', label: 'Other', icon: '📌' }
 ];
 
@@ -340,14 +341,29 @@ export default function GrievanceMaintenanceManager({
                     })
                   : '-';
 
+                const isAntiRagging = item.category === 'ANTI_RAGGING' || (item.title && item.title.includes('[ANONYMOUS')) || (item.title && item.title.toLowerCase().includes('anti-ragging'));
                 return (
-                  <tr key={item.id} className={item.urgency === 'EMERGENCY' ? 'row-emergency' : ''}>
+                  <tr key={item.id} className={item.urgency === 'EMERGENCY' ? 'row-emergency' : (isAntiRagging ? 'row-antiragging' : '')} style={isAntiRagging ? { background: '#fffdf5', borderLeft: '3px solid #d97706' } : undefined}>
                     <td>
                       <div className="ticket-number-badge">{item.ticketNumber}</div>
                       <div className="ticket-date-muted">{createdDate}</div>
                     </td>
                     <td>
-                      <div className="resident-name">{item.studentName || 'Resident Student'}</div>
+                      {isAntiRagging ? (
+                        <div className="resident-anonymous-cell">
+                          <span className="badge" style={{ background: '#fef3c7', color: '#92400e', border: '1px solid #fde68a', fontWeight: 700, padding: '0.2rem 0.5rem', borderRadius: '4px', display: 'inline-block' }}>
+                            🛡️ Protected Resident
+                          </span>
+                          <div style={{ fontSize: '0.75rem', color: '#b45309', marginTop: '3px', fontWeight: 600 }}>
+                            Confidential Anti-Ragging Cell
+                          </div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
+                            Hostel: {item.hostelName || 'Campus'}
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="resident-name">{item.studentName || 'Resident Student'}</div>
                       <div className="resident-subtext">
                         Room {item.roomNumber || 'N/A'} &bull; {item.hostelName || 'Hostel'}
                       </div>
@@ -355,6 +371,8 @@ export default function GrievanceMaintenanceManager({
                         <div className="resident-subtext" style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
                           📞 {item.studentPhone}
                         </div>
+                      )}
+                        </>
                       )}
                     </td>
                     <td>

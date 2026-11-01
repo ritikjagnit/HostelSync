@@ -96,7 +96,7 @@ export default function ResidentIdCardModal({ student, onClose }) {
             Close
           </button>
           <button className="btn-print-id" onClick={handlePrint}>
-            🖨️ Print ID Card
+            📄 Save as PDF / Print ID Card
           </button>
         </div>
       </div>

@@ -9,5 +9,6 @@ public enum ComplaintCategory {
     CARPENTRY,
     CLEANLINESS,
     INTERNET_WIFI,
+    ANTI_RAGGING,
     OTHER
 }

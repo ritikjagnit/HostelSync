@@ -198,3 +198,46 @@
     height: 4rem;
   }
 }
+
+/* Navbar SOS Button */
+.btn-navbar-sos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1px solid #ef4444;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+  animation: pulseSos 2s infinite alternate;
+}
+
+.btn-navbar-sos:hover {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.5);
+}
+
+.sos-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  animation: blinkDot 0.8s infinite alternate;
+}
+
+@keyframes blinkDot {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseSos {
+  from { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  to { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+}

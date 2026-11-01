@@ -91,6 +91,93 @@ public class AdminBootstrapRunner implements ApplicationRunner {
 
         bootstrapAdminUser();
         bootstrapDemoData();
+        ensureDemoStudentAllocations();
+        ensureWardenSeed();
+    }
+
+    private void ensureWardenSeed() {
+        String defaultPwd = passwordEncoder.encode(StringUtils.hasText(adminPassword) ? adminPassword : "Admin@123");
+
+        Hostel sahyadri = hostelRepository.findAll().stream()
+                .filter(h -> h.getHostelType() == HostelType.BOYS)
+                .findFirst()
+                .orElse(null);
+        Hostel kaveri = hostelRepository.findAll().stream()
+                .filter(h -> h.getHostelType() == HostelType.GIRLS)
+                .findFirst()
+                .orElse(null);
+
+        User wardenBoys = userRepository.findByEmail("warden.boys@gpsakoli.ac.in").orElseGet(() ->
+                userRepository.save(new User("Ramesh Patil", "warden.boys@gpsakoli.ac.in", defaultPwd, Role.WARDEN, true))
+        );
+        if (sahyadri != null && !wardenHostelAssignmentRepository.existsByWardenEmailAndHostelId(wardenBoys.getEmail(), sahyadri.getId())) {
+            wardenHostelAssignmentRepository.save(new WardenHostelAssignment(wardenBoys, sahyadri));
+            log.info("Assigned [warden.boys@gpsakoli.ac.in] to Sahyadri Boys Hostel.");
+        }
+
+        User wardenGirls = userRepository.findByEmail("warden.girls@gpsakoli.ac.in").orElseGet(() ->
+                userRepository.save(new User("Sunita Deshmukh", "warden.girls@gpsakoli.ac.in", defaultPwd, Role.WARDEN, true))
+        );
+        if (kaveri != null && !wardenHostelAssignmentRepository.existsByWardenEmailAndHostelId(wardenGirls.getEmail(), kaveri.getId())) {
+            wardenHostelAssignmentRepository.save(new WardenHostelAssignment(wardenGirls, kaveri));
+            log.info("Assigned [warden.girls@gpsakoli.ac.in] to Kaveri Girls Hostel.");
+        }
+
+        User chiefWarden = userRepository.findByEmail("warden@gpsakoli.ac.in").orElseGet(() ->
+                userRepository.save(new User("Chief Warden", "warden@gpsakoli.ac.in", defaultPwd, Role.WARDEN, true))
+        );
+        if (sahyadri != null && !wardenHostelAssignmentRepository.existsByWardenEmailAndHostelId(chiefWarden.getEmail(), sahyadri.getId())) {
+            wardenHostelAssignmentRepository.save(new WardenHostelAssignment(chiefWarden, sahyadri));
+            log.info("Assigned [warden@gpsakoli.ac.in] to Sahyadri Boys Hostel.");
+        }
+    }
+
+    private void ensureDemoStudentAllocations() {
+        studentRepository.findByUserEmail("student@gpsakoli.ac.in").ifPresent(student -> {
+            if (roomAllocationRepository.findActiveByStudentId(student.getId()).isEmpty()) {
+                Hostel sahyadri = hostelRepository.findAll().stream()
+                        .filter(h -> h.getHostelType() == HostelType.BOYS)
+                        .findFirst()
+                        .orElse(null);
+                if (sahyadri != null) {
+                    Room room = roomRepository.findByHostelIdAndRoomNumber(sahyadri.getId(), "102")
+                            .or(() -> roomRepository.findByHostelIdAndRoomNumber(sahyadri.getId(), "101"))
+                            .orElse(null);
+                    if (room != null) {
+                        roomAllocationRepository.save(new RoomAllocation(
+                                student,
+                                room,
+                                LocalDate.now().minusDays(10),
+                                null,
+                                AllocationStatus.ACTIVE
+                        ));
+                        log.info("Auto-allocated demo student [student@gpsakoli.ac.in] to Room {}.", room.getRoomNumber());
+                    }
+                }
+            }
+        });
+
+        studentRepository.findByUserEmail("amit.sharma@gpsakoli.ac.in").ifPresent(student -> {
+            if (roomAllocationRepository.findActiveByStudentId(student.getId()).isEmpty()) {
+                Hostel sahyadri = hostelRepository.findAll().stream()
+                        .filter(h -> h.getHostelType() == HostelType.BOYS)
+                        .findFirst()
+                        .orElse(null);
+                if (sahyadri != null) {
+                    Room room = roomRepository.findByHostelIdAndRoomNumber(sahyadri.getId(), "101").orElse(null);
+                    if (room != null) {
+                        roomAllocationRepository.save(new RoomAllocation(
+                                student,
+                                room,
+                                LocalDate.now().minusDays(15),
+                                null,
+                                AllocationStatus.ACTIVE
+                        ));
+                        log.info("Auto-allocated demo student [amit.sharma@gpsakoli.ac.in] to Room 101.");
+                    }
+                }
+            }
+        });
     }
 
     private void bootstrapAdminUser() {

@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.HashMap;
@@ -158,6 +159,18 @@ public class GlobalExceptionHandler {
                                 ex.getMessage(),
                                 request.getRequestURI());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDto);
+        }
+
+        @ExceptionHandler(ResponseStatusException.class)
+        public ResponseEntity<ErrorResponseDto> handleResponseStatusException(
+                        ResponseStatusException ex, HttpServletRequest request) {
+                String message = ex.getReason() != null ? ex.getReason() : ex.getStatusCode().toString();
+                ErrorResponseDto errorDto = ErrorResponseDto.of(
+                                ex.getStatusCode().value(),
+                                ex.getStatusCode().toString(),
+                                message,
+                                request.getRequestURI());
+                return ResponseEntity.status(ex.getStatusCode()).body(errorDto);
         }
 
         @ExceptionHandler(Exception.class)

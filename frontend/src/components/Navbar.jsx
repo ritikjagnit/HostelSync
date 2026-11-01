@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import NotificationCenter from './NotificationCenter';
+import EmergencySosModal from './EmergencySosModal';
 import './Navbar.css';
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
+  const [sosModalOpen, setSosModalOpen] = useState(false);
 
   const getPortalLink = () => {
     if (!user) return '/';
@@ -88,6 +91,18 @@ export default function Navbar() {
               <Link to={getPortalLink()} className="nav-link nav-portal-link">
                 My Portal &rarr;
               </Link>
+              <NotificationCenter role={user?.role} />
+              {user?.role === 'STUDENT' && (
+                <button
+                  type="button"
+                  className="btn btn-navbar-sos"
+                  onClick={() => setSosModalOpen(true)}
+                  title="24x7 Immediate Emergency SOS Panic Alarm"
+                >
+                  <span className="sos-dot"></span>
+                  <span>🚨 SOS</span>
+                </button>
+              )}
               <div className="navbar-user-chip">
                 <span className="user-name">{user?.fullName?.split(' ')[0]}</span>
                 <span className="badge badge-primary user-role-badge">{user?.role}</span>
@@ -107,6 +122,7 @@ export default function Navbar() {
           )}
         </nav>
       </div>
+      <EmergencySosModal isOpen={sosModalOpen} onClose={() => setSosModalOpen(false)} />
     </header>
   );
 }

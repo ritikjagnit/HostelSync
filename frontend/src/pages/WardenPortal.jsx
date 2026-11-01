@@ -8,7 +8,9 @@ import DigitalGatePassManager from '../components/DigitalGatePassManager';
 import NoticeBoardManager from '../components/NoticeBoardManager';
 import MessManagementSection from '../components/MessManagementSection';
 import RoomQrCodeModal from '../components/RoomQrCodeModal';
+import RoomDoorQrModal from '../components/RoomDoorQrModal';
 import ResidentIdCardModal from '../components/ResidentIdCardModal';
+import SosAlertMonitorBanner from '../components/SosAlertMonitorBanner';
 import './PortalCommon.css';
 import './WardenPortal.css';
 
@@ -61,6 +63,8 @@ export default function WardenPortal() {
   const [loadingRollCall, setLoadingRollCall] = useState(false);
   const [submittingAttendance, setSubmittingAttendance] = useState(false);
   const [attendanceSuccessMsg, setAttendanceSuccessMsg] = useState('');
+  const [roomDoorQrOpen, setRoomDoorQrOpen] = useState(false);
+  const [selectedRoomFilter, setSelectedRoomFilter] = useState('ALL');
 
   // Attendance History States
 
@@ -322,6 +326,23 @@ export default function WardenPortal() {
     setRollCallMarkings({});
   };
 
+  // Mark all residents in a specific room as PRESENT
+  const handleMarkRoomAllPresent = (roomNumber, status = 'PRESENT') => {
+    const updated = { ...rollCallMarkings };
+    let count = 0;
+    rollCallRoster.forEach((r) => {
+      if (r.roomNumber === roomNumber) {
+        updated[r.studentId] = {
+          ...(updated[r.studentId] || {}),
+          status
+        };
+        count++;
+      }
+    });
+    setRollCallMarkings(updated);
+    setAttendanceSuccessMsg(`Marked all ${count} resident(s) in Room ${roomNumber} as ${status}.`);
+  };
+
   // Submit Roll Call Batch
   const handleSubmitRollCall = async () => {
     setFeedbackError('');
@@ -416,6 +437,7 @@ export default function WardenPortal() {
 
   return (
     <div className="portal-wrapper">
+      <SosAlertMonitorBanner role="WARDEN" />
       <div className="container">
         {/* Header Card */}
         {/* Luxury Header Card */}
@@ -1333,7 +1355,7 @@ export default function WardenPortal() {
                     <input
                       type="date"
                       value={attendanceDate}
-                      max={todayDateStr}
+                      max={getTodayDateString()}
                       onChange={(e) => {
                         const newDate = e.target.value;
                         setAttendanceDate(newDate);
@@ -1428,7 +1450,75 @@ export default function WardenPortal() {
                       {Object.values(rollCallMarkings).filter((m) => m.status === 'ON_LEAVE').length}
                     </div>
                   </div>
+                  <div className="attendance-summary-chip" style={{ background: '#ecfeff', border: '1px solid #a5f3fc' }}>
+                    <div className="chip-label" style={{ color: '#0e7490' }}>🏥 Sick-Bay</div>
+                    <div className="chip-val" style={{ color: '#0891b2' }}>
+                      {Object.values(rollCallMarkings).filter((m) => m.status === 'MEDICAL_REST').length}
+                    </div>
+                  </div>
                 </div>
+
+                {/* Sick-Bay Medical Diet Alert if any marked */}
+                {Object.values(rollCallMarkings).some((m) => m.status === 'MEDICAL_REST') && (
+                  <div className="alert" style={{ marginBottom: '1rem', background: '#ecfeff', border: '1px solid #67e8f9', color: '#0e7490', display: 'flex', alignItems: 'center', gap: '0.65rem', borderRadius: '8px', padding: '0.75rem 1rem' }}>
+                    <span style={{ fontSize: '1.25rem' }}>🏥</span>
+                    <div style={{ fontSize: '0.85rem' }}>
+                      <strong>Active Sick-Bay Alert:</strong> {Object.values(rollCallMarkings).filter((m) => m.status === 'MEDICAL_REST').length} resident(s) placed on Medical Rest. Mess catering notified to prepare Moong Dal Khichdi / Dalia.
+                    </div>
+                  </div>
+                )}
+
+                {/* Room Door QR Fast Roll Call Toolbar */}
+                <div className="card" style={{ marginBottom: '1rem', padding: '0.75rem 1rem', background: '#f8fafc', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--slate-800)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <span>🚪</span> Fast Room Roll Call:
+                      </span>
+                      <select
+                        value={selectedRoomFilter}
+                        onChange={(e) => setSelectedRoomFilter(e.target.value)}
+                        className="warden-filter-select"
+                        style={{ padding: '0.35rem 0.65rem', fontSize: '0.8125rem', minWidth: '160px' }}
+                      >
+                        <option value="ALL">All Rooms ({Array.from(new Set(rollCallRoster.map(r => r.roomNumber).filter(Boolean))).length} Rooms)</option>
+                        {Array.from(new Set(rollCallRoster.map(r => r.roomNumber).filter(Boolean))).sort().map((rm) => {
+                          const count = rollCallRoster.filter(r => r.roomNumber === rm).length;
+                          return (
+                            <option key={rm} value={rm}>
+                              Room {rm} ({count} resident{count > 1 ? 's' : ''})
+                            </option>
+                          );
+                        })}
+                      </select>
+
+                      {selectedRoomFilter !== 'ALL' && (
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          style={{ fontSize: '0.8125rem', padding: '0.35rem 0.85rem', background: '#16a34a', borderColor: '#15803d' }}
+                          onClick={() => handleMarkRoomAllPresent(selectedRoomFilter, 'PRESENT')}
+                        >
+                          ✓ Mark All in Room {selectedRoomFilter} Present
+                        </button>
+                      )}
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        style={{ fontSize: '0.8125rem', padding: '0.35rem 0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#0f172a', color: '#ffffff', borderColor: '#0f172a' }}
+                        onClick={() => setRoomDoorQrOpen(true)}
+                        id="btn-scan-door-qr"
+                      >
+                        <span>📷</span> Door QR Scanner &amp; Print
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                
 
                 {/* Filter and Search */}
                 <div className="card" style={{ marginBottom: '1.5rem', padding: '1rem' }}>
@@ -1473,6 +1563,7 @@ export default function WardenPortal() {
                         <tbody>
                           {rollCallRoster
                             .filter((r) => {
+                              if (selectedRoomFilter !== 'ALL' && r.roomNumber !== selectedRoomFilter) return false;
                               if (!attendanceSearch.trim()) return true;
                               const q = attendanceSearch.toLowerCase().trim();
                               return (
@@ -1520,6 +1611,19 @@ export default function WardenPortal() {
                                         onClick={() => handleStatusChange(resident.studentId, 'ON_LEAVE')}
                                       >
                                         &#9992; On Leave
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className={`attendance-toggle-btn btn-medical ${activeStatus === 'MEDICAL_REST' ? 'selected' : ''}`}
+                                        onClick={() => {
+                                          handleStatusChange(resident.studentId, 'MEDICAL_REST');
+                                          if (!currentMark.remarks) {
+                                            handleRemarksChange(resident.studentId, 'Sick-Bay / Light Diet Requested');
+                                          }
+                                        }}
+                                        title="Mark resident in Sick-Bay / Medical Rest (Mess light diet notified)"
+                                      >
+                                        🏥 Sick
                                       </button>
                                     </div>
                                   </td>
@@ -1754,6 +1858,16 @@ export default function WardenPortal() {
             onClose={() => setActiveQrRoom(null)}
           />
         )}
+
+        {/* Modal: Room Door QR Fast Roll Call & Badges */}
+        <RoomDoorQrModal
+          isOpen={roomDoorQrOpen}
+          onClose={() => setRoomDoorQrOpen(false)}
+          hostelName={hostels.find((h) => String(h.id) === selectedHostelId)?.name || 'GP Sakoli Hostel'}
+          roster={rollCallRoster}
+          onMarkRoomAllPresent={(rm) => handleMarkRoomAllPresent(rm, 'PRESENT')}
+          onSelectRoomFilter={(rm) => setSelectedRoomFilter(rm)}
+        />
 
         {/* Modal: Resident ID Card */}
         {activeIdCardStudent && (

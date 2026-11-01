@@ -6,5 +6,6 @@ package com.hostelsync.backend.entity;
 public enum AttendanceStatus {
     PRESENT,
     ABSENT,
-    ON_LEAVE
+    ON_LEAVE,
+    MEDICAL_REST
 }

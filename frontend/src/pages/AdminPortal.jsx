@@ -11,6 +11,7 @@ import FeeManagerSection from '../components/FeeManagerSection';
 import CampusAnalyticsSection from '../components/CampusAnalyticsSection';
 import RoomQrCodeModal from '../components/RoomQrCodeModal';
 import ResidentIdCardModal from '../components/ResidentIdCardModal';
+import SosAlertMonitorBanner from '../components/SosAlertMonitorBanner';
 import './PortalCommon.css';
 import './AdminPortal.css';
 
@@ -136,6 +137,15 @@ export default function AdminPortal() {
   const [checkoutFormData, setCheckoutFormData] = useState({
     vacatingDate: getTodayDateString()
   });
+  const [inspectionChecklist, setInspectionChecklist] = useState({
+    cotPly: true,
+    tableChair: true,
+    fanLights: true,
+    switchboard: true,
+    keysReturned: true,
+    cleanliness: true
+  });
+  const [inspectionRemarks, setInspectionRemarks] = useState('');
 
   // Load Dashboard & Hostels
   const loadDashboardData = useCallback(() => {
@@ -741,6 +751,15 @@ export default function AdminPortal() {
     setCheckoutFormData({
       vacatingDate: getTodayDateString()
     });
+    setInspectionChecklist({
+      cotPly: true,
+      tableChair: true,
+      fanLights: true,
+      switchboard: true,
+      keysReturned: true,
+      cleanliness: true
+    });
+    setInspectionRemarks('Room assets inspected and verified intact. No breakages reported. Caution money clearance granted.');
     setCheckoutModalOpen(true);
   };
 
@@ -1078,6 +1097,7 @@ export default function AdminPortal() {
 
   return (
     <div className="portal-wrapper">
+      <SosAlertMonitorBanner role="ADMIN" />
       <div className="container">
         {/* Header Section */}
         {/* Luxury Admin Header */}
@@ -3497,6 +3517,75 @@ export default function AdminPortal() {
                     <span style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
                       Cannot be earlier than allocation date ({checkingOutAllocation.allocationDate}).
                     </span>
+                  </div>
+
+                  {/* Digital Room Asset Inspection & Vacating Checklist */}
+                  <div style={{ marginTop: '1.25rem', borderTop: '1px solid var(--slate-200)', paddingTop: '1rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
+                      <div>
+                        <h4 style={{ margin: 0, fontSize: '0.875rem', fontWeight: 700, color: 'var(--slate-900)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <span>🔍</span> Room Asset &amp; Caution Money Inspection Checklist
+                        </h4>
+                        <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.75rem', color: 'var(--slate-500)' }}>
+                          Govt. Polytechnic Sakoli &bull; Verify inventory prior to caution deposit clearance
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem' }}
+                        onClick={() => setInspectionChecklist({ cotPly: true, tableChair: true, fanLights: true, switchboard: true, keysReturned: true, cleanliness: true })}
+                      >
+                        ⚡ All Passed
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.cotPly} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, cotPly: e.target.checked })} />
+                        <span>🛏️ Bed / Cot Frame Undamaged</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.tableChair} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, tableChair: e.target.checked })} />
+                        <span>🪑 Study Table &amp; Chair Sound</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.fanLights} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, fanLights: e.target.checked })} />
+                        <span>💡 Fan &amp; Tube Light Working</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.switchboard} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, switchboard: e.target.checked })} />
+                        <span>🔌 Electrical Sockets Intact</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.keysReturned} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, keysReturned: e.target.checked })} />
+                        <span>🔑 Room &amp; Almirah Keys Handed Over</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={inspectionChecklist.cleanliness} onChange={(e) => setInspectionChecklist({ ...inspectionChecklist, cleanliness: e.target.checked })} />
+                        <span>🧹 Room Swept Clean &amp; Trash Disposed</span>
+                      </label>
+                    </div>
+
+                    <div style={{ marginTop: '0.65rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.785rem' }}>
+                      {Object.values(inspectionChecklist).every(Boolean) ? (
+                        <span style={{ color: '#16a34a', fontWeight: 600 }}>✓ All 6 assets cleared &bull; Eligible for full Caution Money refund</span>
+                      ) : (
+                        <span style={{ color: '#d97706', fontWeight: 600 }}>⚠️ {6 - Object.values(inspectionChecklist).filter(Boolean).length} item(s) unverified &bull; Breakage deductions will be noted</span>
+                      )}
+                    </div>
+
+                    <div className="form-group" style={{ marginTop: '0.65rem' }}>
+                      <label className="form-label" style={{ fontSize: '0.8125rem' }}>Inspector Remarks &amp; Handover Notes</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        style={{ fontSize: '0.8125rem' }}
+                        value={inspectionRemarks}
+                        onChange={(e) => setInspectionRemarks(e.target.value)}
+                        placeholder="e.g. Keys received by warden, room inspection verified no breakage."
+                      />
+                    </div>
                   </div>
                 </div>
 

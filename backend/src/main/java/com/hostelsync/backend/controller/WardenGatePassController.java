@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/warden/gatepass")
-@PreAuthorize("hasRole('WARDEN')")
+@PreAuthorize("hasAnyRole('WARDEN', 'ADMIN')")
 public class WardenGatePassController {
 
     private final GatePassService gatePassService;

@@ -8,6 +8,7 @@ const CATEGORIES = [
   { value: 'CARPENTRY', label: 'Carpentry (Bed, Desk, Door, Window, Almirah)', icon: '🪚' },
   { value: 'CLEANLINESS', label: 'Cleanliness & Sanitation', icon: '🧹' },
   { value: 'INTERNET_WIFI', label: 'Internet & Campus Wi-Fi', icon: '📶' },
+  { value: 'ANTI_RAGGING', label: 'Anti-Ragging & Confidential Safety Cell', icon: '🛡️' },
   { value: 'OTHER', label: 'General / Other Hostel Maintenance', icon: '📌' }
 ];
 
@@ -96,6 +97,8 @@ export default function StudentComplaintSection({ currentRoomNumber = '', hostel
 
   // Selected Ticket for detail view modal
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [isAntiRaggingMode, setIsAntiRaggingMode] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -228,13 +231,40 @@ export default function StudentComplaintSection({ currentRoomNumber = '', hostel
             Report electrical, plumbing, carpentry, or cleanliness issues directly to the hostel superintendent for rapid redressal.
           </p>
         </div>
-        <button
-          onClick={openModal}
-          className="btn btn-primary btn-report-issue"
-          id="btn-raise-complaint"
-        >
-          <span>➕</span> Raise Maintenance Ticket
-        </button>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => {
+              setIsAntiRaggingMode(true);
+              setIsAnonymous(true);
+              setFormData({
+                title: '',
+                description: '',
+                category: 'ANTI_RAGGING',
+                urgency: 'HIGH',
+                roomNumber: currentRoomNumber || ''
+              });
+              setFeedbackError('');
+              setFeedbackSuccess('');
+              setModalOpen(true);
+            }}
+            className="btn btn-secondary"
+            style={{ background: '#78350f', color: '#fef3c7', borderColor: '#92400e', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            id="btn-anti-ragging-box"
+          >
+            <span>🛡️</span> Confidential Anti-Ragging Box
+          </button>
+          <button
+            onClick={() => {
+              setIsAntiRaggingMode(false);
+              setIsAnonymous(false);
+              openModal();
+            }}
+            className="btn btn-primary btn-report-issue"
+            id="btn-raise-complaint"
+          >
+            <span>➕</span> Raise Maintenance Ticket
+          </button>
+        </div>
       </div>
 
       {/* Metric Counters */}
@@ -349,6 +379,31 @@ export default function StudentComplaintSection({ currentRoomNumber = '', hostel
             </div>
 
             <form onSubmit={handleSubmitTicket} className="ticket-form">
+              {(isAntiRaggingMode || formData.category === 'ANTI_RAGGING') && (
+                <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', padding: '0.85rem', marginBottom: '1rem', color: '#92400e', fontSize: '0.8125rem', lineHeight: '1.4' }}>
+                  <div style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.25rem' }}>
+                    <span>🏛️</span> DTE Maharashtra Anti-Ragging Statutory Protection Box
+                  </div>
+                  <div>Government Polytechnic Sakoli maintains ZERO-TOLERANCE for ragging, harassment, or intimidation. Your report is directly routed to the Anti-Ragging Committee &amp; Rector.</div>
+                  <div style={{ marginTop: '0.4rem', fontWeight: 600 }}>National Anti-Ragging 24x7 Helpline: 1800-180-5522 (Toll Free)</div>
+                </div>
+              )}
+              <div className="form-group" style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '1rem' }}>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', cursor: 'pointer', margin: 0 }}>
+                  <input
+                    type="checkbox"
+                    checked={isAnonymous}
+                    onChange={(e) => setIsAnonymous(e.target.checked)}
+                    style={{ width: '18px', height: '18px', marginTop: '2px' }}
+                  />
+                  <div>
+                    <strong style={{ fontSize: '0.875rem', color: 'var(--slate-900)' }}>🛡️ Mask My Identity (Submit Anonymously)</strong>
+                    <p style={{ margin: '0.15rem 0 0 0', fontSize: '0.75rem', color: 'var(--slate-500)' }}>
+                      Hides your name and room on the general maintenance board to protect you from retaliation. Only the Head of Anti-Ragging Cell can investigate.
+                    </p>
+                  </div>
+                </label>
+              </div>
               <div className="form-group">
                 <label className="form-label">Category of Issue *</label>
                 <select

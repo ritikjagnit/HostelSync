@@ -554,7 +554,7 @@ export default function FeeManagerSection({ role = 'STUDENT' }) {
                 Close
               </button>
               <button className="btn-print" onClick={() => window.print()}>
-                🖨️ Print Receipt
+                📄 Save as PDF / Print Receipt
               </button>
             </div>
           </div>
@@ -640,7 +640,7 @@ export default function FeeManagerSection({ role = 'STUDENT' }) {
               </button>
               {effectiveNoDuesData.isEligibleForNoDues && (
                 <button className="btn-print" onClick={() => window.print()}>
-                  🖨️ Print No-Dues Certificate (NOC)
+                  📄 Save as PDF / Print NOC
                 </button>
               )}
             </div>

@@ -8,6 +8,7 @@ import MessManagementSection from '../components/MessManagementSection';
 import FeeManagerSection from '../components/FeeManagerSection';
 import ResidentIdCardModal from '../components/ResidentIdCardModal';
 import RoomQrCodeModal from '../components/RoomQrCodeModal';
+import EmergencySosModal from '../components/EmergencySosModal';
 import { MEDIA_REGISTRY, getHostelImage } from '../config/media';
 import './PortalCommon.css';
 import './StudentPortal.css';
@@ -30,6 +31,7 @@ export default function StudentPortal() {
   const [allocations, setAllocations] = useState([]);
   const [loadingDashboard, setLoadingDashboard] = useState(true);
   const [loadingAllocations, setLoadingAllocations] = useState(false);
+  const [sosModalOpen, setSosModalOpen] = useState(false);
 
   // Attendance States
   const [selectedMonth, setSelectedMonth] = useState(getCurrentYearMonth());
@@ -290,6 +292,14 @@ export default function StudentPortal() {
           </div>
 
           <div className="student-header-actions">
+            <button
+              onClick={() => setSosModalOpen(true)}
+              className="btn btn-student-sos"
+              title="Trigger 24x7 Emergency SOS Panic Alarm"
+            >
+              <span className="btn-icon">🚨</span>
+              <span>Emergency SOS</span>
+            </button>
             <button
               onClick={() => setIdCardModalOpen(true)}
               className="btn btn-id-card"
@@ -1248,7 +1258,7 @@ export default function StudentPortal() {
         {/* TAB 6: DIGITAL GATE PASS & OUTING                             */}
         {/* ============================================================= */}
         {activeTab === 'gatepass' && (
-          <DigitalGatePassManager role="STUDENT" />
+          <DigitalGatePassManager role="STUDENT" isAllocated={roomAllocated} />
         )}
 
         {/* ============================================================= */}
@@ -1358,6 +1368,7 @@ export default function StudentPortal() {
         )}
 
         {/* MODAL: ROOM QR CODE POSTER */}
+        <EmergencySosModal isOpen={sosModalOpen} onClose={() => setSosModalOpen(false)} />
         {roomQrModalOpen && (
           <RoomQrCodeModal
             room={dashboardData?.currentAllocation?.room || { roomNumber: '104', capacity: 3, floor: 'Floor 1' }}

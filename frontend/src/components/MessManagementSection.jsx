@@ -106,6 +106,10 @@ export default function MessManagementSection({ role = 'STUDENT' }) {
   const [actionLoading, setActionLoading] = useState(false);
   const [feedbackSuccess, setFeedbackSuccess] = useState('');
   const [feedbackError, setFeedbackError] = useState('');
+  const [rebateDays, setRebateDays] = useState(4);
+  const [customTotalHostellers, setCustomTotalHostellers] = useState(150);
+  const [customAwayCount, setCustomAwayCount] = useState(18);
+  const [showCalculator, setShowCalculator] = useState(false);
 
   // Rating Modal / Form for Student
   const [ratingModalOpen, setRatingModalOpen] = useState(false);
@@ -371,6 +375,124 @@ export default function MessManagementSection({ role = 'STUDENT' }) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Sick-Bay Medical Diet Alert */}
+      <div style={{ background: '#ecfeff', border: '1px solid #a5f3fc', borderRadius: '12px', padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <span style={{ fontSize: '1.75rem', background: '#cffafe', padding: '0.4rem', borderRadius: '10px' }}>🏥</span>
+          <div>
+            <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0e7490' }}>
+              Sick-Bay Special Light Diet Active (2 Residents)
+            </h4>
+            <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8125rem', color: '#155e75' }}>
+              Room 102 &amp; Room 104 on Medical Rest: Prepare Plain Moong Dal Khichdi, Steamed Dalia &amp; Boiled Water.
+            </p>
+          </div>
+        </div>
+        <span style={{ fontSize: '0.75rem', fontWeight: 700, background: '#0e7490', color: '#ffffff', padding: '0.3rem 0.65rem', borderRadius: '9999px' }}>
+          Tiffin Dispatch Priority
+        </span>
+      </div>
+
+      {/* Live Headcount & Food Waste Prevention Calculator */}
+      <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.25rem', marginBottom: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '1.25rem' }}>🧮</span>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 700, color: '#0f172a' }}>
+                Daily Meal Headcount &amp; Food Waste Calculator
+              </h3>
+            </div>
+            <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.8125rem', color: '#64748b' }}>
+              Government Polytechnic Sakoli &bull; Real-time headcount based on gate-passes to prevent kitchen wastage
+            </p>
+          </div>
+          <button
+            onClick={() => setShowCalculator(!showCalculator)}
+            className="btn btn-secondary btn-sm"
+            style={{ fontSize: '0.8125rem' }}
+          >
+            {showCalculator ? 'Hide Details' : '🧮 Adjust Rations'}
+          </button>
+        </div>
+
+        {/* Headcount Stat Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Total Residents</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{customTotalHostellers}</div>
+            <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Allocated Beds</div>
+          </div>
+          <div style={{ background: '#fffbeb', padding: '0.85rem', borderRadius: '8px', border: '1px solid #fef3c7', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#b45309', fontWeight: 600 }}>Away on Leave</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#d97706', marginTop: '0.2rem' }}>{customAwayCount}</div>
+            <div style={{ fontSize: '0.7rem', color: '#b45309' }}>Approved Gatepasses</div>
+          </div>
+          <div style={{ background: '#f0fdf4', padding: '0.85rem', borderRadius: '8px', border: '1px solid #bbf7d0', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#15803d', fontWeight: 600 }}>Net Meals to Cook</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#16a34a', marginTop: '0.2rem' }}>{customTotalHostellers - customAwayCount}</div>
+            <div style={{ fontSize: '0.7rem', color: '#16a34a' }}>Regular Thalis</div>
+          </div>
+          <div style={{ background: '#ecfeff', padding: '0.85rem', borderRadius: '8px', border: '1px solid #a5f3fc', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.75rem', color: '#0e7490', fontWeight: 600 }}>Sick-Bay Portions</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0891b2', marginTop: '0.2rem' }}>2</div>
+            <div style={{ fontSize: '0.7rem', color: '#0891b2' }}>Moong Khichdi</div>
+          </div>
+        </div>
+
+        {/* Environmental & Financial Impact */}
+        <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: '8px', padding: '0.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: '#14532d' }}>
+            <span>🌱</span>
+            <span><strong>Food Waste Prevented:</strong> ~{((customAwayCount) * 0.45).toFixed(1)} kg grain &amp; cooked food saved today.</span>
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#15803d', fontWeight: 600 }}>
+            Estimated Monthly Savings: ₹{((customAwayCount) * 65 * 30).toLocaleString('en-IN')}
+          </div>
+        </div>
+
+        {/* Interactive Adjuster & Leave Rebate Policy */}
+        {showCalculator && (
+          <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px dashed #cbd5e1' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#334155', display: 'block', marginBottom: '0.35rem' }}>
+                  Simulate Away Count (Out-Passes):
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max={customTotalHostellers}
+                  value={customAwayCount}
+                  onChange={(e) => setCustomAwayCount(Math.max(0, parseInt(e.target.value) || 0))}
+                  style={{ width: '100%', padding: '0.4rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#334155', display: 'block', marginBottom: '0.35rem' }}>
+                  Student Mess Leave Rebate Credit (₹65/day if &ge; 3 days):
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <input
+                    type="number"
+                    min="1"
+                    max="30"
+                    value={rebateDays}
+                    onChange={(e) => setRebateDays(Math.max(1, parseInt(e.target.value) || 1))}
+                    style={{ width: '80px', padding: '0.4rem 0.65rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }}
+                  />
+                  <span style={{ fontSize: '0.8125rem', color: '#64748b' }}>days =</span>
+                  <span style={{ fontSize: '0.95rem', fontWeight: 700, color: rebateDays >= 3 ? '#16a34a' : '#d97706' }}>
+                    {rebateDays >= 3 ? `₹${rebateDays * 65} Credit` : '₹0 (Min 3 days required)'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Day Selector Tabs */}

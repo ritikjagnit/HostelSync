@@ -102,6 +102,10 @@ public class GatePassService {
         User warden = userRepository.findByEmail(wardenEmail)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Warden profile not found"));
 
+        if (warden.getRole() == Role.ADMIN) {
+            return filterAndMap(gatePassRepository.findAllByOrderByCreatedAtDesc(), statusFilter);
+        }
+
         List<Long> hostelIds = wardenHostelAssignmentRepository.findByWardenId(warden.getId())
                 .stream()
                 .map(a -> a.getHostel().getId())
@@ -119,6 +123,10 @@ public class GatePassService {
     public GatePassStatsDto getWardenGatePassStats(String wardenEmail) {
         User warden = userRepository.findByEmail(wardenEmail)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Warden profile not found"));
+
+        if (warden.getRole() == Role.ADMIN) {
+            return computeStats(gatePassRepository.findAllByOrderByCreatedAtDesc());
+        }
 
         List<Long> hostelIds = wardenHostelAssignmentRepository.findByWardenId(warden.getId())
                 .stream()
